@@ -1,0 +1,26 @@
+/*------Action person-------*/
+ul.action_person li span {
+    padding: 5px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 11px;
+}
+
+span.fa.fa-list {
+    background: #5bc0de;
+}
+
+span.fa.fa-eye {
+    background: #5cb85c;
+}
+
+span.fa.fa-pencil-square-o {
+    background: #337ab7;
+}
+
+span.fa.fa-trash-o {
+    background: #d9534f;
+}
+table#datatable-buttons {
+    width: 100% !important;
+}

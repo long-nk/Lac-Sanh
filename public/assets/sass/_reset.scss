@@ -1,0 +1,442 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --blue: #00375A;
+  --blue2: #00B6F3;
+  --red: #ea3b3f;
+  --yellow: #FCBB13;
+  --gray: #1A202C;
+  --font: "Be Vietnam Pro", sans-serif;
+  --font-banner: "Be Vietnam Pro", sans-serif;
+  --background-rgba: linear-gradient(to right,#3A50CB,#15268B);
+}
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote {
+  &:before,
+  &:after {
+    content: '';
+    content: none;
+  }
+}
+
+q {
+  &:before,
+  &:after {
+    content: '';
+    content: none;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  font-family: var(--font);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+a {
+  text-decoration: none;
+}
+
+img,
+a,button {
+  transition: all .3s !important;
+}
+
+p {
+  font-size: 100%;
+  line-height: 1.5;
+}
+
+button,img,input,select{
+  outline: none !important;
+}
+
+.clearfix:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.clear {
+  clear: both;
+  background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+}
+
+// Fix Zoom màn hình trên IOS
+@media screen and (device-aspect-ratio: 2/3) {
+    select, textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="url"]{ font-size: 16px; }
+}
+
+/* Fix Input Zoom on iPhone 5, 5C, 5S, iPod Touch 5g */
+@media screen and (device-aspect-ratio: 40/71) {
+    select, textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="url"]{ font-size: 16px; }
+}
+
+/* Fix Input Zoom on iPhone 6, iPhone 6s, iPhone 7  */
+@media screen and (device-aspect-ratio: 375/667) {
+    select, textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"], 
+    input[type="tel"], input[type="url"]{ font-size: 16px; }
+}
+
+/* Fix Input Zoom on iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus, iPhone 8, iPhone X, XS, XS Max  */
+@media screen and (device-aspect-ratio: 9/16) {
+    select, textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="tel"], input[type="url"]{ font-size: 16px; }
+}
+
+// Custom  css
+
+.relative{
+  position: relative;
+  z-index: 5;
+}
+.custom-background{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.btn{
+  @extend .flex;
+  justify-content: center;
+  width: 140px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 100%;
+  font-weight: 500;
+  &:hover{
+    transform:scale(1.05);
+  }
+}
+.btn-blue{
+  background: linear-gradient(100.27deg, #8662ED -1.97%, #1E5FC8 102.2%);
+  color: #fff;
+  &:hover{
+    background: var(--yellow);
+  }
+}
+.btn-white{
+  border: 1px solid #4260D5;
+  background: #fff;
+  color: var(--gray);
+  &:hover{
+    background: var(--yellow);
+    color: #fff;
+    border-color: var(--yellow);
+  }
+}
+
+.ratio{
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding-bottom: 100%;
+  img{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.pd-main{
+  padding-top: 55px;
+  padding-bottom: 55px;
+}
+.cut-text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.slick-arrow{
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 60px;
+  right: 0;
+  border:1px solid #E5E5E5;
+  padding:8px;
+  background: transparent;
+  transition: all .3s;
+  color: var(--color-blue);
+  z-index: 5;
+  font-size: 0;
+  cursor: pointer;
+  transform:translate(0,-50%);
+  background-size: 15px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  &:before{
+    display: none;
+  }
+}
+.slick-disabled{
+  opacity: 0.2;
+}
+.slick-next{
+  right: -29px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%237A8588' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3C!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z'/%3E%3C/svg%3E");
+}
+.slick-prev{
+  left: -27px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%0A%237A8588' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3C!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z'/%3E%3C/svg%3E");
+}
+
+.mb-24{
+  margin-bottom: 24px;
+}
+
+.slick-dots{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  li{
+    margin:0px 5px;
+    width: 12px;
+    height: 12px;
+    border:1px solid var(--blue);
+    background: transparent;
+    border-radius: 50%;
+    button{
+      display: none;
+    }
+  }
+  .slick-active{
+    background: var(--blue);
+  }
+}
+svg{
+  width: 20px;
+}
+
+.title-main{
+  margin-bottom: 30px;
+  .heading,.heading2,.heading3{
+    font-size: 300%;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  .heading{
+    color: var(--yellow);
+  }
+  .heading2{
+    color: var(--blue);
+    margin-top:-30px;
+  }
+  .heading3{
+    color: var(--blue);
+    padding-bottom: 12px;
+    position: relative;
+    &:before{
+      position: absolute;
+      content: '';
+      width: 150px;
+      height: 5px;
+      background: var(--yellow);
+      bottom: 0;
+      left: 50%;
+      transform:translate(-50%,0);
+    }
+  }
+}
+
+.title-main-2{
+  margin-bottom: 50px;
+}
+
+.btn{
+  width: max-content;
+  height: 45px;
+  padding: 0px 20px;
+  min-width: 120px;
+  @extend .flex;
+  justify-content: center;
+  font-size: 90%;
+  border:0;
+  border-radius: 8px;
+  &:hover{
+    color:#fff;
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+}
+.btn-blue{
+  color: #fff;
+  background: var(--blue);
+}
+.btn-white{
+  border:1px solid var(--blue);
+  color: var(--blue);
+}
+
+svg{
+  width: 20px;
+}
+
+.heading{
+  margin-bottom: 32px;
+  &--title{
+    font-size: 150%;
+    font-weight: bold;
+    color: #1A202C;
+  }
+  &--text{
+    font-size: 90%;
+    color: #1A202C;
+    margin-bottom: 0;
+    margin-top: 10px;
+  }
+}
+
+.bg-section{
+  background: #EEF9FF;
+}

@@ -1,0 +1,28 @@
+@media screen and (min-width: 1200px){
+  .container-fluid{
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+.flex{
+  display: flex;
+  align-items: center;
+}
+
+.font-icon{
+  font-family: "Font Awesome 5 Free"; 
+  font-weight: 900; 
+}
+
+.mb-30{
+  margin-bottom: 30px;
+}
+.mb-20{
+  margin-bottom: 20px;
+}
+
+.relative{
+  position: relative;
+  z-index: 5;
+}
