@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Sản phẩm | Dashboard')
+@section('title', 'Thêm khách sạn | Dashboard')
 
 @section('content')
 
@@ -11,16 +11,7 @@
                     <h3>Thông tin dịch vụ</h3>
                 </div>
 
-                <div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
-                            <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                        </span>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div class="clearfix"></div>
 
@@ -29,12 +20,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Dịch vụ</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
+
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -120,10 +106,10 @@
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                       <textarea name="address" id="address" value="{{old('address')}}"
+                                       <textarea name="address" id="address"
                                                  class="form-control" cols="30" rows="5"
                                                  placeholder="Nhập các vị trí khách sạn"
-                                                 required></textarea>
+                                                 required>{{old('address')}}</textarea>
                                         @if ($errors->has('address'))
                                             <div id="formMessage" class="alert alert-danger">
                                                 <strong>{{ $errors->first('address') }}</strong>
@@ -136,11 +122,9 @@
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea name="stores" id="editor1" value="{{old('stores')}}"
+                                        <textarea name="stores" id="editor1"
                                                   class="form-control" cols="30" rows="10"
-                                                  placeholder="Nhập các vị trí cửa hàng lân cận">
-
-                                        </textarea>
+                                                  placeholder="Nhập các vị trí cửa hàng lân cận">{!! old('stores') !!}</textarea>
                                         @if ($errors->has('stores'))
                                             <div id="formMessage" class="alert alert-danger">
                                                 <strong>{{ $errors->first('stores') }}</strong>
@@ -153,11 +137,9 @@
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea name="notes" id="editor2" value="{{old('notes')}}"
+                                        <textarea name="notes" id="editor2"
                                                   class="form-control" cols="30" rows="10"
-                                                  placeholder="Nhập chính sách chung">
-
-                                        </textarea>
+                                                  placeholder="Nhập chính sách chung">{!! old('notes') !!}</textarea>
                                         @if ($errors->has('notes'))
                                             <div id="formMessage" class="alert alert-danger">
                                                 <strong>{{ $errors->first('notes') }}</strong>
@@ -188,10 +170,8 @@
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea name="description" id="editor3" value="{{old('description')}}"
-                                                  class="form-control" cols="30" rows="10" placeholder="Nội dung">
-
-                                        </textarea>
+                                        <textarea name="description" id="editor3"
+                                                  class="form-control" cols="30" rows="10" placeholder="Nội dung">{!! old('description') !!}</textarea>
                                         @if ($errors->has('description'))
                                             <div id="formMessage" class="alert alert-danger">
                                                 <strong>{{ $errors->first('description') }}</strong>
@@ -204,9 +184,9 @@
                                         có)
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea name="video" id="video" value="{{old('video')}}"
+                                        <textarea name="video" id="video"
                                                   class="form-control" cols="30" rows="10"
-                                                  placeholder="Nhập link video embed"></textarea>
+                                                  placeholder="Nhập link video embed">{{old('video')}}</textarea>
                                         @if ($errors->has('video'))
                                             <div id="formMessage" class="alert alert-danger">
                                                 <strong>{{ $errors->first('video') }}</strong>

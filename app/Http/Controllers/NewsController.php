@@ -26,7 +26,7 @@ class NewsController extends Controller
             return view('frontend.news.index', compact('contents', 'hots'));
         } catch (Exception $e) {
             Log::error('Lỗi lấy danh sách tin tức', $e->getMessage());
-            return redirect()->back()->with('message-error', 'Lỗi xảy ra, vui lòng thử lại sau!');
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi xảy ra, vui lòng thử lại sau!');
         }
 
     }
@@ -65,7 +65,7 @@ class NewsController extends Controller
             return view('frontend.news.detail',compact('content', 'contentRelateds', 'news', 'hots', 'randoms'));
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', "Lỗi xem chi tiết bài viết, vui lòng thử lại sau");
+            return redirect()->back()->withInput()->with('message-error', "Lỗi xem chi tiết bài viết, vui lòng thử lại sau");
 
         }
 

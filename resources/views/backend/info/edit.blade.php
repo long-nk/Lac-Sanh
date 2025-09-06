@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_content">
-                        <form action="{{route('info.update', $info->id)}}" class="form-horizontal form-label-left"
+                        <form action="{{route('info.update', $pageInfo['id'])}}" class="form-horizontal form-label-left"
                               validate autocomplete="off" enctype="multipart/form-data"
                               method="post">
                             {{csrf_field()}}
@@ -21,13 +21,13 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Tên cửa hàng
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="name">Tên cửa hàng
                                             <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
                                             <input id="name" class="form-control col-md-7 col-xs-12"
                                                    data-validate-length-range="6" data-validate-words="2"
-                                                   value="{{$info->name}}"
+                                                   value="{{$pageInfo['name']}}"
                                                    name="name" type="text">
                                             @if ($errors->has('name'))
                                                 <div id="formMessage" class="alert alert-danger">
@@ -37,48 +37,40 @@
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Logo
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="number">Logo
                                             <span class="required">*</span>
                                         </label>
                                         <div class="col-md-2 col-sm-6 col-xs-12">
                                             <div class="box_show_img">
-                                                <img src="{{asset('' . $info->logo)}}"
-                                                     alt="" id="img_show">
+                                                <img src="{{asset('') .(isset($pageInfo['logo']) ? $pageInfo['logo'] : '')}}" alt="" id="img_show">
                                                 <i class="">+</i>
                                             </div>
-                                            <div class="box_upload">
-                                                <span class="fa fa-upload"></span> Chọn logo
-                                            <input type="file" class="hide_file" name="logo"
+                                            <input type="file" class="hide_file" name="image"
                                                    onchange="show_img_selected(this)">
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Logo mobile
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="number">Hình ảnh footer
                                             <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-2 col-sm-6 col-xs-12">
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
                                             <div class="box_show_img">
-                                                <img src="{{asset('' . $info->logo_mb)}}"
-                                                     alt="" id="img_show3">
+                                                <img src="{{asset('') .(isset($pageInfo['image']) ? $pageInfo['image'] : '')}}" alt="" id="img_show1">
                                                 <i class="">+</i>
                                             </div>
-                                            <div class="box_upload">
-                                                <span class="fa fa-upload"></span> Chọn logo
-                                                <input type="file" class="hide_file" name="logo_mb"
-                                                       onchange="show_img_selected3(this)">
-                                            </div>
+                                            <input type="file" class="hide_file" name="image_footer"
+                                                   onchange="show_img_selected1(this)">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Giới thiệu ngắn <span
-                                                    class="required">*</span>
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="slogan">Giới thiệu ngắn
+                                            <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <textarea name="slogan" id="editor1" value="{{old('slogan')}}"
-                                                  class="form-control editor1" cols="30" rows="5" placeholder="Tóm tắt"
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <textarea name="slogan" value="{{old('slogan')}}"
+                                                  class="form-control editor1" cols="30" id="editor1" rows="5" placeholder="Tóm tắt"
                                                   required>
-                                            {!! $info->slogan!!}
+                                            {!! $pageInfo['slogan']!!}
                                         </textarea>
                                             @if ($errors->has('slogan'))
                                                 <div id="formMessage" class="alert alert-danger">
@@ -87,48 +79,30 @@
                                             @endif
                                         </div>
                                     </div>
+                            
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address_office">Địa
-                                            chỉ 1
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="address_office">Địa chỉ
                                             <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
                                             <input id="address_office" class="form-control col-md-7 col-xs-12"
-                                                   value="{{$info->address}}"
+                                                   value="{{$pageInfo['address_office']}}"
                                                    data-validate-length-range="6" data-validate-words="2"
-                                                   name="address" required="required" type="text">
-                                            @if ($errors->has('address'))
+                                                   name="address_office" type="text">
+                                            @if ($errors->has('address_office'))
                                                 <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('address') }}</strong>
+                                                    <strong>{{ $errors->first('address_office') }}</strong>
                                                 </div>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address_office">Địa
-                                            chỉ 2
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="name">Số điện thoại 1
                                             <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="address_office" class="form-control col-md-7 col-xs-12"
-                                                   value="{{$info->address2}}"
-                                                   data-validate-length-range="6" data-validate-words="2"
-                                                   name="address2" type="text">
-                                            @if ($errors->has('address2'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('address2') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Số điện
-                                            thoại 1
-                                            <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
                                             <input id="phone_number" class="form-control col-md-7 col-xs-12"
-                                                   value="{{$info->phone_number}}"
+                                                   value="{{$pageInfo['phone_number']}}"
                                                    data-validate-length-range="6" data-validate-words="2"
                                                    name="phone_number" required="required" type="text">
                                             @if ($errors->has('phone_number'))
@@ -138,94 +112,28 @@
                                             @endif
                                         </div>
                                     </div>
+{{--                                    <div class="item form-group">--}}
+{{--                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="name">Số điện thoại 2--}}
+{{--                                            <span class="required">*</span>--}}
+{{--                                        </label>--}}
+{{--                                        <div class="col-md-4 col-sm-6 col-xs-12">--}}
+{{--                                            <input id="phone_number2" class="form-control col-md-7 col-xs-12"--}}
+{{--                                                   value="{{$pageInfo['phone_number2}}"--}}
+{{--                                                   data-validate-length-range="6" data-validate-words="2"--}}
+{{--                                                   name="phone_number2" type="text">--}}
+{{--                                            @if ($errors->has('phone_number2'))--}}
+{{--                                                <div id="formMessage" class="alert alert-danger">--}}
+{{--                                                    <strong>{{ $errors->first('phone_number2') }}</strong>--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Số điện
-                                            thoại 2
-                                            <span class="required">*</span>
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="email">Email
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="phone_number2" class="form-control col-md-7 col-xs-12"
-                                                   value="{{$info->phone_number2}}"
-                                                   data-validate-length-range="6" data-validate-words="2"
-                                                   name="phone_number2" type="text">
-                                            @if ($errors->has('phone_number2'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('phone_number2') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Số tài khoản
-                                            <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="stk" class="form-control col-md-7 col-xs-12"
-                                                   value="{{$info->card}}"
-                                                   data-validate-length-range="6" data-validate-words="2"
-                                                   name="card" type="text">
-                                            @if ($errors->has('card'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('card') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Ngân hàng
-                                            <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="bank" class="form-control col-md-7 col-xs-12"
-                                                   value="{{$info->bank}}"
-                                                   data-validate-length-range="6" data-validate-words="2"
-                                                   name="bank" type="text">
-                                            @if ($errors->has('bank'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('bank') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Chủ tài khoản
-                                            <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="user_name" class="form-control col-md-7 col-xs-12"
-                                                   value="{{$info->account}}"
-                                                   data-validate-length-range="6" data-validate-words="2"
-                                                   name="account" type="text">
-                                            @if ($errors->has('account'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('account') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">QR code
-                                            <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-2 col-sm-6 col-xs-12">
-                                            <div class="box_show_img">
-                                                <img src="{{asset(@$info->qr_code)}}"
-                                                     alt="" id="img_show2">
-                                                <i class="">+</i>
-                                            </div>
-                                            <div class="box_upload">
-                                                <span class="fa fa-upload"></span> Tải QR Code
-                                                <input type="file" class="hide_file" name="qr_code"
-                                                       onchange="show_img_selected2(this)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email hiển thị
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
                                             <input type="email" id="email" name="email"
-                                                   value="{{$info->email}}"
+                                                   value="{{$pageInfo['email']}}"
                                                    class="form-control col-md-7 col-xs-12">
                                             @if ($errors->has('email'))
                                                 <div id="formMessage" class="alert alert-danger">
@@ -235,25 +143,27 @@
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email nhận thông báo
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="mst">Mã
+                                            số thuế
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="email2" id="email2" name="email2"
-                                                   value="{{$info->email2}}"
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <input type="text" id="mst" name="mst"
+                                                   value="{{$pageInfo['mst']}}"
+                                                   data-validate-minmax="10,100"
                                                    class="form-control col-md-7 col-xs-12">
-                                            @if ($errors->has('email2'))
+                                            @if ($errors->has('mst'))
                                                 <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('email2') }}</strong>
+                                                    <strong>{{ $errors->first('mst') }}</strong>
                                                 </div>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="manager">Giám đốc
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="manager">Người quản lý
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
                                             <input type="text" id="manager" name="manager"
-                                                   value="{{$info->manager}}"
+                                                   value="{{$pageInfo['manager']}}"
                                                    class="form-control col-md-7 col-xs-12">
                                             @if ($errors->has('manager'))
                                                 <div id="formMessage" class="alert alert-danger">
@@ -262,13 +172,15 @@
                                             @endif
                                         </div>
                                     </div>
-
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Link
-                                            Facebook
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="address_office">Facebook
+                                            <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea type="text" id="facebook" name="facebook" class="form-control col-md-7 col-xs-12" rows="5" cols="5">{{$info->facebook}}</textarea>
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <input id="facebook" class="form-control col-md-7 col-xs-12"
+                                                   value="{{$pageInfo['facebook']}}"
+                                                   data-validate-length-range="6" data-validate-words="2"
+                                                   name="facebook" type="text">
                                             @if ($errors->has('facebook'))
                                                 <div id="formMessage" class="alert alert-danger">
                                                     <strong>{{ $errors->first('facebook') }}</strong>
@@ -277,24 +189,30 @@
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Link
-                                            Instagram
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="address_office">Group
+                                            <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea type="text" id="instagram" name="instagram" class="form-control col-md-7 col-xs-12" rows="5" cols="5">{{$info->instagram}}</textarea>
-                                            @if ($errors->has('instagram'))
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <input id="group" class="form-control col-md-7 col-xs-12"
+                                                   value="{{$pageInfo['group']}}"
+                                                   data-validate-length-range="6" data-validate-words="2"
+                                                   name="group" type="text">
+                                            @if ($errors->has('group'))
                                                 <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('instagram') }}</strong>
+                                                    <strong>{{ $errors->first('group') }}</strong>
                                                 </div>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Link
-                                            Youtube
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="address_office">Youtube
+                                            <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea type="text" id="youtube" name="youtube" class="form-control col-md-7 col-xs-12" rows="5" cols="5">{{$info->youtube}}</textarea>
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <input id="youtube" class="form-control col-md-7 col-xs-12"
+                                                   value="{{$pageInfo['youtube']}}"
+                                                   data-validate-length-range="6" data-validate-words="2"
+                                                   name="youtube" type="text">
                                             @if ($errors->has('youtube'))
                                                 <div id="formMessage" class="alert alert-danger">
                                                     <strong>{{ $errors->first('youtube') }}</strong>
@@ -303,11 +221,14 @@
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Link
-                                            Tiktok
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="address_office">Tiktok
+                                            <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea type="text" id="tiktok" name="tiktok" class="form-control col-md-7 col-xs-12" rows="5" cols="5">{{$info->tiktok}}</textarea>
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <input id="tiktok" class="form-control col-md-7 col-xs-12"
+                                                   value="{{$pageInfo['tiktok']}}"
+                                                   data-validate-length-range="6" data-validate-words="2"
+                                                   name="tiktok" type="text">
                                             @if ($errors->has('tiktok'))
                                                 <div id="formMessage" class="alert alert-danger">
                                                     <strong>{{ $errors->first('tiktok') }}</strong>
@@ -316,33 +237,50 @@
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Link messenger
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="address_office">Zalo
+                                            <span class="required">*</span>
                                         </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea type="text" id="messenger" name="messenger" class="form-control col-md-7 col-xs-12" rows="5" cols="5">{{$info->messenger}}</textarea>
-                                            @if ($errors->has('messenger'))
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <input id="zalo" class="form-control col-md-7 col-xs-12"
+                                                   value="{{$pageInfo['zalo']}}"
+                                                   data-validate-length-range="6" data-validate-words="2"
+                                                   name="zalo" type="text">
+                                            @if ($errors->has('zalo'))
                                                 <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('messenger') }}</strong>
+                                                    <strong>{{ $errors->first('zalo') }}</strong>
                                                 </div>
                                             @endif
                                         </div>
                                     </div>
-{{--                                    <div class="item form-group">--}}
-{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Link google map<span--}}
-{{--                                                    class="required">*</span>--}}
-{{--                                        </label>--}}
-{{--                                        <div class="col-md-6 col-sm-3 col-xs-12">--}}
-{{--                                            <textarea id="google_map" class="form-control editor" name="google_map" rows="10"--}}
-{{--                                                      cols="30"  placeholder="Nhập vào link google map">--}}
-{{--                                                {!! $info->google_map!!}--}}
-{{--                                            </textarea>--}}
-{{--                                            @if ($errors->has('google_map'))--}}
-{{--                                                <div id="formMessage" class="alert alert-danger">--}}
-{{--                                                    <strong>{{ $errors->first('google_map') }}</strong>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" for="address_office">Discord
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <input id="discord" class="form-control col-md-7 col-xs-12"
+                                                   value="{{$pageInfo['discord']}}"
+                                                   data-validate-length-range="6" data-validate-words="2"
+                                                   name="discord" type="text">
+                                            @if ($errors->has('discord'))
+                                                <div id="formMessage" class="alert alert-danger">
+                                                    <strong>{{ $errors->first('discord') }}</strong>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-4 col-sm-6 col-xs-12" for="email">Trạng thái
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <select name="status" id="status"
+                                            class="form-control" required>
+                                        <option value="1" {{$pageInfo->status==1?"selected":""}}>Hiển thị</option>
+                                        <option value="0" {{$pageInfo->status==0?"selected":""}}>Không hiển thị
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12 text-center">
@@ -364,20 +302,6 @@
 @push('js')
     <script src="{{asset('libs/ckeditor/ckeditor.js')}}"></script>
     <script src="{{asset('libs/validator/validator.js')}}"></script>
-    <script>
-        CKEDITOR.replace('editor1', {
-            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
-            filebrowserUploadMethod: 'form',
-        });
-        CKEDITOR.replace('editor2', {
-            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
-            filebrowserUploadMethod: 'form',
-        });
-        CKEDITOR.replace('editor3', {
-            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
-            filebrowserUploadMethod: 'form',
-        });
-    </script>
 
     <script type="text/javascript">
         //Show image to box when select
@@ -393,24 +317,12 @@
             }
         }
 
-        function show_img_selected2(input) {
+        function show_img_selected1(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#img_show2').attr('src', e.target.result)
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function show_img_selected3(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#img_show3').attr('src', e.target.result)
+                    $('#img_show1').attr('src', e.target.result)
                 };
 
                 reader.readAsDataURL(input.files[0]);
@@ -425,6 +337,14 @@
             else
                 return false;
         }
-    </script>
 
+        CKEDITOR.replace('editor1', {
+            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form',
+        });
+        CKEDITOR.replace('editor2', {
+            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form',
+        });
+    </script>
 @endpush

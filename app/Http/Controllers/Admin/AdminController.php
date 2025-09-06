@@ -37,12 +37,12 @@ class AdminController extends Controller
                     'password' => $password
                 ];
                 Mail::to($user->email)->send(new SendMail($data));
-                return redirect()->back()->with('message-success', 'Mật khẩu mới đã được gửi đến email của bạn. Vui lòng kiểm tra hòm thư!');
+                return redirect()->back()->withInput()->with('message-success', 'Mật khẩu mới đã được gửi đến email của bạn. Vui lòng kiểm tra hòm thư!');
             }  else {
-                return redirect()->back()->with('message-error', 'Email không chính xác, mời nhập lại');
+                return redirect()->back()->withInput()->with('message-error', 'Email không chính xác, mời nhập lại');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('message-error', 'Xảy ra lỗi, vui lòng thử lại sau!');
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi, vui lòng thử lại sau!');
         }
 
     }

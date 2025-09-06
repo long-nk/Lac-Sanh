@@ -2,6 +2,6 @@
 
 @yield('banners')
 
-@yield('contents')
+@yield('content')
 
 @include('frontend.template.footer')

@@ -71,7 +71,7 @@ class ComfortsController extends Controller
             return redirect()->route('comforts.listAll', ['type' => $request->type]);
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $e->getMessage());
         }
     }
 
@@ -113,7 +113,7 @@ class ComfortsController extends Controller
             $comfort = Comforts::find($id);
 
             if(!isset($comfort)){
-                return redirect()->back()->with('message-error', 'Không tìm thấy tiện ích');
+                return redirect()->back()->withInput()->with('message-error', 'Không tìm thấy tiện ích');
             }
 
             $path = "images/uploads/comforts";
@@ -139,7 +139,7 @@ class ComfortsController extends Controller
         } catch (Exception $e) {
             \Log::error($e->getMessage());
             \DB::rollback();
-            return redirect()->back()->with('message-error', 'Lỗi cập nhật, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi cập nhật, vui lòng thử lại sau');
         }
     }
 
@@ -302,9 +302,9 @@ class ComfortsController extends Controller
                 }
             }
 
-            return redirect()->back()->with('message-success', 'Cập nhật thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Cập nhật thành công!');
         } catch (Exception $e) {
-            return redirect()->back()->with('message-error', 'Cập nhật không thành công!');
+            return redirect()->back()->withInput()->with('message-error', 'Cập nhật không thành công!');
         }
 
     }

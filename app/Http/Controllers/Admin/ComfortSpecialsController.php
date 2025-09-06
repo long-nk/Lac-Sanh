@@ -68,7 +68,7 @@ class ComfortSpecialsController extends Controller
             return redirect()->route('comfort_specials.index');
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $e->getMessage());
         }
     }
 
@@ -110,7 +110,7 @@ class ComfortSpecialsController extends Controller
             $comfort = Comforts::find($id);
 
             if(!isset($comfort)){
-                return redirect()->back()->with('message-error', 'Không tìm thấy yêu cầu');
+                return redirect()->back()->withInput()->with('message-error', 'Không tìm thấy yêu cầu');
             }
 
 //            $path = "images/uploads/comforts";
@@ -136,7 +136,7 @@ class ComfortSpecialsController extends Controller
         } catch (Exception $e) {
             \Log::error($e->getMessage());
             \DB::rollback();
-            return redirect()->back()->with('message-error', 'Lỗi cập nhật, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi cập nhật, vui lòng thử lại sau');
         }
     }
 

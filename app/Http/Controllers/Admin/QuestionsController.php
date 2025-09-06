@@ -352,7 +352,7 @@ class QuestionsController extends Controller
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
-            return redirect()->back()->with('message-error', $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $e->getMessage());
         }
     }
 
@@ -381,7 +381,7 @@ class QuestionsController extends Controller
                 return response()->json(['success' => true, 'message' => 'Xóa thành công!']);
             }
 
-            return redirect()->back()->with('message-success', 'Xóa thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Xóa thành công!');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
 
@@ -389,7 +389,7 @@ class QuestionsController extends Controller
                 return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
             }
 
-            return redirect()->back()->with('message-error', $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $e->getMessage());
         }
     }
 

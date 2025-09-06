@@ -292,16 +292,6 @@
                                         <li>
                                             <a href="{{route('comfort_villas.listComfort', ['type' => \App\Models\Comforts::TO])}}">Tour</a>
                                         </li>
-{{--                                        <li>--}}
-{{--                                            <a href="{{route('comfort_villas.listComfort', ['type' => \App\Models\Comforts::HS])}}">Homestay</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="{{route('comfort_villas.listComfort', ['type' => \App\Models\Comforts::RS])}}">Resort</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="{{route('comfort_villas.listComfort', ['type' => \App\Models\Comforts::DT])}}">Du--}}
-{{--                                                thuyền</a>--}}
-{{--                                        </li>--}}
                                         <li>
                                             <a href="{{route('comfort_villas.listComfort', ['type' => \App\Models\Comforts::RM])}}">Phòng</a>
                                         </li>
@@ -313,90 +303,10 @@
                                 {{--                            </li>--}}
                                 <li>
                                     <a href="{{route('hotels.listAll', ['type' => \App\Models\Comforts::KS])}}" class="list-product"><i class="fa fa-table"></i> Quản lý khách sạn</a>
-
-{{--                                    <ul class="nav child_menu">--}}
-{{--                                        <li>--}}
-{{--                                            <a href="{{route('hotels.listAll', ['type' => \App\Models\Comforts::KS])}}">Khách--}}
-{{--                                                sạn & Resort</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="{{route('hotels.listAll', ['type' => \App\Models\Comforts::TO])}}">Tour</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="{{route('hotels.listAll', ['type' => \App\Models\Comforts::HS])}}">Homestay</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="{{route('hotels.listAll', ['type' => \App\Models\Comforts::RS])}}">Resort</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="{{route('hotels.listAll', ['type' => \App\Models\Comforts::DT])}}">Du--}}
-{{--                                                thuyền</a>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
                                 </li>
-{{--                                <li>--}}
-{{--                                    <a href="javascript:;" class="list-room"><i class="fa fa-table"></i> Quản lý--}}
-{{--                                        phòng<span--}}
-{{--                                            class="fa fa-chevron-up"></span></a>--}}
-
-{{--                                    <ul class="nav child_menu">--}}
-{{--                                        @foreach(@$hotelCategories as $hotel)--}}
-{{--                                            <li>--}}
-{{--                                                <a href="{{route('rooms.list', ['id' => $hotel->id])}}">{{$hotel->name}}</a>--}}
-{{--                                            </li>--}}
-{{--                                        @endforeach--}}
-{{--                                        <li>--}}
-{{--                                            <a href="javascript:;">Khách sạn</a>--}}
-{{--                                            <ul class="nav child_menu">--}}
-{{--                                                @foreach(@$hotelCategories as $hotel)--}}
-{{--                                                    <li>--}}
-{{--                                                        <a href="{{route('rooms.list', ['id' => $hotel->id])}}">{{$hotel->name}}</a>--}}
-{{--                                                    </li>--}}
-{{--                                                @endforeach--}}
-{{--                                            </ul>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="javascript:;">Villa</a>--}}
-{{--                                            <ul class="nav child_menu">--}}
-{{--                                                @foreach(@$villaCategories as $hotel)--}}
-{{--                                                    <li>--}}
-{{--                                                        <a href="{{route('rooms.list', ['id' => $hotel->id])}}">{{$hotel->name}}</a>--}}
-{{--                                                    </li>--}}
-{{--                                                @endforeach--}}
-{{--                                            </ul>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="javascript:;">Homestay</a>--}}
-{{--                                            <ul class="nav child_menu">--}}
-{{--                                                @foreach(@$homestayCategories as $hotel)--}}
-{{--                                                    <li>--}}
-{{--                                                        <a href="{{route('rooms.list', ['id' => $hotel->id])}}">{{$hotel->name}}</a>--}}
-{{--                                                    </li>--}}
-{{--                                                @endforeach--}}
-{{--                                            </ul>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="javascript:;">Resort</a>--}}
-{{--                                            <ul class="nav child_menu">--}}
-{{--                                                @foreach(@$resortCategories as $hotel)--}}
-{{--                                                    <li>--}}
-{{--                                                        <a href="{{route('rooms.list', ['id' => $hotel->id])}}">{{$hotel->name}}</a>--}}
-{{--                                                    </li>--}}
-{{--                                                @endforeach--}}
-{{--                                            </ul>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="javascript:;">Du thuyền</a>--}}
-{{--                                            <ul class="nav child_menu">--}}
-{{--                                                @foreach(@$yachtCategories as $hotel)--}}
-{{--                                                    <li>--}}
-{{--                                                        <a href="{{route('rooms.list', ['id' => $hotel->id])}}">{{$hotel->name}}</a>--}}
-{{--                                                    </li>--}}
-{{--                                                @endforeach--}}
-{{--                                            </ul>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                </li>--}}
+                                <li>
+                                    <a href="{{route('tours.index')}}" class="list-product"><i class="fa fa-table"></i> Quản lý tour</a>
+                                </li>
                                 <li>
                                     <a href="{{route('vouchers.index')}}"><i class="fa fa-table"></i>
                                         Quản lý voucher </a>
@@ -404,6 +314,10 @@
                                 <li>
                                     <a href="{{route('comments.index')}}"><i class="fa fa-table"></i>
                                         Quản lý đánh giá </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('feedbacks.index')}}"><i class="fa fa-table"></i>
+                                        Quản lý cảm nhận </a>
                                 </li>
                                 {{--                            <li>--}}
                                 {{--                                <a href="{{route('customers.list')}}"><i class="fa fa-table"></i>--}}
@@ -413,7 +327,7 @@
                             @endif
                             <li>
                                 <a href="{{route('news.index')}}"><i class="fa fa-table"></i>
-                                    Quản lý tin tức </a>
+                                    Quản lý bài viết</a>
                             </li>
                             @if(Auth::user()->role != \App\Models\User::USER_ROLE)
                                 <li>

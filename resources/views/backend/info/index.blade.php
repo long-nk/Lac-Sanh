@@ -6,7 +6,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left" style="width:100%;">
-                    <h3 class="text-center">Quản lý thông tin công ty</h3>
+                    <h3 class="text-center">Quản lý thông tin cửa hàng</h3>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -16,7 +16,7 @@
                         <div class="x_title">
                             <div class="col-lg-2 col-md-2 col-sm-2" style="padding: 0px;">
                                 <a class="btn btn-info form-control btnAddNew" style="border-radius: 0px;"
-                                   href="{{route('info.edit', @$pageInfo->id)}}">
+                                   href="{{route('info.edit', @$pageInfo['id'])}}">
                                     <i class="fa fa-edit"></i> Sửa thông tin
                                 </a>
                             </div>
@@ -27,37 +27,34 @@
                                 <div id="crop-avatar">
                                     <!-- Current avatar -->
                                     <img class="img-responsive avatar-view"
-                                         src="{{asset('' . @$pageInfo->logo)}}"
+                                         src="{{asset('') .(isset($pageInfo['logo']) ? $pageInfo['logo'] : '')}}"
                                          alt="Avatar" title="Change the avatar">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-10">
-                            <h3 >{{@$pageInfo->name}}  {!! @$pageInfo->slogan !!}</h3>
+                            <h3>{{@$pageInfo['name']}} {!!$pageInfo['slogan'] ? ' - ' . $pageInfo['slogan'] : ''!!}</h3>
                             <ul class="list-unstyled user_data">
-                                <li><i class="fa fa-map-marker user-profile-icon"></i>
-                                    {{@$pageInfo->address}} {{@$pageInfo->address2 ? ' - ' . $pageInfo->address2 : ''}}
+                                <li><i class="fa fa-map-marker user-profile-icon"></i> {{@$pageInfo['address_office']}}
                                 </li>
                                 <li>
-                                    <i class="fa fa-phone"></i> {{@$pageInfo->phone_number}} {{@$pageInfo->phone_number2 ? ' - ' . $pageInfo->phone_number2 : ''}}
+                                    <i class="fa fa-phone"></i> {{@$pageInfo['phone_number']}} {{$pageInfo['phone_number2'] ? ' - ' . $pageInfo['phone_number2'] : ''}}
                                 </li>
                                 <li>
-                                    <i class="fa fa-envelope "></i> {{@$pageInfo->email}}
+                                    <i class="fa fa-envelope "></i> {{@$pageInfo['email']}}
                                 </li>
                                 <li>
-                                    <i class="fa fa-user"></i> {{@$pageInfo->manager}}
+                                    <i class="fa fa-money"></i> {{@$pageInfo['mst']}}
                                 </li>
-{{--                                <li>--}}
-{{--                                    <i class="fa fa-facebook"></i> {{@$pageInfo->facebook_link}}--}}
-{{--                                </li>--}}
-{{--                                <li>--}}
-{{--                                    <i class="fa fa-globe"></i> {{@$pageInfo->website}}--}}
-{{--                                </li>--}}
-
+                                <li>
+                                    <i class="fa fa-user"></i> {{@$pageInfo['manager']}}
+                                </li>
                             </ul>
                         </div>
                         <div class="clearfix"></div>
                         <br><br>
+
+
                     </div>
                 </div>
             </div>
@@ -66,6 +63,7 @@
     </div>
     <!-- /page content -->
     {{--model--}}
+
 @endsection
 
 @push('js')
@@ -87,7 +85,7 @@
 <script src="{{asset('libs/pdfmake/build/vfs_fonts.js')}}"></script>
 <script src="{{asset('libs/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')}}"></script>
 <!-- Custom Theme Scripts -->
-{{--<script src="{{asset('build/js/custom.js')}}"></script>--}}
+
 <script src="{{asset('backend/js/shop_address.js')}}"></script>
 <script type="text/javascript">
     //----------------Datatables-----------

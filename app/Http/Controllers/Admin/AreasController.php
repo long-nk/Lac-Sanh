@@ -61,7 +61,7 @@ class AreasController extends Controller
             return redirect()->route('areas.index');
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $e->getMessage());
         }
     }
 

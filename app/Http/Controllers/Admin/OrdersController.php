@@ -49,15 +49,15 @@ class OrdersController extends Controller {
                 $order->save();
                 Mail::to($order->email)->send(new ApproveOrder($order));
                 DB::commit();
-                return redirect()->back()->with('message-success', 'Duyệt đơn thành công!');
+                return redirect()->back()->withInput()->with('message-success', 'Duyệt đơn thành công!');
             } else {
                 DB::rollBack();
-                return redirect()->back()->with('message-error', 'Số phòng trống không đủ. Hãy kiểm tra lại');
+                return redirect()->back()->withInput()->with('message-error', 'Số phòng trống không đủ. Hãy kiểm tra lại');
             }
         } catch (Exception $e) {
             DB::rollBack();
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', 'Xảy ra lỗi khi duyệt!');
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi duyệt!');
         }
     }
 
@@ -78,15 +78,15 @@ class OrdersController extends Controller {
                 $order->save();
                 Mail::to($order->email)->send(new ApproveOrder($order));
                 DB::commit();
-                return redirect()->back()->with('message-success', 'Duyệt đơn thành công!');
+                return redirect()->back()->withInput()->with('message-success', 'Duyệt đơn thành công!');
             } else {
                 DB::rollBack();
-                return redirect()->back()->with('message-error', 'Số phòng trống không đủ. Hãy kiểm tra lại');
+                return redirect()->back()->withInput()->with('message-error', 'Số phòng trống không đủ. Hãy kiểm tra lại');
             }
         } catch (Exception $e) {
             DB::rollBack();
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', 'Xảy ra lỗi khi duyệt!');
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi duyệt!');
         }
     }
 
@@ -98,11 +98,11 @@ class OrdersController extends Controller {
             $order->save();
             Mail::to($order->email)->send(new UnApprovedOrder($order));
             DB::commit();
-            return redirect()->back()->with('message-success', 'Hoàn tất trả phòng!');
+            return redirect()->back()->withInput()->with('message-success', 'Hoàn tất trả phòng!');
         } catch (Exception $e) {
             DB::rollBack();
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', 'Đã có lỗi khi trả phòng!');
+            return redirect()->back()->withInput()->with('message-error', 'Đã có lỗi khi trả phòng!');
         }
     }
 
@@ -121,14 +121,14 @@ class OrdersController extends Controller {
                 $order->save();
                 Mail::to($order->email)->send(new CheckoutSuccess($order));
                 DB::commit();
-                return redirect()->back()->with('message-success', 'Hoàn tất trả phòng!');
+                return redirect()->back()->withInput()->with('message-success', 'Hoàn tất trả phòng!');
             }
-            return redirect()->back()->with('message-error', 'Không tìm thấy thông tin khách sạn. Vui lòng kiểm tra lại!');
+            return redirect()->back()->withInput()->with('message-error', 'Không tìm thấy thông tin khách sạn. Vui lòng kiểm tra lại!');
 
         } catch (Exception $e) {
             DB::rollBack();
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', 'Đã có lỗi khi trả phòng!');
+            return redirect()->back()->withInput()->with('message-error', 'Đã có lỗi khi trả phòng!');
         }
     }
 
@@ -140,7 +140,7 @@ class OrdersController extends Controller {
             return redirect()->route('orders.index')->with('message-success', 'Cập nhật trạng thái thành công!');
         } catch (Exception $e) {
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', 'Xảy ra lỗi khi cập nhật trạng thái!');
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi cập nhật trạng thái!');
         }
 
     }
@@ -155,10 +155,10 @@ class OrdersController extends Controller {
         try {
             $order = Orders::find($id);
             $order->delete();
-            return redirect()->back()->with('message-success', 'Xóa thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Xóa thành công!');
         } catch (Exception $e) {
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-success', 'Lỗi khi xóa đơn!');
+            return redirect()->back()->withInput()->with('message-success', 'Lỗi khi xóa đơn!');
         }
     }
 

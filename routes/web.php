@@ -23,8 +23,11 @@ use App\Http\Controllers\Admin\VillaBannersController;
 use App\Http\Controllers\Admin\AreasController;
 use App\Http\Controllers\Admin\FiltersController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ToursController;
+use App\Http\Controllers\Admin\SchedulesController;
+use App\Http\Controllers\Admin\TourHotelsController;
+use App\Http\Controllers\Admin\FeedbacksController;
 use App\Http\Controllers\HomeController;
-
 
 
 //---------Backend--------
@@ -62,6 +65,10 @@ Route::group(array('prefix' => 'admin/', 'middleware' => 'auth'), function () {
         Route::resource('locations', LocactionsController::class);
         Route::resource('areas', AreasController::class);
         Route::resource('hotels', HotelsController::class);
+        Route::resource('tours', ToursController::class);
+        Route::resource('tour_hotels', TourHotelsController::class);
+        Route::resource('feedbacks', FeedbacksController::class);
+        Route::resource('schedules', SchedulesController::class);
         Route::resource('rooms', RoomsController::class);
         Route::resource('comforts', ComfortsController::class);
         Route::resource('comfort_specials', ComfortSpecialsController::class);
@@ -86,6 +93,7 @@ Route::group(array('prefix' => 'admin/', 'middleware' => 'auth'), function () {
         Route::get('hotel_vouchers/create/{id}', [HotelVouchersController::class, 'create'])->name('hotel_vouchers.create_new');
         Route::get('comforts/type/{type}', [ComfortsController::class, 'listAll'])->name('comforts.listAll');
         Route::get('comfort_child/create/{id}', [ComfortChildsController::class, 'createChild'])->name('comfort_childs.create_new');
+        Route::get('remove-image-tour', [ToursController::class, 'destroyImage'])->name('tours.destroyImage');
         Route::get('remove-image-hotel', [HotelsController::class, 'destroyImage'])->name('hotels.destroyImage');
         Route::get('remove-image-room', [RoomsController::class, 'destroyImage'])->name('rooms.destroyImage');
         Route::get('remove-image-comment', [CommentsController::class, 'destroyImage'])->name('comments.destroyImage');

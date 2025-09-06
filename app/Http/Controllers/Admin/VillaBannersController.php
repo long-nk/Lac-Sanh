@@ -84,7 +84,7 @@ class VillaBannersController extends Controller
             return redirect()->route('villa_banners.index', ['id' => $request->location_id])->with('message-success', 'Thêm mới thành công!');
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', 'Thêm mới thất bại!');
+            return redirect()->back()->withInput()->with('message-error', 'Thêm mới thất bại!');
         }
     }
 
@@ -166,7 +166,7 @@ class VillaBannersController extends Controller
         } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
-            return redirect()->back()->with('message-error', 'Xảy ra lỗi khi cập nhật: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi cập nhật: ' . $e->getMessage());
         }
     }
 
@@ -182,7 +182,7 @@ class VillaBannersController extends Controller
             $banner = VillaBanners::find($id);
 
             if (empty($banner)) {
-                return redirect()->back()->with('message-error', 'Không tìm thấy banner');
+                return redirect()->back()->withInput()->with('message-error', 'Không tìm thấy banner');
             }
 
             if(\Illuminate\Support\Facades\File::exists($banner->image_desktop)) {
@@ -194,10 +194,10 @@ class VillaBannersController extends Controller
             }
 
             $banner->delete();
-            return redirect()->back()->with('message-success', 'Xóa thành công');
+            return redirect()->back()->withInput()->with('message-success', 'Xóa thành công');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', 'Xảy ra lỗi khi xóa: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi xóa: ' . $e->getMessage());
         }
     }
 }

@@ -64,7 +64,7 @@ class HotelVouchersController extends Controller
         } catch (Exception $e) {
             \Log::error($e->getMessage());
             \DB::rollback();
-            return redirect()->back()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau');
         }
 
     }

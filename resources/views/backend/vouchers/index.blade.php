@@ -28,16 +28,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Danh sách voucher</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                       aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
+
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -48,10 +39,11 @@
                                     <th class="text-center" width="5%">STT</th>
                                     <th class="text-center" width="10%">Tên voucher</th>
                                     <th class="text-center" width="15%">Mã voucher</th>
+                                    <th class="text-center" width="15%">Hình ảnh</th>
                                     <th class="text-center" width="30%">Áp dụng cho</th>
-                                    <th class="text-center" width="10%">Phần trăm giảm giá</th>
-                                    <th class="text-center" width="15%">Thời gian bắt đầu</th>
-                                    <th class="text-center" width="15%">Thời gian kết thúc</th>
+                                    <th class="text-center" width="10%">% giảm giá</th>
+                                    <th class="text-center" width="15%">Bắt đầu</th>
+                                    <th class="text-center" width="15%">Kết thúc</th>
 {{--                                    <th class="text-center" width="10%">Áp mã cho tất cả</th>--}}
                                     <th class="text-center" width="10%">Trạng thái</th>
                                     <th class="text-center" width="15%">Hành động</th>
@@ -66,6 +58,9 @@
                                             </td>
                                             <td class="text-center">
                                                 {{$voucher->code}}
+                                            </td>
+                                            <td class="text-center">
+                                                <img src="{{asset('' . $voucher->image)}}" alt="" style="max-width: 250px">
                                             </td>
                                             <td class="">
 {{--                                                @foreach($voucher->hotels as $hotel)--}}
@@ -95,18 +90,18 @@
                                                 @if($voucher->hotel)
                                                 <button type="button" class="btn btn-round btn-success btn-sm btnChangeStatus">Tất cả khách sạn</button>
                                                 @endif
-                                                @if($voucher->villa)
-                                                    <button type="button" class="btn btn-round btn-success btn-sm btnChangeStatus">Tất cả villa</button>
+                                                @if($voucher->tour)
+                                                    <button type="button" class="btn btn-round btn-success btn-sm btnChangeStatus">Tất cả tour</button>
                                                 @endif
-                                                @if($voucher->resort)
-                                                    <button type="button" class="btn btn-round btn-success btn-sm btnChangeStatus">Tất cả resort</button>
-                                                @endif
-                                                @if($voucher->homestay)
-                                                    <button type="button" class="btn btn-round btn-success btn-sm btnChangeStatus">Tất cả homestay</button>
-                                                @endif
-                                                @if($voucher->yacht)
-                                                    <button type="button" class="btn btn-round btn-success btn-sm btnChangeStatus">Tất cả du thuyền</button>
-                                                @endif
+{{--                                                @if($voucher->resort)--}}
+{{--                                                    <button type="button" class="btn btn-round btn-success btn-sm btnChangeStatus">Tất cả resort</button>--}}
+{{--                                                @endif--}}
+{{--                                                @if($voucher->homestay)--}}
+{{--                                                    <button type="button" class="btn btn-round btn-success btn-sm btnChangeStatus">Tất cả homestay</button>--}}
+{{--                                                @endif--}}
+{{--                                                @if($voucher->yacht)--}}
+{{--                                                    <button type="button" class="btn btn-round btn-success btn-sm btnChangeStatus">Tất cả du thuyền</button>--}}
+{{--                                                @endif--}}
                                             </td>
                                             <td class="text-center">
                                                 {{$voucher->percent}}

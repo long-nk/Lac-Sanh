@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Areas;
 use App\Models\Comforts;
 use App\Models\Contents;
 use App\Models\HotelAreas;
 use App\Models\HotelComforts;
-use App\Models\HotelImages;
-use App\Models\tours;
-use App\Models\LocationAreas;
 use App\Models\Locations;
 use App\Models\TourImages;
 use App\Models\Tours;
@@ -28,7 +24,8 @@ class ToursController extends Controller
      */
     public function index()
     {
-        return view('backend.tours.index');
+        $tours = Tours::select('id', 'name', 'address', 'price', 'sale', 'sort', 'status', 'created_at')->orderBy('sort')->orderBy('created_at', 'desc')->get();
+        return view('backend.tours.index', compact('tours'));
     }
 
     /**
@@ -36,12 +33,12 @@ class ToursController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($type)
+    public function create()
     {
         $locations = Locations::where('status', 1)->get();
-        $listComfortHotel = Comforts::where('status', 1)->where('special', '!=', 1)->where('type', $type)->whereNotNull('parent_id')->get();
+        $listComfortHotel = Comforts::where('status', 1)->where('special', '!=', 1)->where('type', Comforts::TO)->whereNotNull('parent_id')->get();
         $listComfortSpecial = Comforts::where('status', 1)->where('special', 1)->get();
-        return view('backend.tours.create', compact('locations', 'listComfortHotel', 'listComfortSpecial', 'type'));
+        return view('backend.tours.create', compact('locations', 'listComfortHotel', 'listComfortSpecial'));
     }
 
     /**
@@ -64,10 +61,10 @@ class ToursController extends Controller
             'video' => $request->video,
             'price' => $request->price,
             'sale' => $request->sale,
-            'flash_sale' => $request->flash_sale,
             'description' => $request->description,
             'type' => $request->type,
             'date' => $request->date,
+            'rate' => $request->rate,
             'start_time' => $request->start_time,
             'activities' => $request->activities,
             'list_comfort' => $request->list_comfort,
@@ -77,17 +74,19 @@ class ToursController extends Controller
             'status' => $request->status
         ];
 
-        $tour = Tours::create($data);
         $validator = \Validator::make($data, [
             'name' => 'required|max:255',
         ]);
 
         $category = '';
         if ($validator->fails()) {
-            return redirect()->back()->with('message-error', 'Xảy ra lỗi khi tạo, vui lòng tạo lại');
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi tạo, vui lòng tạo lại');
         } else {
             try {
                 \DB::beginTransaction();
+
+                $tour = Tours::create($data);
+
                 $image = $request->image;
                 $name = $image->getClientOriginalName();
                 $images[] = $name;
@@ -140,7 +139,7 @@ class ToursController extends Controller
 //                if(!empty($list_comfort)) {
 //                    foreach ($list_comfort as $item => $value) {
 //                        $data = [
-//                            'tour_id' => $hotel->id,
+//                            'tour_id' => $tour->id,
 //                            'comfort_id' => $value,
 //                        ];
 //                        $cat = HotelComforts::create($data);
@@ -150,7 +149,7 @@ class ToursController extends Controller
 //                if(!empty($list_comfort_special)) {
 //                    foreach ($list_comfort_special as $item => $value) {
 //                        $data = [
-//                            'tour_id' => $hotel->id,
+//                            'tour_id' => $tour->id,
 //                            'comfort_id' => $value,
 //                        ];
 //                        $cat = HotelComforts::create($data);
@@ -160,7 +159,7 @@ class ToursController extends Controller
 //                if(!empty($list_area)) {
 //                    foreach ($list_area as $item => $value) {
 //                        $data = [
-//                            'tour_id' => $hotel->id,
+//                            'tour_id' => $tour->id,
 //                            'area_id' => $value,
 //                        ];
 //                        HotelAreas::create($data);
@@ -169,12 +168,11 @@ class ToursController extends Controller
 
 
                 \DB::commit();
-                return redirect()->route('tours.index')->with('message-succes', 'Thêm mới tour thành công!');
+                return redirect()->route('tours.index')->with('message-success', 'Thêm mới tour thành công!');
             } catch (\Exception $e) {
-                dd($e);
                 \Log::error($e->getMessage());
                 \DB::rollback();
-                return redirect()->back()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau!');
+                return redirect()->back()->withInput()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau!');
             }
         }
     }
@@ -212,7 +210,10 @@ class ToursController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tour = tours::find($id);
+        $tour = Tours::find($id);
+
+        $name = $request->name;
+
 
         $data = [
             'name' => $name,
@@ -222,10 +223,10 @@ class ToursController extends Controller
             'video' => $request->video,
             'price' => $request->price,
             'sale' => $request->sale,
-            'flash_sale' => $request->flash_sale,
             'description' => $request->description,
             'type' => $request->type,
             'date' => $request->date,
+            'rate' => $request->rate,
             'start_time' => $request->start_time,
             'activities' => $request->activities,
             'list_comfort' => $request->list_comfort,
@@ -238,7 +239,7 @@ class ToursController extends Controller
         try {
             \DB::beginTransaction();
             $image = $request->image;
-            $imageOld = TourImages::where('tour_id', $hotel->id)->first();
+            $imageOld = TourImages::where('tour_id', $tour->id)->first();
 
             if($image && $imageOld) {
                 $name = $image->getClientOriginalName();
@@ -247,7 +248,7 @@ class ToursController extends Controller
                 $image_name = "tour_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
                 $pathImage = public_path('images/uploads/tours/' . $image_name);
                 $imageItem = [
-                    'tour_id' => $hotel->id,
+                    'tour_id' => $tour->id,
                     'name' => $image_name,
                     'mime' => $image->getClientMimeType(),
                     'size' => $image->getSize(),
@@ -292,7 +293,7 @@ class ToursController extends Controller
                     $image_name = "tour_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
                     $pathImage = public_path('images/uploads/tours/' . $image_name);
                     $imageItem = [
-                        'tour_id' => $hotel->id,
+                        'tour_id' => $tour->id,
                         'name' => $image_name,
                         'mime' => $item->getClientMimeType(),
                         'size' => $item->getSize(),
@@ -319,7 +320,7 @@ class ToursController extends Controller
         } catch (Exception $e) {
             \Log::error($e->getMessage());
             \DB::rollback();
-            return redirect()->back()->with('message-error', 'Lỗi khi cập nhật, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi khi cập nhật, vui lòng thử lại sau');
 
         }
     }
@@ -334,9 +335,9 @@ class ToursController extends Controller
     {
         try {
             \DB::beginTransaction();
-            $tour = tours::find($id);
-            if($hotel) {
-                foreach($hotel->images as $image) {
+            $tour = Tours::find($id);
+            if($tour) {
+                foreach($tour->images as $image) {
                     $filePath = public_path('images/uploads/' . $image->path . '/' . $image->name);
                     $thumbPath = public_path('images/uploads/thumbs/' . $image->name);
                     if(File::exists($filePath)) {
@@ -347,22 +348,20 @@ class ToursController extends Controller
                     }
                 }
                 TourImages::where('tour_id', $id)->delete();
-                HotelComforts::where('tour_id', $id)->delete();
-                HotelAreas::where('tour_id', $id)->delete();
-                $hotel->delete();
+                $tour->delete();
                 \DB::commit();
-                return redirect()->back()->with('message-success', 'Xóa thành công!');
+                return redirect()->back()->withInput()->with('message-success', 'Xóa thành công!');
             }
         } catch (\Exception $e) {
             \DB::rollBack();
-            return redirect()->back()->with('message-error', 'Có lỗi khi xóa, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Có lỗi khi xóa, vui lòng thử lại sau');
         }
     }
 
     public function listAll(Request $request)
     {
         $type = $request->type;
-        $tours = tours::select('id', 'name', 'address', 'price', 'sale', 'flash_sale', 'room', 'sort', 'status', 'created_at')->orderBy('sort')->orderBy('created_at', 'desc')->where('type', $request->type)->get();
+        $tours = Tours::select('id', 'name', 'address', 'price', 'sale', 'flash_sale', 'room', 'sort', 'status', 'created_at')->orderBy('sort')->orderBy('created_at', 'desc')->where('type', $request->type)->get();
         return view('backend.tours.index', compact('tours', 'type'));
     }
 
@@ -383,7 +382,7 @@ class ToursController extends Controller
             File::delete($thumbPath);
         }
         $image->delete();
-        $images = TourImages::where('tour_id', $hotel)->get();
+        $images = TourImages::where('tour_id', $tour)->get();
         return view('backend.tours.list_image', compact('images'));
     }
 

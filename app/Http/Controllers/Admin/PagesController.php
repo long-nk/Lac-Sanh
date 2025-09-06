@@ -176,14 +176,14 @@ class PagesController extends Controller
             $content = Pages::find($id);
 
             if (empty($content)) {
-                return redirect()->back()->with('message-error', 'Không tìm thấy trang!');
+                return redirect()->back()->withInput()->with('message-error', 'Không tìm thấy trang!');
             }
 
             $content->delete();
-            return redirect()->back()->with('message-success', 'Xóa trang thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Xóa trang thành công!');
         } catch (\Exception $exeption) {
             Log::error($exeption->getMessage());
-            return redirect()->back()->with('message-error', $exeption->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $exeption->getMessage());
         }
 
     }
