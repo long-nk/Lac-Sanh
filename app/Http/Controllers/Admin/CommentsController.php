@@ -94,7 +94,7 @@ class CommentsController extends Controller
             return redirect()->route('comments.index');
         } catch (Exception $e) {
             \DB::rollBack();
-            return redirect()->back()->with('message-error', 'Lỗi khi thêm mới đánh giá, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi khi thêm mới đánh giá, vui lòng thử lại sau');
         }
     }
 
@@ -214,11 +214,11 @@ class CommentsController extends Controller
                 CommentImages::where('comment_id', $id)->delete();
                 $comment->delete();
                 \DB::commit();
-                return redirect()->back()->with('message-success', 'Xóa thành công!');
+                return redirect()->back()->withInput()->with('message-success', 'Xóa thành công!');
             }
         } catch (\Exception $e) {
             \DB::rollBack();
-            return redirect()->back()->with('message-error', 'Có lỗi khi xóa, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Có lỗi khi xóa, vui lòng thử lại sau');
         }
     }
 

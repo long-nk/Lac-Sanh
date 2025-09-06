@@ -20,6 +20,7 @@ class Tours extends Model
         'flash_sale',
         'description',
         'type',
+        'rate',
         'date',
         'start_time',
         'activities',

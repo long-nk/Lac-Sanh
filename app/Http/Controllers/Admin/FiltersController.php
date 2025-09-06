@@ -56,7 +56,7 @@ class FiltersController extends Controller
             return redirect()->route('Filters.index');
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
-            return redirect()->back()->with('message-error', $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $e->getMessage());
         }
     }
 

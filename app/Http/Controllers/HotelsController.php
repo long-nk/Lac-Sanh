@@ -183,7 +183,7 @@ class HotelsController extends Controller
             return view('frontend.hotels.list', compact('hotels', 'hotel', 'location', 'title', 'type',
                 'title', 'room', 'startDate', 'people', 'child', 'endDate', 'day', 'listComfortHotel', 'listComfortSpecial'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('message-error', 'Không tìm thấy điểm đến nào!');
+            return redirect()->back()->withInput()->with('message-error', 'Không tìm thấy điểm đến nào!');
         }
     }
 
@@ -955,20 +955,20 @@ class HotelsController extends Controller
                     Mail::to($order->email)->send(new MailBookRoom($order));
                     Mail::to($pageInfo->email2)->send(new SendMailNewOrder($order));
                     DB::commit();
-                    return redirect()->back()->with('message-success', 'Đặt phòng thành công, vui lòng kiểm tra email về thông tin phòng đã đặt.');
+                    return redirect()->back()->withInput()->with('message-success', 'Đặt phòng thành công, vui lòng kiểm tra email về thông tin phòng đã đặt.');
 
                 } catch (\Exception $e) {
                     DB::rollBack();
-                    return redirect()->back()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
+                    return redirect()->back()->withInput()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
                 }
 
             } else {
                 DB::rollBack();
-                return redirect()->back()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
+                return redirect()->back()->withInput()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
             }
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
+            return redirect()->back()->withInput()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
         }
     }
 
@@ -1012,22 +1012,22 @@ class HotelsController extends Controller
                     Mail::to($order->email)->send(new MailBookRoom($order));
                     Mail::to($pageInfo->email2)->send(new SendMailNewOrder($order));
                     DB::commit();
-                    return redirect()->back()->with('message-success', 'Đặt phòng thành công, vui lòng kiểm tra email về thông tin phòng đã đặt.');
+                    return redirect()->back()->withInput()->with('message-success', 'Đặt phòng thành công, vui lòng kiểm tra email về thông tin phòng đã đặt.');
 
                 } catch (\Exception $e) {
                     dd($e);
                     DB::rollBack();
-                    return redirect()->back()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
+                    return redirect()->back()->withInput()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
                 }
 
             } else {
                 DB::rollBack();
-                return redirect()->back()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
+                return redirect()->back()->withInput()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
             }
         } catch (Exception $e) {
             dd($e);
             DB::rollBack();
-            return redirect()->back()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
+            return redirect()->back()->withInput()->with('message-error', 'Đặt phòng không thành công. Xin vui lòng thử lại!');
         }
     }
 

@@ -48,53 +48,53 @@
                                             </label>
                                             <div class="col-md-4 col-sm-6 col-xs-12">
                                                 <input id="username" class="form-control col-md-7 col-xs-12"
-                                                       value="{{$user->user_name}}"
+                                                       value="{{$user->username}}"
                                                        data-validate-length-range="6" data-validate-words="2"
-                                                       name="user_name" required="required" type="text">
-                                                @if ($errors->has('user_name'))
+                                                       name="username" required="required" type="text">
+                                                @if ($errors->has('username'))
                                                     <div id="formMessage" class="alert alert-danger">
-                                                        <strong>{{ $errors->first('user_name') }}</strong>
+                                                        <strong>{{ $errors->first('username') }}</strong>
                                                     </div>
                                                 @endif
                                             </div>
                                         </div>
-{{--                                        <div class="item form-group">--}}
-{{--                                            <label class="control-label col-md-4 col-sm-3 col-xs-12"--}}
-{{--                                                   for="birthdate">Ngày sinh--}}
-{{--                                            </label>--}}
-{{--                                            <div class="col-md-4 col-sm-6 col-xs-12">--}}
-{{--                                                <input type="text" class="form-control has-feedback-left"--}}
-{{--                                                       value="{{\Carbon\Carbon::parse($user->birth_date)->format('d/m/Y')}}"--}}
-{{--                                                       id="birth_date" data-inputmask="'mask': '99/99/9999'"--}}
-{{--                                                       name="birth_date">--}}
-{{--                                                <span class="fa fa-calendar-o form-control-feedback left"--}}
-{{--                                                      aria-hidden="true"></span>--}}
-{{--                                                <span id="inputSuccess2Status" class="sr-only">(success)</span>--}}
-{{--                                                @if ($errors->has('birth_date'))--}}
-{{--                                                    <div id="formMessage" class="alert alert-danger">--}}
-{{--                                                        <strong>{{ $errors->first('birth_date') }}</strong>--}}
-{{--                                                    </div>--}}
-{{--                                                @endif--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="item form-group">--}}
-{{--                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="email">Giới--}}
-{{--                                                tính--}}
-{{--                                            </label>--}}
-{{--                                            <div class="col-md-4 col-sm-6 col-xs-12">--}}
-{{--                                                <h5>--}}
-{{--                                                    <label><input type="radio" class="flat" name="gender"--}}
-{{--                                                                  id="genderM" value="1"--}}
-{{--                                                                  {{$user->gender==1?'checked':''}} required/> Nam--}}
-{{--                                                    </label>--}}
-{{--                                                    <label><input type="radio" class="flat" name="gender"--}}
-{{--                                                                  id="genderF"--}}
-{{--                                                                  value="0" {{$user->gender==0?'checked':''}} required/>--}}
-{{--                                                        Nữ--}}
-{{--                                                    </label>--}}
-{{--                                                </h5>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        <div class="item form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12"
+                                                   for="birthdate">Ngày sinh
+                                            </label>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <input type="text" class="form-control has-feedback-left"
+                                                       value="{{\Carbon\Carbon::parse($user->birth_date)->format('d/m/Y')}}"
+                                                       id="birth_date" data-inputmask="'mask': '99/99/9999'"
+                                                       name="birth_date">
+                                                <span class="fa fa-calendar-o form-control-feedback left"
+                                                      aria-hidden="true"></span>
+                                                <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                                                @if ($errors->has('birth_date'))
+                                                    <div id="formMessage" class="alert alert-danger">
+                                                        <strong>{{ $errors->first('birth_date') }}</strong>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="item form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="email">Giới
+                                                tính
+                                            </label>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <h5>
+                                                    <label><input type="radio" class="flat" name="gender"
+                                                                  id="genderM" value="1"
+                                                                  {{$user->gender==1?'checked':''}} required/> Nam
+                                                    </label>
+                                                    <label><input type="radio" class="flat" name="gender"
+                                                                  id="genderF"
+                                                                  value="0" {{$user->gender==0?'checked':''}} required/>
+                                                        Nữ
+                                                    </label>
+                                                </h5>
+                                            </div>
+                                        </div>
                                         <div class="item form-group">
                                             <label class="control-label col-md-4 col-sm-3 col-xs-12" for="email">Email
                                             </label>
@@ -125,21 +125,21 @@
                                                 @endif
                                             </div>
                                         </div>
-{{--                                        <div class="item form-group">--}}
-{{--                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="number">Địa--}}
-{{--                                                chỉ--}}
-{{--                                            </label>--}}
-{{--                                            <div class="col-md-4 col-sm-6 col-xs-12">--}}
-{{--                                                <input type="text" id="address" name="address"--}}
-{{--                                                       value="{{$user->address}}"--}}
-{{--                                                       class="form-control col-md-7 col-xs-12">--}}
-{{--                                                @if ($errors->has('address'))--}}
-{{--                                                    <div id="formMessage" class="alert alert-danger">--}}
-{{--                                                        <strong>{{ $errors->first('address') }}</strong>--}}
-{{--                                                    </div>--}}
-{{--                                                @endif--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        <div class="item form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="number">Địa
+                                                chỉ
+                                            </label>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <input type="text" id="address" name="address"
+                                                       value="{{$user->address}}"
+                                                       class="form-control col-md-7 col-xs-12">
+                                                @if ($errors->has('address'))
+                                                    <div id="formMessage" class="alert alert-danger">
+                                                        <strong>{{ $errors->first('address') }}</strong>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
                                         <div class="item form-group">
                                             <label class="control-label col-md-4 col-sm-3 col-xs-12" for="password">Mật
                                                 khẩu
@@ -153,19 +153,6 @@
                                                         <strong>{{ $errors->first('password') }}</strong>
                                                     </div>
                                                 @endif
-                                            </div>
-                                        </div>
-                                        <div class="item form-group">
-                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="email">Phân quyền
-                                                <span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                                <select name="role" id="role" value="{{$user->role}}"
-                                                        class="form-control" required>
-                                                    <option value="1" {{$user->role==1?"selected":""}}>Quản trị</option>
-                                                    <option value="2" {{$user->role==2?"selected":""}}>Nhân viên</option>
-                                                    <option value="3" {{$user->role==3?"selected":""}}>Cộng tác viên</option>
-                                                </select>
                                             </div>
                                         </div>
                                     </div>

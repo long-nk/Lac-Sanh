@@ -7,6 +7,8 @@ use App\Models\Comforts;
 use App\Models\HotelVouchers;
 use App\Models\Vouchers;
 use Illuminate\Http\Request;
+use File;
+use Image;
 
 class VouchersController extends Controller
 {
@@ -46,7 +48,9 @@ class VouchersController extends Controller
             'term' => $request->term,
             'status' => $request->status,
             'start_date' => $request->start_date,
-            'time' => $request->time
+            'time' => $request->time,
+            'number' => $request->number,
+            'cost' => $request->cost
         ];
 
         $validator = \Validator::make($data, [
@@ -55,10 +59,21 @@ class VouchersController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->with('message-error', 'Mã voucher và phần trăm không được để trống');
+            return redirect()->back()->withInput()->with('message-error', 'Mã voucher và phần trăm không được để trống');
         } else {
             try {
                 \DB::beginTransaction();
+
+                $path = "images/vouchers";
+                $image = $request->image;
+                $file_path = "";
+                if ($request->image) {
+                    $extension = $image->extension();
+                    $file_name = "voucher_" . time() .  '.' . $extension;
+                    $file_path = $path . '/' . $file_name;
+                    $image->move($path . '/', $file_name);
+                    $data['image'] = $file_path;
+                }
 
                 $list_type = [];
                 $list_type = $request->input('list_type');
@@ -71,25 +86,25 @@ class VouchersController extends Controller
                             $data['hotel'] = 0;
                         }
                         if(in_array(Comforts::TO, $list_type)) {
-                            $data['villa'] = 1;
+                            $data['tour'] = 1;
                         } else {
-                            $data['villa'] = 0;
+                            $data['tour'] = 0;
                         }
-                        if(in_array(Comforts::RS, $list_type)) {
-                            $data['resort'] = 1;
-                        } else {
-                            $data['resort'] = 0;
-                        }
-                        if(in_array(Comforts::HS, $list_type)) {
-                            $data['homestay'] = 1;
-                        } else {
-                            $data['homestay'] = 0;
-                        }
-                        if(in_array(Comforts::DT, $list_type)) {
-                            $data['yacht'] = 1;
-                        } else {
-                            $data['yacht'] = 0;
-                        }
+//                        if(in_array(Comforts::RS, $list_type)) {
+//                            $data['resort'] = 1;
+//                        } else {
+//                            $data['resort'] = 0;
+//                        }
+//                        if(in_array(Comforts::HS, $list_type)) {
+//                            $data['homestay'] = 1;
+//                        } else {
+//                            $data['homestay'] = 0;
+//                        }
+//                        if(in_array(Comforts::DT, $list_type)) {
+//                            $data['yacht'] = 1;
+//                        } else {
+//                            $data['yacht'] = 0;
+//                        }
                     }
 
                 }
@@ -145,7 +160,9 @@ class VouchersController extends Controller
             'percent' => $request->percent,
             'term' => $request->term,
             'start_date' => $request->start_date,
-            'time' => $request->time
+            'time' => $request->time,
+            'number' => $request->number,
+            'cost' => $request->cost
         ];
 
 
@@ -155,12 +172,25 @@ class VouchersController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->with('message-error', 'Mã giảm giá và phần trăm không được để trống');
+            return redirect()->back()->withInput()->with('message-error', 'Mã giảm giá và phần trăm không được để trống');
         } else {
             try {
                 \DB::beginTransaction();
 
                 $voucher = Vouchers::find($id);
+
+                $path = "images/vouchers";
+                $image = $request->image;
+                if ($image) {
+                    if(\Illuminate\Support\Facades\File::exists($voucher->image)) {
+                        File::delete($voucher->image);
+                    }
+                    $extension = $image->extension();
+                    $file_name = "voucher_" . time() . '.' . $extension;
+                    $file_path = $path . '/' . $file_name;
+                    $image->move($path . '/', $file_name);
+                    $data['image'] = $file_path;
+                }
 
                 $list_type = [];
                 $list_type = $request->input('list_type');
@@ -168,42 +198,35 @@ class VouchersController extends Controller
                 if(!empty($list_type)) {
                     foreach ($list_type as $item => $value) {
                         if(in_array(Comforts::KS, $list_type)) {
-                            $voucher->hotel = 1;
+                            $data['hotel'] = 1;
                         } else {
-                            $voucher->hotel = 0;
+                            $data['hotel'] = 0;
                         }
                         if(in_array(Comforts::TO, $list_type)) {
-                            $voucher->villa = 1;
+                            $data['tour'] = 1;
                         } else {
-                            $voucher->villa = 0;
+                            $data['tour'] = 0;
                         }
-                        if(in_array(Comforts::RS, $list_type)) {
-                            $voucher->resort = 1;
-                        } else {
-                            $voucher->resort = 0;
-                        }
-                        if(in_array(Comforts::HS, $list_type)) {
-                            $voucher->homestay = 1;
-                        } else {
-                            $voucher->homestay = 0;
-                        }
-                        if(in_array(Comforts::DT, $list_type)) {
-                            $voucher->yacht = 1;
-                        } else {
-                            $voucher->yacht = 0;
-                        }
+//                        if(in_array(Comforts::RS, $list_type)) {
+//                            $voucher->resort = 1;
+//                        } else {
+//                            $voucher->resort = 0;
+//                        }
+//                        if(in_array(Comforts::HS, $list_type)) {
+//                            $voucher->homestay = 1;
+//                        } else {
+//                            $voucher->homestay = 0;
+//                        }
+//                        if(in_array(Comforts::DT, $list_type)) {
+//                            $voucher->yacht = 1;
+//                        } else {
+//                            $voucher->yacht = 0;
+//                        }
                     }
 
                 }
 
-                $voucher->name = $data['name'];
-                $voucher->code = $data['code'];
-                $voucher->percent = $data['percent'];
-                $voucher->term = $data['term'];
-                $voucher->start_date = $data['start_date'];
-                $voucher->time = $data['time'];
-                $voucher->status = $data['status'];
-                $voucher->save();
+                $voucher->update($data);
 
                 \DB::commit();
                 return redirect()->route('vouchers.index');

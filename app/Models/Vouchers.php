@@ -22,7 +22,11 @@ class Vouchers extends Model
         'villa',
         'homestay',
         'resort',
-        'yacht'
+        'yacht',
+        'tour',
+        'image',
+        'number',
+        'cost'
     ];
 
     public function hotels()

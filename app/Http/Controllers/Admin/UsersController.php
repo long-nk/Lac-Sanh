@@ -90,9 +90,9 @@ class UsersController extends Controller
         $result = $user->save();
 
         if ($result) {
-            return redirect()->back()->with('message-success', 'Cập nhật mật khẩu thành công');
+            return redirect()->back()->withInput()->with('message-success', 'Cập nhật mật khẩu thành công');
         }
-        return redirect()->back()->with('message-error', 'Lỗi khi cập nhật mật khẩu!');
+        return redirect()->back()->withInput()->with('message-error', 'Lỗi khi cập nhật mật khẩu!');
     }
 
     /**
@@ -144,7 +144,7 @@ class UsersController extends Controller
                 \DB::beginTransaction();
                 $check = User::where('email', $request->email)->first();
                 if ($check) {
-                    return redirect()->back()->with('message-error', 'Email đã tồn tại');
+                    return redirect()->back()->withInput()->with('message-error', 'Email đã tồn tại');
                 }
                 $result = User::create($data);
 
@@ -153,7 +153,7 @@ class UsersController extends Controller
             } catch (\Exception $e) {
                 \Log::error($e->getMessage());
                 \DB::rollback();
-                return redirect()->back()->with('message-error', 'Đã xảy ra lỗi, xin thử lại sau');
+                return redirect()->back()->withInput()->with('message-error', 'Đã xảy ra lỗi, xin thử lại sau');
             }
 
         }

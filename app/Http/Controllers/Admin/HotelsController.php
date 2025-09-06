@@ -97,7 +97,7 @@ class HotelsController extends Controller
 
         $category = '';
         if ($validator->fails()) {
-            return redirect()->back()->with('message-error', 'Xảy ra lỗi khi tạo, vui lòng tạo lại');
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi tạo, vui lòng tạo lại');
         } else {
             try {
                 \DB::beginTransaction();
@@ -187,7 +187,7 @@ class HotelsController extends Controller
                 dd($e);
                 \Log::error($e->getMessage());
                 \DB::rollback();
-                return redirect()->back()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau!');
+                return redirect()->back()->withInput()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau!');
             }
         }
     }
@@ -415,7 +415,7 @@ class HotelsController extends Controller
         } catch (Exception $e) {
             \Log::error($e->getMessage());
             \DB::rollback();
-            return redirect()->back()->with('message-error', 'Lỗi khi cập nhật, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi khi cập nhật, vui lòng thử lại sau');
 
         }
     }
@@ -447,11 +447,11 @@ class HotelsController extends Controller
                 HotelAreas::where('hotel_id', $id)->delete();
                 $hotel->delete();
                 \DB::commit();
-                return redirect()->back()->with('message-success', 'Xóa thành công!');
+                return redirect()->back()->withInput()->with('message-success', 'Xóa thành công!');
             }
         } catch (\Exception $e) {
             \DB::rollBack();
-            return redirect()->back()->with('message-error', 'Có lỗi khi xóa, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Có lỗi khi xóa, vui lòng thử lại sau');
         }
     }
 

@@ -53,9 +53,9 @@ class CustomersController extends BaseController
             $order->save();
             $pageInfo = PageInfo::first();
             Mail::to($pageInfo->email2)->send(new SendMailCancelOrder($order));
-            return redirect()->back()->with('message-success', 'Hủy đơn hàng thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Hủy đơn hàng thành công!');
         } catch (Exception $e) {
-            return redirect()->back()->with('message-error', 'Không thể hủy đơn hàng');
+            return redirect()->back()->withInput()->with('message-error', 'Không thể hủy đơn hàng');
         }
     }
 
@@ -79,12 +79,12 @@ class CustomersController extends BaseController
             try {
                 Mail::to($request->email)->send(new MailRegisterSuccess($data));
             } catch (\Exception $e) {
-                return redirect()->back()->with('message-error', 'Email không tồn tại, vui lòng nhập email chính xác!');
+                return redirect()->back()->withInput()->with('message-error', 'Email không tồn tại, vui lòng nhập email chính xác!');
             }
             Customers::create($data);
-            return redirect()->back()->with('message-success', 'Đăng ký tài khoản thành công! Vui lòng kích hoạt tài khoản để đăng nhập');
+            return redirect()->back()->withInput()->with('message-success', 'Đăng ký tài khoản thành công! Vui lòng kích hoạt tài khoản để đăng nhập');
         }
-        return redirect()->back()->with('message-error', 'Email đã được đăng ký!');
+        return redirect()->back()->withInput()->with('message-error', 'Email đã được đăng ký!');
 
     }
 
@@ -105,20 +105,20 @@ class CustomersController extends BaseController
         if (!$check) {
             $checkPhone = Customers::where('phone_number', $request['email'])->first();
             if ($checkPhone && $checkPhone->verify_email == 0) {
-                return redirect()->back()->with('message-error', 'Tài khoản chưa được kích hoạt. Hãy kiểm tra email hoặc liên hệ với quản trị viên để được hỗ trợ!');
+                return redirect()->back()->withInput()->with('message-error', 'Tài khoản chưa được kích hoạt. Hãy kiểm tra email hoặc liên hệ với quản trị viên để được hỗ trợ!');
             } elseif ($checkPhone && $checkPhone->verify_email != 0) {
                 if (Auth::guard('customer')->attempt(['phone_number' => $request['email'], 'password' => $request['password']])) {
                     return redirect()->route('home')->with('message-success', 'Đăng nhập thành công!');
                 }
             } else {
-                return redirect()->back()->with('message-error', 'Thông tin đăng nhập không chính xác!');
+                return redirect()->back()->withInput()->with('message-error', 'Thông tin đăng nhập không chính xác!');
             }
         } elseif ($check && $check->verify_email == 0) {
-            return redirect()->back()->with('message-error', 'Tài khoản chưa được kích hoạt. Hãy kiểm tra email hoặc liên hệ với quản trị viên để được hỗ trợ!');
+            return redirect()->back()->withInput()->with('message-error', 'Tài khoản chưa được kích hoạt. Hãy kiểm tra email hoặc liên hệ với quản trị viên để được hỗ trợ!');
         } elseif (Auth::guard('customer')->attempt(['email' => $request['email'], 'password' => $request['password']])) {
             return redirect()->intended(url()->previous())->with('message-success', 'Đăng nhập thành công!');
         }
-        return redirect()->back()->with('message-error', 'Email, số điện thoại hoặc mật khẩu không chính xác. Xin vui lòng thử lại');
+        return redirect()->back()->withInput()->with('message-error', 'Email, số điện thoại hoặc mật khẩu không chính xác. Xin vui lòng thử lại');
     }
 
     public function sendComment(Request $request) {
@@ -167,10 +167,10 @@ class CustomersController extends BaseController
                 }
             }
             \DB::commit();
-            return redirect()->back()->with('message-success', 'Thêm đánh giá thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Thêm đánh giá thành công!');
         } catch (Exception $e) {
             \DB::rollBack();
-            return redirect()->back()->with('message-error', 'Lỗi khi thêm mới đánh giá, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi khi thêm mới đánh giá, vui lòng thử lại sau');
         }
     }
 
@@ -180,9 +180,9 @@ class CustomersController extends BaseController
         if ($account->verify_email == 0) {
             $account->verify_email = 1;
             $account->save();
-            return redirect()->back()->with('message-success', 'Kích hoạt tài khoản thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Kích hoạt tài khoản thành công!');
         }
-        return redirect()->back()->with('message-success', 'Tài khoản đã được kích hoạt!');
+        return redirect()->back()->withInput()->with('message-success', 'Tài khoản đã được kích hoạt!');
 
     }
 
@@ -198,12 +198,12 @@ class CustomersController extends BaseController
                     'password' => $password
                 ];
                 Mail::to($customer->email)->send(new SendMail($data));
-                return redirect()->back()->with('message-success', 'Mật khẩu mới đã được gửi đến email của bạn. Vui lòng kiểm tra hòm thư!');
+                return redirect()->back()->withInput()->with('message-success', 'Mật khẩu mới đã được gửi đến email của bạn. Vui lòng kiểm tra hòm thư!');
             } else {
-                return redirect()->back()->with('message-error', 'Đã có lỗi khi khôi phục lại mật khẩu, xin vui lòng thử lại');
+                return redirect()->back()->withInput()->with('message-error', 'Đã có lỗi khi khôi phục lại mật khẩu, xin vui lòng thử lại');
             }
         } else {
-            return redirect()->back()->with('message-error', 'Email chưa được đăng ký. Xin thử lại email khác!');
+            return redirect()->back()->withInput()->with('message-error', 'Email chưa được đăng ký. Xin thử lại email khác!');
         }
 
     }
@@ -214,9 +214,9 @@ class CustomersController extends BaseController
         $user->password = bcrypt($request->password);
         $check = $user->save();
         if ($check) {
-            return redirect()->back()->with('message-success', 'Thay đổi mật khẩu thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Thay đổi mật khẩu thành công!');
         }
-        return redirect()->back()->with('message-success', 'Thay đổi mật khẩu thất bại!');
+        return redirect()->back()->withInput()->with('message-success', 'Thay đổi mật khẩu thất bại!');
     }
 
     public function listCustomer()
@@ -252,9 +252,9 @@ class CustomersController extends BaseController
 //            $data['image'] = $file_path;
 //        }
             Customers::find(\auth()->guard('customer')->user()->id)->update($data);
-            return redirect()->back()->with('message-success', 'Cập nhật thông tin thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Cập nhật thông tin thành công!');
         } catch (Exception $e) {
-            return redirect()->back()->with('message-error', 'Cập nhật thông tin không thành công!');
+            return redirect()->back()->withInput()->with('message-error', 'Cập nhật thông tin không thành công!');
         }
 
 
@@ -293,9 +293,9 @@ class CustomersController extends BaseController
     {
         $order = Order::find($request->id)->delete();
         if ($order) {
-            return redirect()->back()->with('message-success', 'Xóa đơn hàng thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Xóa đơn hàng thành công!');
         } else {
-            return redirect()->back()->with('message-error', 'Xóa đơn hàng không thành công!');
+            return redirect()->back()->withInput()->with('message-error', 'Xóa đơn hàng không thành công!');
         }
     }
 
@@ -355,7 +355,7 @@ class CustomersController extends BaseController
             // return $response;
         } catch (\Exception $th) {
             Log::error("Lỗi thanh toán PayOS: " . $th);
-            return redirect()->back()->with('message-error', $th->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $th->getMessage());
         }
 
     }
@@ -401,10 +401,10 @@ class CustomersController extends BaseController
             return redirect()->route('customers.update.profile')->with('message-error', 'Vui lòng cập nhật QR-CODE hoặc thông tin thanh toán!');
         }
         if ((int)$customer->donate < (int)$request->withdraw) {
-            return redirect()->back()->with('message-error', 'Số dư không khả dụng');
+            return redirect()->back()->withInput()->with('message-error', 'Số dư không khả dụng');
         }
         if ((int)$request->withdraw < 50000) {
-            return redirect()->back()->with('message-error', 'Số tiền rút tổi thiểu phải là 50.000đ/Lần.');
+            return redirect()->back()->withInput()->with('message-error', 'Số tiền rút tổi thiểu phải là 50.000đ/Lần.');
         }
         $data = [
             'user_id' => $user_id,
@@ -417,7 +417,7 @@ class CustomersController extends BaseController
         $data['withdraw'] = count(Histories::whereNotNull('withdraw')->where('status', 0)->get());
         $pageInfo = PageInfo::first();
         Mail::to($pageInfo->email2)->send(new SendApproveWithdraw($data));
-        return redirect()->back()->with('message-success', 'Yêu cầu thanh toán đã được gửi thành công');
+        return redirect()->back()->withInput()->with('message-success', 'Yêu cầu thanh toán đã được gửi thành công');
     }
 
 //    public function postRecharge(Request $request) {
@@ -445,7 +445,7 @@ class CustomersController extends BaseController
 //        $pageInfo = PageInfo::first();
 //        Mail::to($pageInfo->email2)->send(new SendApproveRecharge($data));
 //
-//        return redirect()->back()->with('message-success', 'Yêu cầu nạp tiền đã được gửi thành công');
+//        return redirect()->back()->withInput()->with('message-success', 'Yêu cầu nạp tiền đã được gửi thành công');
 //    }
 
 }

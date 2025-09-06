@@ -165,7 +165,7 @@ class TermsController extends Controller
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
-            return redirect()->back()->with('message-error', 'Lỗi khi thêm mới, vui lòng thử lại sau');
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi khi thêm mới, vui lòng thử lại sau');
         }
     }
 
@@ -384,11 +384,11 @@ class TermsController extends Controller
             }
 
             DB::commit();
-            return redirect()->back()->with('message-success', 'Cập nhật thành công!');
+            return redirect()->back()->withInput()->with('message-success', 'Cập nhật thành công!');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
-            return redirect()->back()->with('message-error', $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $e->getMessage());
         }
     }
 
@@ -404,7 +404,7 @@ class TermsController extends Controller
             $content = Contents::find($id);
 
             if (empty($content)) {
-                return redirect()->back()->with('message-error', 'Không tìm thấy bài viết!');
+                return redirect()->back()->withInput()->with('message-error', 'Không tìm thấy bài viết!');
             }
             if ($content->question_terms) {
                 // Lặp qua các câu hỏi và xóa các bản ghi trong bảng question_contents
@@ -427,7 +427,7 @@ class TermsController extends Controller
             return redirect()->back()->withInput()->with('message-success', 'Xóa bài viết thành công!');
         } catch (\Exception $exeption) {
             Log::error($exeption->getMessage());
-            return redirect()->back()->with('message-error', $exeption->getMessage());
+            return redirect()->back()->withInput()->with('message-error', $exeption->getMessage());
         }
 
     }

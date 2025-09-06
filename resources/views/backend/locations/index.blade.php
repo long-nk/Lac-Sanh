@@ -50,7 +50,7 @@
                                     <th class="text-center" width="10%">View</th>
                                     <th class="text-center" width="10%">Thứ tự</th>
                                     <th class="text-center" width="10%">Điểm đánh giá</th>
-                                    <th class="text-center" width="10%">Hiển thị tìm kiếm</th>
+                                    <th class="text-center" width="10%">Địa điểm nổi bật</th>
 {{--                                    <th class="text-center" width="10%">Hiển thị tổng khách sạn</th>--}}
                                     <th class="text-center" width="10%">Trạng thái</th>
                                     <th class="text-center" width="10%">Hành động</th>
