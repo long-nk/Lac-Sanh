@@ -27,6 +27,11 @@ use App\Http\Controllers\Admin\ToursController;
 use App\Http\Controllers\Admin\SchedulesController;
 use App\Http\Controllers\Admin\TourHotelsController;
 use App\Http\Controllers\Admin\FeedbacksController;
+use App\Http\Controllers\Admin\RedirectsController;
+use App\Http\Controllers\Admin\CtasController;
+use App\Http\Controllers\Admin\SitemapsController;
+use App\Http\Controllers\Admin\PagesController;
+use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\HomeController;
 
 
@@ -76,11 +81,16 @@ Route::group(array('prefix' => 'admin/', 'middleware' => 'auth'), function () {
         Route::resource('contacts', ContactsController::class);
         Route::resource('info', PageInfoController::class);
         Route::resource('introduces', IntroducesController::class);
+        Route::resource('contact_page', ContactPageController::class);
         Route::resource('vouchers', VouchersController::class);
         Route::resource('filters', FiltersController::class);
         Route::resource('hotel_vouchers', HotelVouchersController::class);
         Route::resource('comments', CommentsController::class);
         Route::resource('users', UsersController::class);
+        Route::resource('redirects', RedirectsController::class);
+        Route::resource('ctas', CtasController::class);
+        Route::resource('pages', PagesController::class);
+        Route::resource('sitemaps', SitemapsController::class);
         Route::get('orders/approve/{order}/{status}', [OrdersController::class, 'approveOrder'])->name('orders.approve');
         Route::post('orders/approve/order/villa', [OrdersController::class, 'approveOrderVilla'])->name('orders.approve_villa');
         Route::get('orders/un-approve/{order}/{status}', [OrdersController::class, 'unApproveOrder'])->name('orders.unapprove');
@@ -108,6 +118,8 @@ Route::group(array('prefix' => 'admin/', 'middleware' => 'auth'), function () {
 
     Route::middleware(['checkRole:admin,staff,user'])->group(function () {
         Route::resource('news', NewsController::class);
+        Route::post('news/create-news-content', [NewsController::class, 'storeNews'])->name('news.createNews');
+        Route::put('update-news-content', [NewsController::class, 'updateNews'])->name('news.updateNews');
     });
     Route::post('ckeditor/image-upload', [AdminController::class, 'upload'])->name('upload');
     Route::get('changeStatusContact/{id}', [ContactsController::class, 'changeStatus'])->name('contacts.changeStatus');

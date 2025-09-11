@@ -38,7 +38,13 @@ class Hotels extends Model
         'type_room',
         'vat',
         'sort',
-        'status'
+        'status',
+        'title_seo',
+        'user_update_id',
+        'script',
+        'summary',
+        'alt',
+        'meta'
     ];
 
     public function images()

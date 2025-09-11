@@ -34,18 +34,18 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" style="width:5%">STT</th>
-                                    <th class="text-center" style="width:15%">Họ tên</th>
-                                    <th class="text-center" style="width:15%">Số điện thoại</th>
-                                    <th class="text-center" style="width:20%">Khách sạn</th>
+                                    <th class="text-center" style="width:10%">Họ tên</th>
+                                    <th class="text-center" style="width:10%">Số điện thoại</th>
+                                    <th class="text-center" style="width:15%">Khách sạn</th>
 {{--                                    <th class="text-center" style="width:20%">Tiêu đề</th>--}}
-                                    <th class="text-center" style="width:20%">Nội dung</th>
-                                    <th class="text-center" style="width:20%">Điểm đánh giá</th>
-                                    <th class="text-center" style="width:20%">Điểm vị trí</th>
-                                    <th class="text-center" style="width:20%">Điểm giá cả</th>
-                                    <th class="text-center" style="width:20%">Điểm phục vụ</th>
-                                    <th class="text-center" style="width:20%">Điểm vệ sinh</th>
-                                    <th class="text-center" style="width:20%">Điểm tiện nghi</th>
-                                    <th class="text-center" style="width:15%">Trạng thái</th>
+                                    <th class="text-center" style="width:15%">Nội dung</th>
+                                    <th class="text-center" style="width:7%">Điểm đánh giá</th>
+                                    <th class="text-center" style="width:7%">Điểm vị trí</th>
+                                    <th class="text-center" style="width:7%">Điểm giá cả</th>
+                                    <th class="text-center" style="width:7%">Điểm phục vụ</th>
+                                    <th class="text-center" style="width:7%">Điểm vệ sinh</th>
+                                    <th class="text-center" style="width:7%">Điểm tiện nghi</th>
+                                    <th class="text-center" style="width:10%">Trạng thái</th>
                                     <th class="text-center" style="width:15%">Hành động</th>
                                 </tr>
                             </thead>
@@ -105,8 +105,7 @@
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 {{csrf_field()}}
                                                 <button type="submit" onclick="return ConfirmDelete()"
-                                                        class="btn btn-danger btn-sm" name="actiondelete" value="1"
-                                                        style="min-width:100px;"><i
+                                                        class="btn btn-danger btn-sm" name="actiondelete" value="1"><i
                                                         class="fa fa-trash"></i> Xóa
                                                 </button>
                                             </form>

@@ -193,7 +193,7 @@ class CtasController extends Controller
             $cta->save();
             DB::commit();
 
-            return redirect()->back()->withInput()->with('message-success', 'Cập nhật thành công!');
+            return redirect()->back()->with('message-success', 'Cập nhật thành công!');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
@@ -223,10 +223,10 @@ class CtasController extends Controller
                 }
             }
 
-            return redirect()->back()->withInput()->with('message-success', 'Xóa thành công!');
+            return redirect()->back()->with('message-success', 'Xóa thành công!');
         } catch (\Exception $e) {
             Log::error('Lỗi xóa cta', $e->getMessage());
-            return redirect()->back()->withInput()->with('message-error', $e->getMessage());
+            return redirect()->back()->with('message-error', $e->getMessage());
         }
     }
 }

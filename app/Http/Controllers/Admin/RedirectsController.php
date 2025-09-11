@@ -111,7 +111,7 @@ class RedirectsController extends Controller
             $redirect->save();
 
             DB::commit();
-            return redirect()->back()->withInput()->with('message-success', 'Cập nhật thành công!');
+            return redirect()->route('redirects.index')->with('message-success', 'Cập nhật thành công!');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
@@ -133,10 +133,10 @@ class RedirectsController extends Controller
                 return redirect()->back()->withInput()->with('message-error', 'Không tìm thấy redirect');
             }
             $redirect->delete();
-            return redirect()->back()->withInput()->with('message-success', 'Xóa thành công!');
+            return redirect()->back()->with('message-success', 'Xóa thành công!');
         } catch (\Exception $e) {
             Log::error('Lỗi xóa redirect', $e->getMessage());
-            return redirect()->back()->withInput()->with('message-error', $e->getMessage());
+            return redirect()->back()->with('message-error', $e->getMessage());
         }
     }
 }

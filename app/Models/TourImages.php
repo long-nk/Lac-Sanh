@@ -14,7 +14,9 @@ class TourImages extends Model
         'name',
         'mime',
         'size',
-        'path'
+        'path',
+        'alt',
+        'meta'
     ];
 
     public function tour()

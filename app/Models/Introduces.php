@@ -12,7 +12,21 @@ class Introduces extends Model
     protected $fillable = [
         'title',
         'slug',
+        'image',
         'content',
-        'status'
+        'parent_id',
+        'sort',
+        'status',
+        'default'
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(Introduces::class, 'parent_id');
+    }
+
+    public function child()
+    {
+        return $this->hasMany(Introduces::class, 'parent_id')->orderBy('sort');
+    }
 }

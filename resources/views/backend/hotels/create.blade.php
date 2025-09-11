@@ -29,8 +29,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Tên sản phẩm
-                                        (khách sạn, villa, ...)
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Tên khách sạn hoặc resort
                                         <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -82,6 +81,38 @@
                                             <input type="file" class="hide_file" name="image"
                                                    onchange="show_img_selected(this)" required>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                        Alt ảnh
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="alt" value="{{old('alt')}}"
+                                               class="form-control col-md-7 col-xs-12"
+                                               name="alt" type="text" placeholder="Alt ảnh">
+                                        @if ($errors->has('alt'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('alt') }}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                        Tiêu đề ảnh
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="meta" value="{{old('meta')}}"
+                                               class="form-control col-md-7 col-xs-12"
+                                               name="meta" type="text" placeholder="Tiêu đề ảnh">
+                                        @if ($errors->has('meta'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('meta') }}</strong>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -147,6 +178,23 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Nội dung script
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="seo-textarea-wrapper">
+                                            <textarea id="script" name="script"
+                                                      class="form-control"
+                                                      placeholder="Nội dung script"
+                                                      rows="20" cols="5">{!! old('script') !!}</textarea>
+                                        </div>
+                                        @if ($errors->has('script'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('script') }}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
 {{--                                @if($type == \App\Models\Comforts::KS)--}}
 {{--                                    <div class="item form-group">--}}
 {{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Tiện ích--}}
@@ -195,6 +243,123 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">Tiêu đề
+                                        SEO<span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="seo-info">
+                                            <span id="seoTitleInfoTitle">
+                                                <span id="seoCharCountTitle">0</span> / 60 (
+                                                <span id="seoPxCountTitle">0</span>px / 580px)
+                                            </span>
+                                            <div id="seoTitleBarTitle" class="seo-bar">
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                            </div>
+                                        </div>
+
+                                        <input id="title" name="title_seo" type="text" class="form-control"
+                                               value="{{old('title_seo')}}"
+                                               required>
+                                        @if ($errors->has('title_seo'))
+                                            <div class="alert alert-danger">
+                                                <strong>{{ $errors->first('title_seo') }}</strong></div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="slug">URL bài viết
+                                        <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="seo-info">
+                                            <span id="seoTitleInfoSlug">
+                                                <span id="seoCharCountSlug">0</span> / 75 (
+                                                <span id="seoPxCountSlug">0</span>px / 580px)
+                                            </span>
+                                            <div id="seoTitleBarSlug" class="seo-bar">
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                            </div>
+                                        </div>
+
+                                        <input id="slug" name="slug" type="text" class="form-control"
+                                               value="{{old('slug')}}"
+                                               oninput="updateSeoBar('slug', 'seoTitleBarSlug', 'seoCharCountSlug', 'seoPxCountSlug', 75, 580)"
+                                               required>
+                                        @if ($errors->has('slug'))
+                                            <div class="alert alert-danger">
+                                                <strong>{{ $errors->first('slug') }}</strong></div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Meta description
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="seo-textarea-wrapper">
+                                            <div class="seo-info">
+                                                <span id="seoTitleInfoSummary">
+                                                    <span id="seoCharCountSummary">0</span> / 155 (
+                                                    <span id="seoPxCountSummary">0</span>px / 580px)
+                                                </span>
+                                                <div id="seoTitleBarSummary" class="seo-bar"
+                                                     style="display: flex; gap: 4px;">
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                </div>
+                                            </div>
+                                            <textarea id="meta-description" name="summary"
+                                                      oninput="updateSeoBar('summary', 'seoTitleBarSummary', 'seoCharCountSummary', 'seoPxCountSummary', 155, 580)"
+                                                      class="form-control"
+                                                      placeholder="Nội dung"
+                                                      rows="5"
+                                            >{!! old('summary') !!}</textarea>
+                                        </div>
+                                        @if ($errors->has('summary'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('summary') }}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Demo
+                                    </label>
+                                    @php $type = 'khach-san'; @endphp
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="google-preview"
+                                             style="text-align:left;margin-top: 20px; border: 1px solid #ddd; padding: 15px; background: #fff;">
+                                            <input type="text" id="content-type" hidden value="{{$type}}">
+                                            <div id="preview-url"
+                                                 style="color: #006621; font-size: 14px; margin-bottom: 4px;">
+                                                {{route('home')}}/
+                                            </div>
+                                            <div id="preview-title"
+                                                 style="color: #1a0dab; font-size: 18px; font-weight: bold; margin-bottom: 4px;">
+                                                Tiêu đề SEO sẽ hiển thị tại đây
+                                            </div>
+                                            <div id="preview-description" style="color: #545454; font-size: 13px;">
+                                                Mô tả meta sẽ hiển thị tại đây.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Chọn tiện
                                         ích<span class="required">*</span>
                                     </label>
@@ -238,98 +403,98 @@
                                         @endif
                                     </div>
                                 </div>
-                                @if(@$type != \App\Models\Comforts::KS)
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số người
-                                            tối thiểu <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <input id="people_min" value="{{old('people_min')}}"
-                                                   class="form-control col-md-7 col-xs-12" name="people_min"
-                                                   type="number">
-                                            @if ($errors->has('people_min'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('people_min') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số người
-                                            tối đa <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <input id="people" value="{{old('people')}}"
-                                                   class="form-control col-md-7 col-xs-12" name="people" type="number">
-                                            @if ($errors->has('people'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('people') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số phòng
-                                            ngủ <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <input id="bedroom" value="{{old('bedroom')}}"
-                                                   class="form-control col-md-7 col-xs-12" name="bedroom" type="number">
-                                            @if ($errors->has('bedroom'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('bedroom') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số giường
-                                            ngủ <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <input id="bed" value="{{old('bed')}}"
-                                                   class="form-control col-md-7 col-xs-12" name="bed" type="number">
-                                            @if ($errors->has('bed'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('bed') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    @if($type == \App\Models\Comforts::TO)
-                                        <div class="item form-group">
-                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số nệm
-                                                ngủ<span
-                                                    class="required">*</span>
-                                            </label>
-                                            <div class="col-md-3 col-sm-6 col-xs-12">
-                                                <input id="mattress" value="{{old('mattress')}}"
-                                                       class="form-control col-md-7 col-xs-12" name="mattress"
-                                                       type="number">
-                                                @if ($errors->has('mattress'))
-                                                    <div id="formMessage" class="alert alert-danger">
-                                                        <strong>{{ $errors->first('mattress') }}</strong>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endif
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số phòng
-                                            tắm <span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <input id="bathroom" value="{{old('bathroom')}}"
-                                                   class="form-control col-md-7 col-xs-12" name="bathroom"
-                                                   type="number">
-                                            @if ($errors->has('bathroom'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('bathroom') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endif
+{{--                                @if(@$type != \App\Models\Comforts::KS)--}}
+{{--                                    <div class="item form-group">--}}
+{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số người--}}
+{{--                                            tối thiểu <span class="required">*</span>--}}
+{{--                                        </label>--}}
+{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+{{--                                            <input id="people_min" value="{{old('people_min')}}"--}}
+{{--                                                   class="form-control col-md-7 col-xs-12" name="people_min"--}}
+{{--                                                   type="number">--}}
+{{--                                            @if ($errors->has('people_min'))--}}
+{{--                                                <div id="formMessage" class="alert alert-danger">--}}
+{{--                                                    <strong>{{ $errors->first('people_min') }}</strong>--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="item form-group">--}}
+{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số người--}}
+{{--                                            tối đa <span class="required">*</span>--}}
+{{--                                        </label>--}}
+{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+{{--                                            <input id="people" value="{{old('people')}}"--}}
+{{--                                                   class="form-control col-md-7 col-xs-12" name="people" type="number">--}}
+{{--                                            @if ($errors->has('people'))--}}
+{{--                                                <div id="formMessage" class="alert alert-danger">--}}
+{{--                                                    <strong>{{ $errors->first('people') }}</strong>--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="item form-group">--}}
+{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số phòng--}}
+{{--                                            ngủ <span class="required">*</span>--}}
+{{--                                        </label>--}}
+{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+{{--                                            <input id="bedroom" value="{{old('bedroom')}}"--}}
+{{--                                                   class="form-control col-md-7 col-xs-12" name="bedroom" type="number">--}}
+{{--                                            @if ($errors->has('bedroom'))--}}
+{{--                                                <div id="formMessage" class="alert alert-danger">--}}
+{{--                                                    <strong>{{ $errors->first('bedroom') }}</strong>--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="item form-group">--}}
+{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số giường--}}
+{{--                                            ngủ <span class="required">*</span>--}}
+{{--                                        </label>--}}
+{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+{{--                                            <input id="bed" value="{{old('bed')}}"--}}
+{{--                                                   class="form-control col-md-7 col-xs-12" name="bed" type="number">--}}
+{{--                                            @if ($errors->has('bed'))--}}
+{{--                                                <div id="formMessage" class="alert alert-danger">--}}
+{{--                                                    <strong>{{ $errors->first('bed') }}</strong>--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    @if($type == \App\Models\Comforts::TO)--}}
+{{--                                        <div class="item form-group">--}}
+{{--                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số nệm--}}
+{{--                                                ngủ<span--}}
+{{--                                                    class="required">*</span>--}}
+{{--                                            </label>--}}
+{{--                                            <div class="col-md-3 col-sm-6 col-xs-12">--}}
+{{--                                                <input id="mattress" value="{{old('mattress')}}"--}}
+{{--                                                       class="form-control col-md-7 col-xs-12" name="mattress"--}}
+{{--                                                       type="number">--}}
+{{--                                                @if ($errors->has('mattress'))--}}
+{{--                                                    <div id="formMessage" class="alert alert-danger">--}}
+{{--                                                        <strong>{{ $errors->first('mattress') }}</strong>--}}
+{{--                                                    </div>--}}
+{{--                                                @endif--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
+{{--                                    <div class="item form-group">--}}
+{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số phòng--}}
+{{--                                            tắm <span class="required">*</span>--}}
+{{--                                        </label>--}}
+{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+{{--                                            <input id="bathroom" value="{{old('bathroom')}}"--}}
+{{--                                                   class="form-control col-md-7 col-xs-12" name="bathroom"--}}
+{{--                                                   type="number">--}}
+{{--                                            @if ($errors->has('bathroom'))--}}
+{{--                                                <div id="formMessage" class="alert alert-danger">--}}
+{{--                                                    <strong>{{ $errors->first('bathroom') }}</strong>--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Giá mặc
                                         định<span
@@ -397,23 +562,23 @@
 {{--                                        </select>--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
-                                @if(@$type != \App\Models\Comforts::KS)
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Loại phòng
-                                            <span
-                                                class="required">*</span>
-                                        </label>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <input id="type_room" value="{{old('type_room')}}"
-                                                   class="form-control col-md-7 col-xs-12" name="type_room" type="text">
-                                            @if ($errors->has('type_room'))
-                                                <div id="formMessage" class="alert alert-danger">
-                                                    <strong>{{ $errors->first('type_room') }}</strong>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endif
+{{--                                @if(@$type != \App\Models\Comforts::KS)--}}
+{{--                                    <div class="item form-group">--}}
+{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Loại phòng--}}
+{{--                                            <span--}}
+{{--                                                class="required">*</span>--}}
+{{--                                        </label>--}}
+{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+{{--                                            <input id="type_room" value="{{old('type_room')}}"--}}
+{{--                                                   class="form-control col-md-7 col-xs-12" name="type_room" type="text">--}}
+{{--                                            @if ($errors->has('type_room'))--}}
+{{--                                                <div id="formMessage" class="alert alert-danger">--}}
+{{--                                                    <strong>{{ $errors->first('type_room') }}</strong>--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Thuế và phí
                                         dịch vụ<span
@@ -453,7 +618,6 @@
 {{--                                        </select>--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
-                                @if(@$type != \App\Models\Comforts::TO)
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Loại khách
                                             sạn<span class="required">*</span>
@@ -468,7 +632,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                @endif
 {{--                                <div class="item form-group">--}}
 {{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Loại dịch--}}
 {{--                                        vụ<span class="required">*</span>--}}
@@ -614,20 +777,26 @@
         }
 
         function preview_image() {
-            var total_file = document.getElementById("upload_file").files.length;
-            for (var i = 0; i < total_file; i++) {
+            let total_file = document.getElementById("upload_file").files.length;
+            let files = document.getElementById("upload_file").files;
+
+            for (let i = 0; i < total_file; i++) {
+                let imgUrl = URL.createObjectURL(files[i]);
                 $('#image_preview').append(
-                    "<div class='col-sm-2 col-md-3'>" +
-                    "<img class='img_upload remove-img' data-id='" + i + "' src='" + URL.createObjectURL(event.target.files[i]) + "'>" +
-                    "</div>"
+                    `<div class="col-sm-2 col-md-3 image-item" data-id="${i}" style="position: relative; margin-bottom: 15px;">
+                        <img class="img_upload" src="${imgUrl}" style="width: 100%; height: auto; border: 1px solid #ddd; padding: 4px;">
+                        <input type="text" name="alts[]" class="form-control" style="padding-left: 5px;padding-right: 0px" placeholder="Nhập alt cho ảnh">
+                        <input type="text" name="titles[]" class="form-control" style="padding-left: 5px;padding-right: 0px" placeholder="Nhập title cho ảnh">
+                        <button type="button" class="remove-img btn btn-danger btn-sm">Xóa</button>
+                    </div>`
                 );
             }
         }
 
-        $("body").on('click', "img.remove-img", function () {
-            let confirm = ConfirmDelete();
-            if (confirm) {
-                $(this).remove();
+
+        $("body").on('click', ".remove-img", function () {
+            if (confirm("Bạn có chắc muốn xóa ảnh này không?")) {
+                $(this).closest('.image-item').remove(); // Xóa cả khối ảnh
             }
         });
 

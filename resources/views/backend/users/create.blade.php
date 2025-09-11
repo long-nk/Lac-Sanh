@@ -45,53 +45,53 @@
                                             </label>
                                             <div class="col-md-4 col-sm-6 col-xs-12">
                                                 <input id="username" class="form-control col-md-7 col-xs-12"
-                                                       value="{{old('username')}}"
+                                                       value="{{old('user_name')}}"
                                                        data-validate-length-range="6" data-validate-words="2"
-                                                       name="username" required="required" type="text">
-                                                @if ($errors->has('username'))
+                                                       name="user_name" required="required" type="text">
+                                                @if ($errors->has('user_name'))
                                                     <div id="formMessage" class="alert alert-danger">
-                                                        <strong>{{ $errors->first('username') }}</strong>
+                                                        <strong>{{ $errors->first('user_name') }}</strong>
                                                     </div>
                                                 @endif
                                             </div>
                                         </div>
                                         {{--<div class="item form-group">--}}
-                                            {{--<label class="control-label col-md-4 col-sm-3 col-xs-12"--}}
-                                                   {{--for="birthdate">Ngày sinh--}}
-                                            {{--</label>--}}
-                                            {{--<div class="col-md-4 col-sm-6 col-xs-12">--}}
-                                                {{--<input type="text" class="form-control has-feedback-left"--}}
-                                                       {{--value="{{old('birth_date')}}"--}}
-                                                       {{--id="birth_date" data-inputmask="'mask': '99/99/9999'"--}}
-                                                       {{--name="birth_date">--}}
-                                                {{--<span class="fa fa-calendar-o form-control-feedback left"--}}
-                                                      {{--aria-hidden="true"></span>--}}
-                                                {{--<span id="inputSuccess2Status" class="sr-only">(success)</span>--}}
-                                                {{--@if ($errors->has('birth_date'))--}}
-                                                    {{--<div id="formMessage" class="alert alert-danger">--}}
-                                                        {{--<strong>{{ $errors->first('birth_date') }}</strong>--}}
-                                                    {{--</div>--}}
-                                                {{--@endif--}}
-                                            {{--</div>--}}
+                                        {{--<label class="control-label col-md-4 col-sm-3 col-xs-12"--}}
+                                        {{--for="birthdate">Ngày sinh--}}
+                                        {{--</label>--}}
+                                        {{--<div class="col-md-4 col-sm-6 col-xs-12">--}}
+                                        {{--<input type="text" class="form-control has-feedback-left"--}}
+                                        {{--value="{{old('birth_date')}}"--}}
+                                        {{--id="birth_date" data-inputmask="'mask': '99/99/9999'"--}}
+                                        {{--name="birth_date">--}}
+                                        {{--<span class="fa fa-calendar-o form-control-feedback left"--}}
+                                        {{--aria-hidden="true"></span>--}}
+                                        {{--<span id="inputSuccess2Status" class="sr-only">(success)</span>--}}
+                                        {{--@if ($errors->has('birth_date'))--}}
+                                        {{--<div id="formMessage" class="alert alert-danger">--}}
+                                        {{--<strong>{{ $errors->first('birth_date') }}</strong>--}}
                                         {{--</div>--}}
-                                        <div class="item form-group">
-                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="email">Giới
-                                                tính
-                                            </label>
-                                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                                <h5>
-                                                    <label><input type="radio" class="flat" name="gender"
-                                                                  id="genderM" value="1"
-                                                                  {{old('gender')==1?'checked':''}} required/> Nam
-                                                    </label>
-                                                    <label><input type="radio" class="flat" name="gender"
-                                                                  id="genderF"
-                                                                  value="0" {{old('gender')==0?'checked':''}} required/>
-                                                        Nữ
-                                                    </label>
-                                                </h5>
-                                            </div>
-                                        </div>
+                                        {{--@endif--}}
+                                        {{--</div>--}}
+                                        {{--</div>--}}
+                                        {{--                                        <div class="item form-group">--}}
+                                        {{--                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="email">Giới--}}
+                                        {{--                                                tính--}}
+                                        {{--                                            </label>--}}
+                                        {{--                                            <div class="col-md-4 col-sm-6 col-xs-12">--}}
+                                        {{--                                                <h5>--}}
+                                        {{--                                                    <label><input type="radio" class="flat" name="gender"--}}
+                                        {{--                                                                  id="genderM" value="1"--}}
+                                        {{--                                                                  {{old('gender')==1?'checked':''}} required/> Nam--}}
+                                        {{--                                                    </label>--}}
+                                        {{--                                                    <label><input type="radio" class="flat" name="gender"--}}
+                                        {{--                                                                  id="genderF"--}}
+                                        {{--                                                                  value="0" {{old('gender')==0?'checked':''}} required/>--}}
+                                        {{--                                                        Nữ--}}
+                                        {{--                                                    </label>--}}
+                                        {{--                                                </h5>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                         <div class="item form-group">
                                             <label class="control-label col-md-4 col-sm-3 col-xs-12" for="email">Email
                                             </label>
@@ -122,21 +122,21 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="item form-group">
-                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="number">Địa
-                                                chỉ
-                                            </label>
-                                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                                <input type="text" id="address" name="address"
-                                                       value="{{old('address')}}"
-                                                       class="form-control col-md-7 col-xs-12">
-                                                @if ($errors->has('address'))
-                                                    <div id="formMessage" class="alert alert-danger">
-                                                        <strong>{{ $errors->first('address') }}</strong>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
+                                        {{--                                        <div class="item form-group">--}}
+                                        {{--                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="number">Địa--}}
+                                        {{--                                                chỉ--}}
+                                        {{--                                            </label>--}}
+                                        {{--                                            <div class="col-md-4 col-sm-6 col-xs-12">--}}
+                                        {{--                                                <input type="text" id="address" name="address"--}}
+                                        {{--                                                       value="{{old('address')}}"--}}
+                                        {{--                                                       class="form-control col-md-7 col-xs-12">--}}
+                                        {{--                                                @if ($errors->has('address'))--}}
+                                        {{--                                                    <div id="formMessage" class="alert alert-danger">--}}
+                                        {{--                                                        <strong>{{ $errors->first('address') }}</strong>--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                @endif--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                         <div class="item form-group">
                                             <label class="control-label col-md-4 col-sm-3 col-xs-12" for="password">Mật
                                                 khẩu
@@ -144,12 +144,24 @@
                                             <div class="col-md-4 col-sm-6 col-xs-12">
                                                 <input id="password" class="form-control col-md-7 col-xs-12"
                                                        data-validate-length-range="6" data-validate-words="2"
-                                                       name="password">
+                                                       name="password" type="password">
                                                 @if ($errors->has('password'))
                                                     <div id="formMessage" class="alert alert-danger">
                                                         <strong>{{ $errors->first('password') }}</strong>
                                                     </div>
                                                 @endif
+                                            </div>
+                                        </div>
+                                        <div class="item form-group">
+                                            <label class="control-label col-md-4 col-sm-3 col-xs-12" for="email">Phân quyền<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <select name="role" id="role" value="{{old('role')}}" class="form-control" required>
+                                                    <option value="{{\App\Models\User::ADMIN_ROLE}}">Quản trị</option>
+                                                    <option value="{{\App\Models\User::STAFF_ROLE}}">Nhân viên</option>
+                                                    <option value="{{\App\Models\User::USER_ROLE}}">Cộng tác viên</option>
+                                                    <option value="{{\App\Models\User::ORDER_ROLE}}">Quản lý đơn hàng</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -159,7 +171,7 @@
                                         dùng
                                     </button>
                                     <a href="{{URL::previous()}}" class="btn btn-default btn-secondary"><i
-                                                class="fa fa-reply"></i> Quay lại</a>
+                                            class="fa fa-reply"></i> Quay lại</a>
                                 </div>
                             </form>
                         </div>
@@ -173,9 +185,9 @@
 @endsection
 
 @push('js')
-<script src="{{asset('libs/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')}}"></script>
-<script>
-    $(":input").inputmask();
-</script>
+    <script src="{{asset('libs/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js')}}"></script>
+    <script>
+        $(":input").inputmask();
+    </script>
 
 @endpush

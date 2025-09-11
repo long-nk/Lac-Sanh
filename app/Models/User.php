@@ -15,6 +15,7 @@ class User extends Authenticatable
     const ADMIN_ROLE = 1;
     const STAFF_ROLE = 2;
     const USER_ROLE = 3;
+    const ORDER_ROLE = 4;
 
     /**
      * The attributes that are mass assignable.

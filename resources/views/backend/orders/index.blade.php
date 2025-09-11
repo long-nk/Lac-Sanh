@@ -33,7 +33,7 @@
                                     </th>
                                     <th class="text-center">Tên khách hàng</th>
                                     <th class="text-center">Số điện thoại</th>
-                                    <th class="text-center">Phòng / Villa</th>
+                                    <th class="text-center">Phòng / Tour</th>
                                     <th class="text-center">Loại giường</th>
                                     <th class="text-center">Số người lớn</th>
                                     <th class="text-center">Số trẻ em</th>

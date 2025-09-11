@@ -10,11 +10,14 @@ use App\Models\HotelAreas;
 use App\Models\HotelComforts;
 use App\Models\HotelImages;
 use App\Models\Hotels;
+use App\Models\Images;
 use App\Models\LocationAreas;
 use App\Models\Locations;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 
 class HotelsController extends Controller
@@ -54,17 +57,44 @@ class HotelsController extends Controller
         if ($request->price == null) {
             $request->price = 0;
         }
+
+        $request->validate([
+            'name' => [
+                'required',
+                Rule::unique('hotels', 'name'),
+            ],
+            'title_seo' => [
+                'required',
+                Rule::unique('hotels', 'title_seo'),
+            ],
+            'slug' => [
+                'required',
+                Rule::unique('hotels', 'slug'),
+            ],
+//            'faqs' => 'array',
+//            'faqs.*.question' => 'required|string|max:255',
+//            'faqs.*.answer' => 'nullable|string|max:1000',
+        ], [
+            'name.required' => 'Tên khách sạn không được để trống.',
+            'name.unique' => 'Tên khách sạn đã tồn tại.',
+            'title_seo.required' => 'Tiêu đề SEO không được để trống.',
+            'title_seo.unique' => 'Tiêu đề SEO này đã tồn tại.',
+            'slug.required' => 'Đường dẫn (slug) không được để trống.',
+            'slug.unique' => 'Đường dẫn (slug) này đã tồn tại.',
+//            'faqs.*.question.required' => 'Câu hỏi không được để trống.',
+//            'faqs.*.answer.required' => 'Câu trả lời không được để trống.',
+        ]);
+
         $data = [
             'name' => $name,
             'location_id' => $request->location_id,
-            'slug' => Str::slug($name, '-'),
             'address' => ltrim($request->address),
             'video' => $request->video,
             'price' => $request->price,
             'sale' => $request->sale,
             'flash_sale' => $request->flash_sale,
             'description' => $request->description,
-            'type' => $request->type,
+            'type' => \App\Models\Comforts::KS,
             'rate' => $request->rate,
             'stores' => $request->stores,
             'notes' => $request->notes,
@@ -82,8 +112,16 @@ class HotelsController extends Controller
             'type_room' => $request->type_room,
             'vat' => $request->vat,
             'sort' => $request->sort ?? 100,
-            'status' => $request->status
+            'status' => $request->status,
+            'title_seo' => $request->title_seo,
+            'slug' => $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->title_seo, '-'),
+            'summary' => $request->summary,
+            'user_update_id' => Auth::user()->id,
+            'script' => $request->script,
+            'alt' => $request->alt ?? null,
+            'meta' => $request->meta ?? null,
         ];
+
         $list_comfort = [];
         $list_comfort = $request->input('list_comfort');
         $list_area = [];
@@ -91,105 +129,102 @@ class HotelsController extends Controller
         $list_comfort_special = [];
         $list_comfort_special = $request->input('list_comfort_special');
         $hotel = Hotels::create($data);
-        $validator = \Validator::make($data, [
-            'name' => 'required|max:255',
-        ]);
 
-        $category = '';
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi tạo, vui lòng tạo lại');
-        } else {
-            try {
-                \DB::beginTransaction();
-                $image = $request->image;
-                $name = $image->getClientOriginalName();
-                $images[] = $name;
-                $extensionImage = $image->extension();
-                $image_name = "hotel_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
-                $image->move('images/uploads/hotels/', $image_name);
-                $pathImage = public_path('images/uploads/hotels/' . $image_name);
-                $imageNew = Image::make($pathImage);
-                $imageItem = [
-                    'hotel_id' => $hotel->id,
-                    'name' => $image_name,
-                    'mime' => $image->getClientMimeType(),
-                    'path' => 'hotels'
-                ];
-                $thumbsPathImage = public_path('images/uploads/thumbs/' . $image_name);
-                $widthImg = $imageNew->width();
-                $heightImg = $imageNew->height();
-                $wResize = Contents::WIDTH_THUMBS;
-                $hResize = ($wResize * $heightImg) / $widthImg;
-                $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
-                HotelImages::create($imageItem);
+        try {
+            \DB::beginTransaction();
+            $image = $request->image;
+            $name = $image->getClientOriginalName();
+            $images[] = $name;
+            $extensionImage = $image->extension();
+            $image_name = "hotel_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
+            $image->move('images/uploads/hotels/', $image_name);
+            $pathImage = public_path('images/uploads/hotels/' . $image_name);
+            $imageNew = Image::make($pathImage);
+            $imageItem = [
+                'hotel_id' => $hotel->id,
+                'name' => $image_name,
+                'mime' => $image->getClientMimeType(),
+                'path' => 'hotels',
+            ];
+            $thumbsPathImage = public_path('images/uploads/thumbs/' . $image_name);
+            $widthImg = $imageNew->width();
+            $heightImg = $imageNew->height();
+            $wResize = Contents::WIDTH_THUMBS;
+            $hResize = ($wResize * $heightImg) / $widthImg;
+            $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
+            HotelImages::create($imageItem);
 
-                $images = array();
-                if ($request->hasFile('images')) {
-                    $files = $request->file('images');
-                    foreach ($files as $item) {
-                        $name = $item->getClientOriginalName();
-                        $images[] = $name;
-                        $extensionImage = $item->extension();
-                        $image_name = "hotel_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
-                        $item->move('images/uploads/hotels/', $image_name);
-                        $pathImage = public_path('images/uploads/hotels/' . $image_name);
-                        $imageNew = Image::make($pathImage);
-                        $imageItem = [
-                            'hotel_id' => $hotel->id,
-                            'name' => $image_name,
-                            'mime' => $item->getClientMimeType(),
-                            'path' => 'hotels'
-                        ];
-                        $thumbsPathImage = public_path('images/uploads/thumbs/' . $image_name);
-                        $widthImg = $imageNew->width();
-                        $heightImg = $imageNew->height();
-                        $wResize = Contents::WIDTH_THUMBS;
-                        $hResize = ($wResize * $heightImg) / $widthImg;
-                        $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
-                        HotelImages::create($imageItem);
-                    }
+            $images = array();
+            if ($request->hasFile('images')) {
+                $files = $request->file('images');
+                $alts = $request->input('alts', []);
+                $titles = $request->input('titles', []);
+                foreach ($files as $index => $item) {
+                    $name = $item->getClientOriginalName();
+                    $images[] = $name;
+                    $extensionImage = $item->extension();
+                    $image_name = "hotel_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
+                    $item->move('images/uploads/hotels/', $image_name);
+                    $pathImage = public_path('images/uploads/hotels/' . $image_name);
+                    $imageNew = Image::make($pathImage);
+                    $imageItem = [
+                        'hotel_id' => $hotel->id,
+                        'name' => $image_name,
+                        'mime' => $item->getClientMimeType(),
+                        'path' => 'hotels',
+                        'alt' => $alts[$index] ?? null,
+                        'meta' => $titles[$index] ?? null,
+                    ];
+                    $thumbsPathImage = public_path('images/uploads/thumbs/' . $image_name);
+                    $widthImg = $imageNew->width();
+                    $heightImg = $imageNew->height();
+                    $wResize = Contents::WIDTH_THUMBS;
+                    $hResize = ($wResize * $heightImg) / $widthImg;
+                    $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
+                    HotelImages::create($imageItem);
                 }
-
-                if(!empty($list_comfort)) {
-                    foreach ($list_comfort as $item => $value) {
-                        $data = [
-                            'hotel_id' => $hotel->id,
-                            'comfort_id' => $value,
-                        ];
-                        $cat = HotelComforts::create($data);
-                    }
-                }
-
-                if(!empty($list_comfort_special)) {
-                    foreach ($list_comfort_special as $item => $value) {
-                        $data = [
-                            'hotel_id' => $hotel->id,
-                            'comfort_id' => $value,
-                        ];
-                        $cat = HotelComforts::create($data);
-                    }
-                }
-
-                if(!empty($list_area)) {
-                    foreach ($list_area as $item => $value) {
-                        $data = [
-                            'hotel_id' => $hotel->id,
-                            'area_id' => $value,
-                        ];
-                        HotelAreas::create($data);
-                    }
-                }
-
-
-                \DB::commit();
-                return redirect()->route('hotels.listAll', ['type' => Comforts::KS])->with('message-success', 'Thêm mới khách sạn thành công!');
-            } catch (\Exception $e) {
-                dd($e);
-                \Log::error($e->getMessage());
-                \DB::rollback();
-                return redirect()->back()->withInput()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau!');
             }
+
+            if (!empty($list_comfort)) {
+                foreach ($list_comfort as $item => $value) {
+                    $data = [
+                        'hotel_id' => $hotel->id,
+                        'comfort_id' => $value,
+                    ];
+                    $cat = HotelComforts::create($data);
+                }
+            }
+
+            if (!empty($list_comfort_special)) {
+                foreach ($list_comfort_special as $item => $value) {
+                    $data = [
+                        'hotel_id' => $hotel->id,
+                        'comfort_id' => $value,
+                    ];
+                    $cat = HotelComforts::create($data);
+                }
+            }
+
+            if (!empty($list_area)) {
+                foreach ($list_area as $item => $value) {
+                    $data = [
+                        'hotel_id' => $hotel->id,
+                        'area_id' => $value,
+                    ];
+                    HotelAreas::create($data);
+                }
+            }
+
+
+            \DB::commit();
+            return redirect()->route('hotels.listAll', ['type' => Comforts::KS])->with('message-success', 'Thêm mới khách sạn thành công!');
+        } catch (\Exception $e) {
+            dd($e);
+            \Log::error($e->getMessage());
+            \DB::rollback();
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau!');
         }
+
     }
 
     /**
@@ -241,14 +276,16 @@ class HotelsController extends Controller
         $data = [
             'name' => $request->name,
             'location_id' => $request->location_id,
-            'slug' => Str::slug($request->name, '-'),
+            'title_seo' => $request->title_seo,
+            'slug' => $request->slug ?  Str::slug($request->slug, '-') : Str::slug($request->title_seo, '-'),
+            'summary' => $request->summary,
             'address' => ltrim($request->address),
             'video' => $request->video,
             'price' => $request->price,
             'sale' => $request->sale,
             'flash_sale' => $request->flash_sale,
             'description' => $request->description,
-            'type' => $request->type,
+            'type' => \App\Models\Comforts::KS,
             'rate' => $request->rate,
             'stores' => $request->stores,
             'notes' => $request->notes,
@@ -265,8 +302,33 @@ class HotelsController extends Controller
             'surcharge' => $request->surcharge,
             'vat' => $request->vat,
             'sort' => $request->sort ?? 100,
-            'status' => $request->status
+            'status' => $request->status,
+            'script' => $request->script,
+            'alt' => $request->alt,
+            'meta' => $request->meta,
         ];
+
+        $request->validate([
+            'name' => [
+                'required',
+                Rule::unique('hotels', 'name')->ignore($hotel->id),
+            ],
+            'title_seo' => [
+                'required',
+                Rule::unique('hotels', 'title_seo')->ignore($hotel->id),
+            ],
+            'slug' => [
+                'required',
+                Rule::unique('hotels', 'slug')->ignore($hotel->id),
+            ],
+        ], [
+            'name.required' => 'Tên khách sạn không được để trống.',
+            'name.unique' => 'Tên khách sạn đã tồn tại.',
+            'title_seo.required' => 'Tiêu đề SEO không được để trống.',
+            'title_seo.unique' => 'Tiêu đề SEO này đã tồn tại.',
+            'slug.required' => 'Đường dẫn (slug) không được để trống.',
+            'slug.unique' => 'Đường dẫn (slug) này đã tồn tại.',
+        ]);
 
         $hotel_comfort = HotelComforts::where('hotel_id', $id)->pluck('comfort_id')->toArray();
         $hotel_area = HotelAreas::where('hotel_id', $id)->pluck('area_id')->toArray();
@@ -289,7 +351,7 @@ class HotelsController extends Controller
             HotelComforts::where('hotel_id', $hotel->id)->whereIn('comfort_id', $idDel)->delete();
         }
 
-        if(!empty($list_area)) {
+        if (!empty($list_area)) {
             $idDel = array_diff($hotel_area, $list_area);
             $idAdd = array_diff($list_area, $hotel_area);
             foreach ($idAdd as $item => $value) {
@@ -309,7 +371,7 @@ class HotelsController extends Controller
             $image = $request->image;
             $imageOld = HotelImages::where('hotel_id', $hotel->id)->first();
 
-            if($image && $imageOld) {
+            if ($image && $imageOld) {
                 $name = $image->getClientOriginalName();
                 $images[] = $name;
                 $extensionImage = $image->extension();
@@ -354,7 +416,10 @@ class HotelsController extends Controller
             $images = array();
             if ($request->hasFile('images')) {
                 $files = $request->file('images');
-                foreach ($files as $item) {
+                $altsNew = $request->input('alts_new', []);
+                $titlesNew = $request->input('titles_new', []);
+
+                foreach ($files as $index => $item) {
                     $name = $item->getClientOriginalName();
                     $images[] = $name;
                     $extensionImage = $item->extension();
@@ -365,7 +430,9 @@ class HotelsController extends Controller
                         'name' => $image_name,
                         'mime' => $item->getClientMimeType(),
                         'size' => $item->getSize(),
-                        'path' => 'hotels'
+                        'path' => 'hotels',
+                        'alt' => $altsNew[$index] ?? null,
+                        'meta' => $titlesNew[$index] ?? null,
                     ];
                     $item->move('images/uploads/hotels/', $image_name);
 
@@ -379,35 +446,19 @@ class HotelsController extends Controller
                     $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
                     HotelImages::create($imageItem);
                 }
+            } else {
+                // Chỉ update alt/meta cho ảnh cũ nếu không có file mới
+                foreach ($request->input('alts', []) as $id => $alt) {
+                    $image = HotelImages::find($id);
+                    if ($image) {
+                        $image->alt = $alt;
+                        $image->meta = $request->input('titles.' . $id);
+                        $image->save();
+                    }
+                }
             }
 
-            $hotel->name = $data['name'];
-            $hotel->location_id = $data['location_id'];
-            $hotel->slug = $data['slug'];
-            $hotel->address = $data['address'];
-            $hotel->video = $data['video'];
-            $hotel->price = $data['price'];
-            $hotel->sale = $data['sale'];
-            $hotel->flash_sale = $data['flash_sale'];
-            $hotel->description = $data['description'];
-            $hotel->type = $data['type'];
-            $hotel->rate = $data['rate'];
-            $hotel->stores = $data['stores'];
-            $hotel->notes = $data['notes'];
-            $hotel->list_comfort = $data['list_comfort'];
-            $hotel->room = $data['room'];
-            $hotel->people = $data['people'];
-            $hotel->people_min = $data['people_min'];
-            $hotel->bedroom = $data['bedroom'];
-            $hotel->bed = $data['bed'];
-            $hotel->mattress = $data['mattress'];
-            $hotel->bathroom = $data['bathroom'];
-            $hotel->breakfast = $data['breakfast'];
-            $hotel->cancel = $data['cancel'];
-            $hotel->surcharge = $data['surcharge'];
-            $hotel->vat = $data['vat'];
-            $hotel->sort = $data['sort'];
-            $hotel->status = $data['status'];
+            $hotel->update($data);
             $hotel->save();
 
             \DB::commit();
@@ -431,14 +482,14 @@ class HotelsController extends Controller
         try {
             \DB::beginTransaction();
             $hotel = Hotels::find($id);
-            if($hotel) {
-                foreach($hotel->images as $image) {
+            if ($hotel) {
+                foreach ($hotel->images as $image) {
                     $filePath = public_path('images/uploads/' . $image->path . '/' . $image->name);
                     $thumbPath = public_path('images/uploads/thumbs/' . $image->name);
-                    if(File::exists($filePath)) {
+                    if (File::exists($filePath)) {
                         File::delete($filePath);
                     }
-                    if(File::exists($thumbPath)) {
+                    if (File::exists($thumbPath)) {
                         File::delete($thumbPath);
                     }
                 }
@@ -472,10 +523,10 @@ class HotelsController extends Controller
         }
         $filePath = public_path('images/uploads/' . $image->path . '/' . $image->name);
         $thumbPath = public_path('images/uploads/thumbs/' . $image->name);
-        if(File::exists($filePath)) {
+        if (File::exists($filePath)) {
             File::delete($filePath);
         }
-        if(File::exists($thumbPath)) {
+        if (File::exists($thumbPath)) {
             File::delete($thumbPath);
         }
         $image->delete();

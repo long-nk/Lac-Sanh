@@ -57,19 +57,19 @@
                                         </select>
                                     </div>
                                 </div>
-{{--                                <div class="item form-group" id="list-area-update-filter">--}}
-{{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Chọn khu--}}
-{{--                                        vực<span class="required">*</span>--}}
-{{--                                    </label>--}}
-{{--                                    <div class="col-md-6 col-sm-6 col-xs-12">--}}
-{{--                                        <select class="form-control" multiple="multiple" name="list_area[]"--}}
-{{--                                                id="choose-area">--}}
-{{--                                            @foreach($listArea as $area)--}}
-{{--                                                <option value="{{$area->id}}" selected>{{$area->name}}</option>--}}
-{{--                                            @endforeach--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="item form-group" id="list-area-update-filter">--}}
+                                {{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Chọn khu--}}
+                                {{--                                        vực<span class="required">*</span>--}}
+                                {{--                                    </label>--}}
+                                {{--                                    <div class="col-md-6 col-sm-6 col-xs-12">--}}
+                                {{--                                        <select class="form-control" multiple="multiple" name="list_area[]"--}}
+                                {{--                                                id="choose-area">--}}
+                                {{--                                            @foreach($listArea as $area)--}}
+                                {{--                                                <option value="{{$area->id}}" selected>{{$area->name}}</option>--}}
+                                {{--                                            @endforeach--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Ảnh đại diện
                                         <span
@@ -90,51 +90,76 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Cập nhật nhiều
-                                        hình ảnh<span
-                                            class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                        Alt ảnh
+                                        <span class="required">*</span>
                                     </label>
-
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        @if(count($tour->images) > 0)
-                                            <div class="box_show_img">
-                                                <div class="row list_image" style="width: 100%;padding: 0px 10px;"
-                                                     id="upload-new-image">
-                                                    @foreach($tour->images as $items => $item)
-                                                        @if($items == 0)
-                                                            @continue
-                                                        @endif
-                                                        <div class='col-sm-2 col-md-3'>
-                                                            <img src="{{asset('images/uploads/thumbs/' . $item->name)}}"
-                                                                 style="margin-bottom: 10px" alt=""
-                                                                 class='img_upload remove-img'
-                                                                 id="img_show2">
-
-                                                            {{csrf_field()}}
-                                                            <a href="javascript:;" class="delete-image" data-id="{{$item->id}}"
-                                                               id="delete_images">
-                                                                <i class="fa fa-trash"></i> Xóa
-                                                            </a>
-                                                        </div>
-                                                    @endforeach
-
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="box_show_img">
-                                                <div class="row list_image" style="width: 100%;padding: 0px 10px;">
-                                                    <div class="col-xs-2 col-sm-2 col-md-2"
-                                                         id="image_preview">
-                                                    </div>
-                                                </div>
+                                        <input id="alt" value="{{old('alt') ?? @$tour->alt}}"
+                                               class="form-control col-md-7 col-xs-12"
+                                               name="alt" type="text" placeholder="Alt ảnh">
+                                        @if ($errors->has('alt'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('alt') }}</strong>
                                             </div>
                                         @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                        Tiêu đề ảnh
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="meta" value="{{old('meta') ?? @$tour->meta}}"
+                                               class="form-control col-md-7 col-xs-12"
+                                               name="meta" type="text" placeholder="Tiêu đề ảnh">
+                                        @if ($errors->has('meta'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('meta') }}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Cập nhật nhiều
+                                        hình ảnh<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="box_show_img">
+                                            <div class="row list_image" style="width: 100%; padding: 0px 10px;" id="image_preview">
+                                                {{-- Ảnh đã có --}}
+                                                @foreach($tour->images as $items => $item)
+                                                    @if($items != 0)
+                                                        <div class='col-sm-2 col-md-3 image-item'>
+                                                            <img
+                                                                src="{{ asset('images/uploads/thumbs/' . $item->name) }}"
+                                                                style="margin-bottom: 5px" class='img_upload'>
+                                                            <input type='text' name='alts[{{$item->id}}]'
+                                                                   class="form-control"
+                                                                   style="padding-left: 5px;padding-right: 0px"
+                                                                   value="{{$item->alt}}"
+                                                                   placeholder='Nhập alt cho ảnh'>
+                                                            <input type='text' name='titles[{{$item->id}}]'
+                                                                   class="form-control"
+                                                                   style="padding-left: 5px;padding-right: 0px"
+                                                                   value="{{$item->meta}}"
+                                                                   placeholder='Nhập title cho ảnh'>
+                                                            {{ csrf_field() }}
+                                                            <a href="javascript:;" class="btn btn-danger btn-sm"
+                                                               id="delete_images" data-id="{{$item->id}}">
+                                                                Xóa
+                                                            </a>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
 
                                         <div class="box_upload">
-                                            Chọn nhiều hình ảnh
+                                            Chọn nhiều ảnh
                                             <input type="file" class="hide_file" name="images[]" id="upload_file"
-                                                   onchange="preview_image();"
-                                                   {{@$tour->images[0] == ""?"required":""}} multiple>
+                                                   onchange="preview_image();" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -154,12 +179,14 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Điểm nổi bật của tour<span
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Điểm nổi bật của
+                                        tour<span
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <textarea name="description" id="editor2"
-                                                  class="form-control" cols="30" rows="10" placeholder="Nhập nội dung">{!! $tour->description !!}</textarea>
+                                                  class="form-control" cols="30" rows="10"
+                                                  placeholder="Nhập nội dung">{!! $tour->description !!}</textarea>
                                         @if ($errors->has('description'))
                                             <div id="formMessage" class="alert alert-danger">
                                                 <strong>{{ $errors->first('description') }}</strong>
@@ -168,12 +195,14 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Dịch vụ tour<span
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Dịch vụ
+                                        tour<span
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <textarea name="list_comfort" id="editor3"
-                                                  class="form-control" cols="30" rows="10" placeholder="Nhập nội dung">{!! $tour->list_comfort !!}</textarea>
+                                                  class="form-control" cols="30" rows="10"
+                                                  placeholder="Nhập nội dung">{!! $tour->list_comfort !!}</textarea>
                                         @if ($errors->has('list_comfort'))
                                             <div id="formMessage" class="alert alert-danger">
                                                 <strong>{{ $errors->first('list_comfort') }}</strong>
@@ -182,15 +211,34 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Các hoạt động của tour<span
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Các hoạt động
+                                        của tour<span
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <textarea name="activities" id="editor4"
-                                                  class="form-control" cols="30" rows="10" placeholder="Nhập nội dung">{!! $tour->activities !!}</textarea>
+                                                  class="form-control" cols="30" rows="10"
+                                                  placeholder="Nhập nội dung">{!! $tour->activities !!}</textarea>
                                         @if ($errors->has('activities'))
                                             <div id="formMessage" class="alert alert-danger">
                                                 <strong>{{ $errors->first('activities') }}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Nội dung script
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="seo-textarea-wrapper">
+                                            <textarea id="script" name="script"
+                                                      class="form-control"
+                                                      placeholder="Nội dung script"
+                                                      rows="20" cols="5">{!! $tour->script !!}</textarea>
+                                        </div>
+                                        @if ($errors->has('script'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('script') }}</strong>
                                             </div>
                                         @endif
                                     </div>
@@ -208,6 +256,128 @@
                                                 <strong>{{ $errors->first('video') }}</strong>
                                             </div>
                                         @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">Tiêu đề
+                                        SEO<span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="seo-info">
+                                            <span id="seoTitleInfoTitle">
+                                                <span id="seoCharCountTitle">0</span> / 60 (
+                                                <span id="seoPxCountTitle">0</span>px / 580px)
+                                            </span>
+                                            <div id="seoTitleBarTitle" class="seo-bar">
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                            </div>
+                                        </div>
+
+                                        <input id="title"
+                                               name="title_seo"
+                                               type="text"
+                                               class="form-control"
+                                               value="{{ old('title_seo', $tour->title_seo ?? '') }}"
+                                               oninput="updateSeoBar('title', 'seoTitleBarTitle', 'seoCharCountTitle', 'seoPxCountTitle', 60, 580)"
+                                               required>
+                                        @if ($errors->has('title_seo'))
+                                            <div class="alert alert-danger">
+                                                <strong>{{ $errors->first('title_seo') }}</strong></div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="slug">URL bài viết
+                                        <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="seo-info">
+                                            <span id="seoTitleInfoSlug">
+                                                <span id="seoCharCountSlug">0</span> / 75 (
+                                                <span id="seoPxCountSlug">0</span>px / 580px)
+                                            </span>
+                                            <div id="seoTitleBarSlug" class="seo-bar">
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                                <div class="seo-segment"></div>
+                                            </div>
+                                        </div>
+
+                                        <input id="slug-seo" name="slug" type="text" class="form-control"
+                                               value="{{$tour->slug}}"
+                                               oninput="updateSeoBar('slug', 'seoTitleBarSlug', 'seoCharCountSlug', 'seoPxCountSlug', 75, 580)"
+                                               required>
+                                        @if ($errors->has('slug'))
+                                            <div class="alert alert-danger">
+                                                <strong>{{ $errors->first('slug') }}</strong></div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Meta description
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="seo-textarea-wrapper">
+                                            <div class="seo-info">
+                                                <span id="seoTitleInfoSummary">
+                                                    <span id="seoCharCountSummary">0</span> / 155 (
+                                                    <span id="seoPxCountSummary">0</span>px / 580px)
+                                                </span>
+                                                <div id="seoTitleBarSummary" class="seo-bar"
+                                                     style="display: flex; gap: 4px;">
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                    <div class="seo-segment"
+                                                         style="height: 8px; flex: 1; background-color: #e0e0e0; opacity: 0.3;"></div>
+                                                </div>
+                                            </div>
+                                            <textarea id="meta-description" name="summary"
+                                                      oninput="updateSeoBar('summary', 'seoTitleBarSummary', 'seoCharCountSummary', 'seoPxCountSummary', 155, 580)"
+                                                      class="form-control"
+                                                      placeholder="Nội dung"
+                                                      rows="5">{!! strip_tags($tour->summary) !!}</textarea>
+                                        </div>
+                                        @if ($errors->has('summary'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('summary') }}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Demo
+                                    </label>
+                                    @php $type = 'khach-san'; @endphp
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="google-preview"
+                                             style="text-align:left;margin-top: 20px; border: 1px solid #ddd; padding: 15px; background: #fff;">
+                                            <input type="text" id="content-type" hidden value="{{$type}}">
+                                            <div id="preview-url"
+                                                 style="color: #006621; font-size: 14px; margin-bottom: 4px;">
+                                                {{ route('home') }}/{{ old('type', $type) }}
+                                                /{{ old('slug', $tour->slug ?? '') }}
+                                            </div>
+                                            <div id="preview-title"
+                                                 style="color: #1a0dab; font-size: 18px; font-weight: bold; margin-bottom: 4px;">
+                                                {{ old('title_seo', $tour->title_seo ?? 'Tiêu đề SEO sẽ hiển thị tại đây') }}
+                                            </div>
+                                            <div id="preview-description" style="color: #545454; font-size: 13px;">
+                                                {{ old('summary', strip_tags($tour->summary) ?? 'Mô tả meta sẽ hiển thị tại đây.') }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -245,8 +415,9 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Loại tour<span
                                             class="required">*</span>
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="type" value="{{ $tour->type }}" placeholder="Nhập loại tour ví dụ: Private, Public, ..."
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <input id="type" value="{{ $tour->type }}"
+                                               placeholder="Nhập loại tour ví dụ: Private, Public, ..."
                                                class="form-control col-md-7 col-xs-12" name="type" type="text">
                                         @if ($errors->has('type'))
                                             <div id="formMessage" class="alert alert-danger">
@@ -259,7 +430,7 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Thời gian<span
                                             class="required">*</span>
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
                                         <input id="date" value="{{$tour->date}}" placeholder="Nhập thời gian của tour"
                                                class="form-control col-md-7 col-xs-12" name="date" type="text" required>
                                         @if ($errors->has('date'))
@@ -270,12 +441,15 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Ngày khởi hành<span
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Ngày khởi
+                                        hành<span
                                             class="required">*</span>
                                     </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input id="start_time" value="{{$tour->start_time}}" placeholder="Nhập thời gian khởi hành"
-                                               class="form-control col-md-7 col-xs-12" name="start_time" type="text" required>
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <input id="start_time" value="{{$tour->start_time}}"
+                                               placeholder="Nhập thời gian khởi hành"
+                                               class="form-control col-md-7 col-xs-12" name="start_time" type="text"
+                                               required>
                                         @if ($errors->has('start_time'))
                                             <div id="formMessage" class="alert alert-danger">
                                                 <strong>{{ $errors->first('start_time') }}</strong>
@@ -283,150 +457,150 @@
                                         @endif
                                     </div>
                                 </div>
-{{--                                <div class="item form-group">--}}
-{{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Giá đã bao gồm--}}
-{{--                                        cả ăn sáng--}}
-{{--                                    </label>--}}
-{{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                        <select name="breakfast" id="breakfast" value="{{old('breakfast')}}"--}}
-{{--                                                class="form-control">--}}
-{{--                                            <option value="1" {{$tour->breakfast == 1 ? 'selected' : ''}}>Có</option>--}}
-{{--                                            <option value="0" {{$tour->breakfast == 0 ? 'selected' : ''}}>Không--}}
-{{--                                            </option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="item form-group">--}}
-{{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Hỗ trợ hoàn hủy--}}
-{{--                                        phòng--}}
-{{--                                    </label>--}}
-{{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                        <select name="cancel" id="cancel" value="{{old('cancel')}}"--}}
-{{--                                                class="form-control">--}}
-{{--                                            <option value="0" {{$tour->breakfast == 0 ? 'selected' : ''}}>Không hỗ--}}
-{{--                                                trợ--}}
-{{--                                            </option>--}}
-{{--                                            <option value="1" {{$tour->breakfast == 1 ? 'selected' : ''}}>Có hỗ trợ--}}
-{{--                                            </option>--}}
-{{--                                            <option value="2" {{$tour->breakfast == 2 ? 'selected' : ''}}>Hoàn hủy một--}}
-{{--                                                phần--}}
-{{--                                            </option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="item form-group">--}}
-{{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Phụ thu người--}}
-{{--                                        lớn và trẻ em--}}
-{{--                                    </label>--}}
-{{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                        <select name="surcharge" id="surcharge" value="{{old('surcharge')}}"--}}
-{{--                                                class="form-control">--}}
-{{--                                            <option value="0" {{$tour->surcharge == 0 ? 'selected' : ''}}>Không áp--}}
-{{--                                                dụng--}}
-{{--                                            </option>--}}
-{{--                                            <option value="1" {{$tour->surcharge == 1 ? 'selected' : ''}}>Có áp dụng--}}
-{{--                                            </option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                @if($tour->type != \App\Models\Comforts::KS)--}}
-{{--                                    <div class="item form-group">--}}
-{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số người--}}
-{{--                                            tối--}}
-{{--                                            thiểu<span--}}
-{{--                                                class="required">*</span>--}}
-{{--                                        </label>--}}
-{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                            <input id="people_min" value="{{$tour->people_min}}"--}}
-{{--                                                   class="form-control col-md-7 col-xs-12" name="people_min"--}}
-{{--                                                   type="number">--}}
-{{--                                            @if ($errors->has('people_min'))--}}
-{{--                                                <div id="formMessage" class="alert alert-danger">--}}
-{{--                                                    <strong>{{ $errors->first('people_min') }}</strong>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="item form-group">--}}
-{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số người--}}
-{{--                                            tối đa<span--}}
-{{--                                                class="required">*</span>--}}
-{{--                                        </label>--}}
-{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                            <input id="people" value="{{$tour->people}}"--}}
-{{--                                                   class="form-control col-md-7 col-xs-12" name="people" type="number">--}}
-{{--                                            @if ($errors->has('people'))--}}
-{{--                                                <div id="formMessage" class="alert alert-danger">--}}
-{{--                                                    <strong>{{ $errors->first('people') }}</strong>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="item form-group">--}}
-{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số phòng--}}
-{{--                                            ngủ<span--}}
-{{--                                                class="required">*</span>--}}
-{{--                                        </label>--}}
-{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                            <input id="bedroom" value="{{$tour->bedroom}}"--}}
-{{--                                                   class="form-control col-md-7 col-xs-12" name="bedroom" type="number">--}}
-{{--                                            @if ($errors->has('bedroom'))--}}
-{{--                                                <div id="formMessage" class="alert alert-danger">--}}
-{{--                                                    <strong>{{ $errors->first('bedroom') }}</strong>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="item form-group">--}}
-{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số giường--}}
-{{--                                            ngủ<span--}}
-{{--                                                class="required">*</span>--}}
-{{--                                        </label>--}}
-{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                            <input id="bed" value="{{$tour->bed}}"--}}
-{{--                                                   class="form-control col-md-7 col-xs-12" name="bed" type="number">--}}
-{{--                                            @if ($errors->has('bed'))--}}
-{{--                                                <div id="formMessage" class="alert alert-danger">--}}
-{{--                                                    <strong>{{ $errors->first('bed') }}</strong>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    @if($tour->type == \App\Models\Comforts::TO)--}}
-{{--                                        <div class="item form-group">--}}
-{{--                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số--}}
-{{--                                                nệm ngủ<span--}}
-{{--                                                    class="required">*</span>--}}
-{{--                                            </label>--}}
-{{--                                            <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                                <input id="mattress" value="{{$tour->mattress}}"--}}
-{{--                                                       class="form-control col-md-7 col-xs-12" name="mattress"--}}
-{{--                                                       type="number">--}}
-{{--                                                @if ($errors->has('mattress'))--}}
-{{--                                                    <div id="formMessage" class="alert alert-danger">--}}
-{{--                                                        <strong>{{ $errors->first('mattress') }}</strong>--}}
-{{--                                                    </div>--}}
-{{--                                                @endif--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    @endif--}}
-{{--                                    <div class="item form-group">--}}
-{{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số phòng--}}
-{{--                                            tắm<span--}}
-{{--                                                class="required">*</span>--}}
-{{--                                        </label>--}}
-{{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                            <input id="bathroom" value="{{$tour->bathroom}}"--}}
-{{--                                                   class="form-control col-md-7 col-xs-12" name="bathroom"--}}
-{{--                                                   type="number">--}}
-{{--                                            @if ($errors->has('bathroom'))--}}
-{{--                                                <div id="formMessage" class="alert alert-danger">--}}
-{{--                                                    <strong>{{ $errors->first('bathroom') }}</strong>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                @endif--}}
+                                {{--                                <div class="item form-group">--}}
+                                {{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Giá đã bao gồm--}}
+                                {{--                                        cả ăn sáng--}}
+                                {{--                                    </label>--}}
+                                {{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                        <select name="breakfast" id="breakfast" value="{{old('breakfast')}}"--}}
+                                {{--                                                class="form-control">--}}
+                                {{--                                            <option value="1" {{$tour->breakfast == 1 ? 'selected' : ''}}>Có</option>--}}
+                                {{--                                            <option value="0" {{$tour->breakfast == 0 ? 'selected' : ''}}>Không--}}
+                                {{--                                            </option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+                                {{--                                <div class="item form-group">--}}
+                                {{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Hỗ trợ hoàn hủy--}}
+                                {{--                                        phòng--}}
+                                {{--                                    </label>--}}
+                                {{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                        <select name="cancel" id="cancel" value="{{old('cancel')}}"--}}
+                                {{--                                                class="form-control">--}}
+                                {{--                                            <option value="0" {{$tour->breakfast == 0 ? 'selected' : ''}}>Không hỗ--}}
+                                {{--                                                trợ--}}
+                                {{--                                            </option>--}}
+                                {{--                                            <option value="1" {{$tour->breakfast == 1 ? 'selected' : ''}}>Có hỗ trợ--}}
+                                {{--                                            </option>--}}
+                                {{--                                            <option value="2" {{$tour->breakfast == 2 ? 'selected' : ''}}>Hoàn hủy một--}}
+                                {{--                                                phần--}}
+                                {{--                                            </option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+                                {{--                                <div class="item form-group">--}}
+                                {{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Phụ thu người--}}
+                                {{--                                        lớn và trẻ em--}}
+                                {{--                                    </label>--}}
+                                {{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                        <select name="surcharge" id="surcharge" value="{{old('surcharge')}}"--}}
+                                {{--                                                class="form-control">--}}
+                                {{--                                            <option value="0" {{$tour->surcharge == 0 ? 'selected' : ''}}>Không áp--}}
+                                {{--                                                dụng--}}
+                                {{--                                            </option>--}}
+                                {{--                                            <option value="1" {{$tour->surcharge == 1 ? 'selected' : ''}}>Có áp dụng--}}
+                                {{--                                            </option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+                                {{--                                @if($tour->type != \App\Models\Comforts::KS)--}}
+                                {{--                                    <div class="item form-group">--}}
+                                {{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số người--}}
+                                {{--                                            tối--}}
+                                {{--                                            thiểu<span--}}
+                                {{--                                                class="required">*</span>--}}
+                                {{--                                        </label>--}}
+                                {{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                            <input id="people_min" value="{{$tour->people_min}}"--}}
+                                {{--                                                   class="form-control col-md-7 col-xs-12" name="people_min"--}}
+                                {{--                                                   type="number">--}}
+                                {{--                                            @if ($errors->has('people_min'))--}}
+                                {{--                                                <div id="formMessage" class="alert alert-danger">--}}
+                                {{--                                                    <strong>{{ $errors->first('people_min') }}</strong>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            @endif--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="item form-group">--}}
+                                {{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số người--}}
+                                {{--                                            tối đa<span--}}
+                                {{--                                                class="required">*</span>--}}
+                                {{--                                        </label>--}}
+                                {{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                            <input id="people" value="{{$tour->people}}"--}}
+                                {{--                                                   class="form-control col-md-7 col-xs-12" name="people" type="number">--}}
+                                {{--                                            @if ($errors->has('people'))--}}
+                                {{--                                                <div id="formMessage" class="alert alert-danger">--}}
+                                {{--                                                    <strong>{{ $errors->first('people') }}</strong>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            @endif--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="item form-group">--}}
+                                {{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số phòng--}}
+                                {{--                                            ngủ<span--}}
+                                {{--                                                class="required">*</span>--}}
+                                {{--                                        </label>--}}
+                                {{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                            <input id="bedroom" value="{{$tour->bedroom}}"--}}
+                                {{--                                                   class="form-control col-md-7 col-xs-12" name="bedroom" type="number">--}}
+                                {{--                                            @if ($errors->has('bedroom'))--}}
+                                {{--                                                <div id="formMessage" class="alert alert-danger">--}}
+                                {{--                                                    <strong>{{ $errors->first('bedroom') }}</strong>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            @endif--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="item form-group">--}}
+                                {{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số giường--}}
+                                {{--                                            ngủ<span--}}
+                                {{--                                                class="required">*</span>--}}
+                                {{--                                        </label>--}}
+                                {{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                            <input id="bed" value="{{$tour->bed}}"--}}
+                                {{--                                                   class="form-control col-md-7 col-xs-12" name="bed" type="number">--}}
+                                {{--                                            @if ($errors->has('bed'))--}}
+                                {{--                                                <div id="formMessage" class="alert alert-danger">--}}
+                                {{--                                                    <strong>{{ $errors->first('bed') }}</strong>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            @endif--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    @if($tour->type == \App\Models\Comforts::TO)--}}
+                                {{--                                        <div class="item form-group">--}}
+                                {{--                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số--}}
+                                {{--                                                nệm ngủ<span--}}
+                                {{--                                                    class="required">*</span>--}}
+                                {{--                                            </label>--}}
+                                {{--                                            <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                                <input id="mattress" value="{{$tour->mattress}}"--}}
+                                {{--                                                       class="form-control col-md-7 col-xs-12" name="mattress"--}}
+                                {{--                                                       type="number">--}}
+                                {{--                                                @if ($errors->has('mattress'))--}}
+                                {{--                                                    <div id="formMessage" class="alert alert-danger">--}}
+                                {{--                                                        <strong>{{ $errors->first('mattress') }}</strong>--}}
+                                {{--                                                    </div>--}}
+                                {{--                                                @endif--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    @endif--}}
+                                {{--                                    <div class="item form-group">--}}
+                                {{--                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Số phòng--}}
+                                {{--                                            tắm<span--}}
+                                {{--                                                class="required">*</span>--}}
+                                {{--                                        </label>--}}
+                                {{--                                        <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                            <input id="bathroom" value="{{$tour->bathroom}}"--}}
+                                {{--                                                   class="form-control col-md-7 col-xs-12" name="bathroom"--}}
+                                {{--                                                   type="number">--}}
+                                {{--                                            @if ($errors->has('bathroom'))--}}
+                                {{--                                                <div id="formMessage" class="alert alert-danger">--}}
+                                {{--                                                    <strong>{{ $errors->first('bathroom') }}</strong>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            @endif--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                @endif--}}
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Thuế và phí
                                         dịch vụ<span
@@ -465,67 +639,67 @@
                                 {{--                                        </select>--}}
                                 {{--                                    </div>--}}
                                 {{--                                </div>--}}
-{{--                                <div class="item form-group">--}}
-{{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Hiển thị trên--}}
-{{--                                        Flash Sale--}}
-{{--                                    </label>--}}
-{{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                        <select name="flash_sale" id="flash_sale" value="{{old('flash_sale')}}"--}}
-{{--                                                class="form-control">--}}
-{{--                                            <option value="1" {{$tour->flash_sale == 1 ? 'selected' : ''}}>Hiển thị--}}
-{{--                                            </option>--}}
-{{--                                            <option value="0" {{$tour->flash_sale == 0 ? 'selected' : ''}}>Không hiển--}}
-{{--                                                thị--}}
-{{--                                            </option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-                                @if($tour->type != \App\Models\Comforts::TO)
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Loại khách
-                                            sạn<span class="required">*</span>
-                                        </label>
-                                        <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <select class="form-control" name="rate"
-                                                    id="rate" required>
-                                                <option value="2" {{$tour->rate == 2 ? 'selected' : ''}}>2 Sao</option>
-                                                <option value="3" {{$tour->rate == 3 ? 'selected' : ''}}>3 Sao</option>
-                                                <option value="4" {{$tour->rate == 4 ? 'selected' : ''}}>4 Sao</option>
-                                                <option value="5" {{$tour->rate == 5 ? 'selected' : ''}}>5 Sao</option>
-                                            </select>
-                                        </div>
+                                {{--                                <div class="item form-group">--}}
+                                {{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Hiển thị trên--}}
+                                {{--                                        Flash Sale--}}
+                                {{--                                    </label>--}}
+                                {{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                        <select name="flash_sale" id="flash_sale" value="{{old('flash_sale')}}"--}}
+                                {{--                                                class="form-control">--}}
+                                {{--                                            <option value="1" {{$tour->flash_sale == 1 ? 'selected' : ''}}>Hiển thị--}}
+                                {{--                                            </option>--}}
+                                {{--                                            <option value="0" {{$tour->flash_sale == 0 ? 'selected' : ''}}>Không hiển--}}
+                                {{--                                                thị--}}
+                                {{--                                            </option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+                                {{--                                @if($tour->type != \App\Models\Comforts::TO)--}}
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Loại khách
+                                        sạn<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <select class="form-control" name="rate"
+                                                id="rate" required>
+                                            <option value="2" {{$tour->rate == 2 ? 'selected' : ''}}>2 Sao</option>
+                                            <option value="3" {{$tour->rate == 3 ? 'selected' : ''}}>3 Sao</option>
+                                            <option value="4" {{$tour->rate == 4 ? 'selected' : ''}}>4 Sao</option>
+                                            <option value="5" {{$tour->rate == 5 ? 'selected' : ''}}>5 Sao</option>
+                                        </select>
                                     </div>
-                                @endif
-{{--                                <div class="item form-group">--}}
-{{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Loại dịch--}}
-{{--                                        vụ<span class="required">*</span>--}}
-{{--                                    </label>--}}
-{{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
-{{--                                        <select class="form-control" name="type"--}}
-{{--                                                id="type" required>--}}
-{{--                                            <option--}}
-{{--                                                value="{{\App\Models\Comforts::KS}}" {{@$tour->type == \App\Models\Comforts::KS ? 'selected' : ''}}>--}}
-{{--                                                Khách sạn--}}
-{{--                                            </option>--}}
-{{--                                            <option--}}
-{{--                                                value="{{\App\Models\Comforts::TO}}" {{@$tour->type == \App\Models\Comforts::TO ? 'selected' : ''}}>--}}
-{{--                                                Villa--}}
-{{--                                            </option>--}}
-{{--                                            <option--}}
-{{--                                                value="{{\App\Models\Comforts::HS}}" {{@$tour->type == \App\Models\Comforts::HS ? 'selected' : ''}}>--}}
-{{--                                                Homestay--}}
-{{--                                            </option>--}}
-{{--                                            <option--}}
-{{--                                                value="{{\App\Models\Comforts::RS}}" {{@$tour->type == \App\Models\Comforts::RS ? 'selected' : ''}}>--}}
-{{--                                                Resort--}}
-{{--                                            </option>--}}
-{{--                                            <option--}}
-{{--                                                value="{{\App\Models\Comforts::DT}}" {{@$tour->type == \App\Models\Comforts::DT ? 'selected' : ''}}>--}}
-{{--                                                Du thuyền--}}
-{{--                                            </option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                </div>
+                                {{--                                @endif--}}
+                                {{--                                <div class="item form-group">--}}
+                                {{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Loại dịch--}}
+                                {{--                                        vụ<span class="required">*</span>--}}
+                                {{--                                    </label>--}}
+                                {{--                                    <div class="col-md-3 col-sm-6 col-xs-12">--}}
+                                {{--                                        <select class="form-control" name="type"--}}
+                                {{--                                                id="type" required>--}}
+                                {{--                                            <option--}}
+                                {{--                                                value="{{\App\Models\Comforts::KS}}" {{@$tour->type == \App\Models\Comforts::KS ? 'selected' : ''}}>--}}
+                                {{--                                                Khách sạn--}}
+                                {{--                                            </option>--}}
+                                {{--                                            <option--}}
+                                {{--                                                value="{{\App\Models\Comforts::TO}}" {{@$tour->type == \App\Models\Comforts::TO ? 'selected' : ''}}>--}}
+                                {{--                                                Villa--}}
+                                {{--                                            </option>--}}
+                                {{--                                            <option--}}
+                                {{--                                                value="{{\App\Models\Comforts::HS}}" {{@$tour->type == \App\Models\Comforts::HS ? 'selected' : ''}}>--}}
+                                {{--                                                Homestay--}}
+                                {{--                                            </option>--}}
+                                {{--                                            <option--}}
+                                {{--                                                value="{{\App\Models\Comforts::RS}}" {{@$tour->type == \App\Models\Comforts::RS ? 'selected' : ''}}>--}}
+                                {{--                                                Resort--}}
+                                {{--                                            </option>--}}
+                                {{--                                            <option--}}
+                                {{--                                                value="{{\App\Models\Comforts::DT}}" {{@$tour->type == \App\Models\Comforts::DT ? 'selected' : ''}}>--}}
+                                {{--                                                Du thuyền--}}
+                                {{--                                            </option>--}}
+                                {{--                                        </select>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Thứ tự hiển thị
                                     </label>
@@ -665,7 +839,7 @@
         });
     </script>
     <script type="text/javascript">
-        $("body").on('click', "a.delete-image", function () {
+        $("body").on('click', "a#delete_images", function () {
             let id = $(this).data('id');
             if (confirm("Bạn có chắc chắn muốn xóa ảnh này?")) {
                 $.ajax({
@@ -682,20 +856,30 @@
         });
 
         function preview_image() {
-            var total_file = document.getElementById("upload_file").files.length;
-            for (var i = 0; i < total_file; i++) {
-                $('#image_preview, #upload-new-image').append(
-                    "<div class='col-sm-2 col-md-3'>" +
-                    "<img class='img_upload remove-img' data-id='" + i + "' src='" + URL.createObjectURL(document.getElementById("upload_file").files[i]) + "'>" +
-                    "</div>"
-                );
+            let fileInput = document.getElementById("upload_file");
+            let files = fileInput.files;
+            let previewContainer = $('#image_preview');
+
+            // previewContainer.empty(); // Xóa preview cũ trước khi render mới
+
+            for (let i = 0; i < files.length; i++) {
+                let imgUrl = URL.createObjectURL(files[i]);
+
+                previewContainer.append(`
+            <div class="col-sm-2 col-md-3 image-item" data-id="${i}" style="position: relative; margin-bottom: 15px;">
+                <img class="img_upload" src="${imgUrl}" style="width: 100%; height: auto; border: 1px solid #ddd; padding: 4px; margin-bottom: 5px;">
+                <input type="text" name="alts_new[]" class="form-control mb-2" placeholder="Nhập alt cho ảnh">
+                <input type="text" name="titles_new[]" class="form-control mb-2" placeholder="Nhập title cho ảnh">
+                <button type="button" class="remove-img btn btn-danger btn-sm mt-1">Xóa</button>
+            </div>
+        `);
             }
         }
 
-        $("body").on('click', "img.remove-img", function () {
-            let confirm = ConfirmDelete();
-            if (confirm) {
-                $(this).remove();
+
+        $("body").on('click', ".remove-img", function () {
+            if (confirm("Bạn có chắc muốn xóa ảnh này không?")) {
+                $(this).closest('.image-item').remove(); // Xóa cả khối ảnh
             }
         });
 

@@ -25,6 +25,7 @@ class UsersController extends Controller
             return redirect('/dashboard');
         }
         $users = User::orderBy('role', 'asc')->get();
+
         return view('backend.users.index', compact('users'));
     }
 

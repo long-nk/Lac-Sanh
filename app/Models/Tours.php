@@ -28,7 +28,13 @@ class Tours extends Model
         'surcharge',
         'vat',
         'sort',
-        'status'
+        'status',
+        'title_seo',
+        'user_update_id',
+        'script',
+        'summary',
+        'alt',
+        'meta'
     ];
 
     public function images()

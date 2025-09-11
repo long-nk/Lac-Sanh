@@ -7,12 +7,15 @@ use App\Models\Comforts;
 use App\Models\Contents;
 use App\Models\HotelAreas;
 use App\Models\HotelComforts;
+use App\Models\HotelImages;
 use App\Models\Locations;
 use App\Models\TourImages;
 use App\Models\Tours;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 
 class ToursController extends Controller
@@ -56,7 +59,6 @@ class ToursController extends Controller
         $data = [
             'name' => $name,
             'location_id' => $request->location_id,
-            'slug' => Str::slug($name, '-'),
             'address' => ltrim($request->address),
             'video' => $request->video,
             'price' => $request->price,
@@ -71,70 +73,100 @@ class ToursController extends Controller
             'surcharge' => $request->surcharge,
             'vat' => $request->vat,
             'sort' => $request->sort ?? 100,
-            'status' => $request->status
+            'status' => $request->status,
+            'title_seo' => $request->title_seo,
+            'slug' => $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->title_seo, '-'),
+            'summary' => $request->summary,
+            'user_update_id' => Auth::user()->id,
+            'script' => $request->script,
+            'alt' => $request->alt ?? null,
+            'meta' => $request->meta ?? null,
         ];
 
-        $validator = \Validator::make($data, [
-            'name' => 'required|max:255',
+        $request->validate([
+            'name' => [
+                'required',
+                Rule::unique('tours', 'name'),
+            ],
+            'title_seo' => [
+                'required',
+                Rule::unique('tours', 'title_seo'),
+            ],
+            'slug' => [
+                'required',
+                Rule::unique('tours', 'slug'),
+            ],
+//            'faqs' => 'array',
+//            'faqs.*.question' => 'required|string|max:255',
+//            'faqs.*.answer' => 'nullable|string|max:1000',
+        ], [
+            'name.required' => 'Tên tour không được để trống.',
+            'name.unique' => 'Tên tour đã tồn tại.',
+            'title_seo.required' => 'Tiêu đề SEO không được để trống.',
+            'title_seo.unique' => 'Tiêu đề SEO này đã tồn tại.',
+            'slug.required' => 'Đường dẫn (slug) không được để trống.',
+            'slug.unique' => 'Đường dẫn (slug) này đã tồn tại.',
+//            'faqs.*.question.required' => 'Câu hỏi không được để trống.',
+//            'faqs.*.answer.required' => 'Câu trả lời không được để trống.',
         ]);
 
-        $category = '';
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi tạo, vui lòng tạo lại');
-        } else {
-            try {
-                \DB::beginTransaction();
+        try {
+            \DB::beginTransaction();
 
-                $tour = Tours::create($data);
+            $tour = Tours::create($data);
 
-                $image = $request->image;
-                $name = $image->getClientOriginalName();
-                $images[] = $name;
-                $extensionImage = $image->extension();
-                $image_name = "tour_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
-                $image->move('images/uploads/tours/', $image_name);
-                $pathImage = public_path('images/uploads/tours/' . $image_name);
-                $imageNew = Image::make($pathImage);
-                $imageItem = [
-                    'tour_id' => $tour->id,
-                    'name' => $image_name,
-                    'mime' => $image->getClientMimeType(),
-                    'path' => 'tours'
-                ];
-                $thumbsPathImage = public_path('images/uploads/thumbs/' . $image_name);
-                $widthImg = $imageNew->width();
-                $heightImg = $imageNew->height();
-                $wResize = Contents::WIDTH_THUMBS;
-                $hResize = ($wResize * $heightImg) / $widthImg;
-                $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
-                TourImages::create($imageItem);
+            $image = $request->image;
+            $name = $image->getClientOriginalName();
+            $images[] = $name;
+            $extensionImage = $image->extension();
+            $image_name = "tour_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
+            $image->move('images/uploads/tours/', $image_name);
+            $pathImage = public_path('images/uploads/tours/' . $image_name);
+            $imageNew = Image::make($pathImage);
+            $imageItem = [
+                'tour_id' => $tour->id,
+                'name' => $image_name,
+                'mime' => $image->getClientMimeType(),
+                'path' => 'tours',
+            ];
+            $thumbsPathImage = public_path('images/uploads/thumbs/' . $image_name);
+            $widthImg = $imageNew->width();
+            $heightImg = $imageNew->height();
+            $wResize = Contents::WIDTH_THUMBS;
+            $hResize = ($wResize * $heightImg) / $widthImg;
+            $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
+            TourImages::create($imageItem);
 
-                $images = array();
-                if ($request->hasFile('images')) {
-                    $files = $request->file('images');
-                    foreach ($files as $item) {
-                        $name = $item->getClientOriginalName();
-                        $images[] = $name;
-                        $extensionImage = $item->extension();
-                        $image_name = "tour_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
-                        $item->move('images/uploads/tours/', $image_name);
-                        $pathImage = public_path('images/uploads/tours/' . $image_name);
-                        $imageNew = Image::make($pathImage);
-                        $imageItem = [
-                            'tour_id' => $tour->id,
-                            'name' => $image_name,
-                            'mime' => $image->getClientMimeType(),
-                            'path' => 'tours'
-                        ];
-                        $thumbsPathImage = public_path('images/uploads/thumbs/' . $image_name);
-                        $widthImg = $imageNew->width();
-                        $heightImg = $imageNew->height();
-                        $wResize = Contents::WIDTH_THUMBS;
-                        $hResize = ($wResize * $heightImg) / $widthImg;
-                        $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
-                        TourImages::create($imageItem);
-                    }
+            $images = array();
+            if ($request->hasFile('images')) {
+                $files = $request->file('images');
+                $alts = $request->input('alts', []);
+                $titles = $request->input('titles', []);
+                foreach ($files as $index => $item) {
+                    $name = $item->getClientOriginalName();
+                    $images[] = $name;
+                    $extensionImage = $item->extension();
+                    $image_name = "tour_" . rand(10000, mt_getrandmax()) . '_' . rand(10000, mt_getrandmax()) . '.' . $extensionImage;
+                    $item->move('images/uploads/tours/', $image_name);
+                    $pathImage = public_path('images/uploads/tours/' . $image_name);
+                    $imageNew = Image::make($pathImage);
+                    $imageItem = [
+                        'tour_id' => $tour->id,
+                        'name' => $image_name,
+                        'mime' => $image->getClientMimeType(),
+                        'path' => 'tours',
+                        'alt' => $alts[$index] ?? null,
+                        'meta' => $titles[$index] ?? null,
+                    ];
+                    $thumbsPathImage = public_path('images/uploads/thumbs/' . $image_name);
+                    $widthImg = $imageNew->width();
+                    $heightImg = $imageNew->height();
+                    $wResize = Contents::WIDTH_THUMBS;
+                    $hResize = ($wResize * $heightImg) / $widthImg;
+                    $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
+                    TourImages::create($imageItem);
                 }
+            }
 
 //                if(!empty($list_comfort)) {
 //                    foreach ($list_comfort as $item => $value) {
@@ -167,13 +199,13 @@ class ToursController extends Controller
 //                }
 
 
-                \DB::commit();
-                return redirect()->route('tours.index')->with('message-success', 'Thêm mới tour thành công!');
-            } catch (\Exception $e) {
-                \Log::error($e->getMessage());
-                \DB::rollback();
-                return redirect()->back()->withInput()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau!');
-            }
+            \DB::commit();
+            return redirect()->route('tours.index')->with('message-success', 'Thêm mới tour thành công!');
+        } catch (\Exception $e) {
+            dd($e);
+            \Log::error($e->getMessage());
+            \DB::rollback();
+            return redirect()->back()->withInput()->with('message-error', 'Lỗi khi tạo, vui lòng thử lại sau!');
         }
     }
 
@@ -214,11 +246,12 @@ class ToursController extends Controller
 
         $name = $request->name;
 
-
         $data = [
             'name' => $name,
             'location_id' => $request->location_id,
-            'slug' => Str::slug($name, '-'),
+            'title_seo' => $request->title_seo,
+            'slug' => $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->title_seo, '-'),
+            'summary' => $request->summary,
             'address' => ltrim($request->address),
             'video' => $request->video,
             'price' => $request->price,
@@ -233,15 +266,40 @@ class ToursController extends Controller
             'surcharge' => $request->surcharge,
             'vat' => $request->vat,
             'sort' => $request->sort ?? 100,
-            'status' => $request->status
+            'status' => $request->status,
+            'script' => $request->script,
+            'alt' => $request->alt,
+            'meta' => $request->meta,
         ];
+
+        $request->validate([
+            'name' => [
+                'required',
+                Rule::unique('tours', 'name')->ignore($tour->id),
+            ],
+            'title_seo' => [
+                'required',
+                Rule::unique('tours', 'title_seo')->ignore($tour->id),
+            ],
+            'slug' => [
+                'required',
+                Rule::unique('tours', 'slug')->ignore($tour->id),
+            ],
+        ], [
+            'name.required' => 'Tên tour không được để trống.',
+            'name.unique' => 'Tên tour đã tồn tại.',
+            'title_seo.required' => 'Tiêu đề SEO không được để trống.',
+            'title_seo.unique' => 'Tiêu đề SEO này đã tồn tại.',
+            'slug.required' => 'Đường dẫn (slug) không được để trống.',
+            'slug.unique' => 'Đường dẫn (slug) này đã tồn tại.',
+        ]);
 
         try {
             \DB::beginTransaction();
             $image = $request->image;
             $imageOld = TourImages::where('tour_id', $tour->id)->first();
 
-            if($image && $imageOld) {
+            if ($image && $imageOld) {
                 $name = $image->getClientOriginalName();
                 $images[] = $name;
                 $extensionImage = $image->extension();
@@ -252,7 +310,9 @@ class ToursController extends Controller
                     'name' => $image_name,
                     'mime' => $image->getClientMimeType(),
                     'size' => $image->getSize(),
-                    'path' => 'tours'
+                    'path' => 'tours',
+                    'alt' => $request->alt ?? null,
+                    'meta' => $request->meta ?? null,
                 ];
                 $image->move('images/uploads/tours/', $image_name);
 
@@ -286,7 +346,9 @@ class ToursController extends Controller
             $images = array();
             if ($request->hasFile('images')) {
                 $files = $request->file('images');
-                foreach ($files as $item) {
+                $altsNew = $request->input('alts_new', []);
+                $titlesNew = $request->input('titles_new', []);
+                foreach ($files as $index => $item) {
                     $name = $item->getClientOriginalName();
                     $images[] = $name;
                     $extensionImage = $item->extension();
@@ -297,7 +359,9 @@ class ToursController extends Controller
                         'name' => $image_name,
                         'mime' => $item->getClientMimeType(),
                         'size' => $item->getSize(),
-                        'path' => 'tours'
+                        'path' => 'tours',
+                        'alt' => $altsNew[$index] ?? null,
+                        'meta' => $titlesNew[$index] ?? null,
                     ];
                     $item->move('images/uploads/tours/', $image_name);
 
@@ -310,6 +374,16 @@ class ToursController extends Controller
                     $hResize = ($wResize * $heightImg) / $widthImg;
                     $imageNew->resize($wResize, $hResize)->save($thumbsPathImage);
                     TourImages::create($imageItem);
+                }
+            } else {
+                // Chỉ update alt/meta cho ảnh cũ nếu không có file mới
+                foreach ($request->input('alts', []) as $id => $alt) {
+                    $image = TourImages::find($id);
+                    if ($image) {
+                        $image->alt = $alt;
+                        $image->meta = $request->input('titles.' . $id);
+                        $image->save();
+                    }
                 }
             }
 
@@ -336,14 +410,14 @@ class ToursController extends Controller
         try {
             \DB::beginTransaction();
             $tour = Tours::find($id);
-            if($tour) {
-                foreach($tour->images as $image) {
+            if ($tour) {
+                foreach ($tour->images as $image) {
                     $filePath = public_path('images/uploads/' . $image->path . '/' . $image->name);
                     $thumbPath = public_path('images/uploads/thumbs/' . $image->name);
-                    if(File::exists($filePath)) {
+                    if (File::exists($filePath)) {
                         File::delete($filePath);
                     }
-                    if(File::exists($thumbPath)) {
+                    if (File::exists($thumbPath)) {
                         File::delete($thumbPath);
                     }
                 }
@@ -375,10 +449,10 @@ class ToursController extends Controller
         }
         $filePath = public_path('images/uploads/' . $image->path . '/' . $image->name);
         $thumbPath = public_path('images/uploads/thumbs/' . $image->name);
-        if(File::exists($filePath)) {
+        if (File::exists($filePath)) {
             File::delete($filePath);
         }
-        if(File::exists($thumbPath)) {
+        if (File::exists($thumbPath)) {
             File::delete($thumbPath);
         }
         $image->delete();

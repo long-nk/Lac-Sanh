@@ -58,10 +58,10 @@ class SitemapsController extends Controller
             // Di chuyển file vào thư mục public và đổi tên thành sitemap.xml
             $file->move(public_path(), 'sitemap.xml');
 
-            return redirect()->back()->withInput()->with('message-success', 'Cập nhật sitemap thành công!');
+            return redirect()->back()->with('message-success', 'Cập nhật sitemap thành công!');
         } catch (\Exception $e) {
             Log::error('Lỗi cập nhật sitemap ' . $e->getMessage());
-            return redirect()->back()->withInput()->with('message-error' . $e->getMessage());
+            return redirect()->back()->with('message-error' . $e->getMessage());
         }
     }
 
@@ -115,14 +115,14 @@ class SitemapsController extends Controller
 
             if (File::exists($filePath)) {
                 File::delete($filePath);
-                return redirect()->back()->withInput()->with('message-success', 'Đã xóa sitemap.xml thành công!');
+                return redirect()->back()->with('message-success', 'Đã xóa sitemap.xml thành công!');
             } else {
-                return redirect()->back()->withInput()->with('message-error', 'File sitemap.xml không tồn tại!');
+                return redirect()->back()->with('message-error', 'File sitemap.xml không tồn tại!');
             }
 
         } catch (\Exception $e) {
             Log::error('Lỗi xóa sitemap.xml: ' . $e->getMessage());
-            return redirect()->back()->withInput()->with('message-error', 'Lỗi xóa sitemap.xml: ' . $e->getMessage());
+            return redirect()->back()->with('message-error', 'Lỗi xóa sitemap.xml: ' . $e->getMessage());
         }
     }
 }

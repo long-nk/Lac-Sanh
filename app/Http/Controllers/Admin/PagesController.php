@@ -156,7 +156,7 @@ class PagesController extends Controller
             $news->save();
 
             DB::commit();
-            return redirect()->back()->withInput()->with('message-success', 'Cập nhật thành công!');
+            return redirect()->route('pages.index')->with('message-success', 'Cập nhật thành công!');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             DB::rollback();
@@ -176,14 +176,14 @@ class PagesController extends Controller
             $content = Pages::find($id);
 
             if (empty($content)) {
-                return redirect()->back()->withInput()->with('message-error', 'Không tìm thấy trang!');
+                return redirect()->back()->with('message-error', 'Không tìm thấy trang!');
             }
 
             $content->delete();
-            return redirect()->back()->withInput()->with('message-success', 'Xóa trang thành công!');
+            return redirect()->back()->with('message-success', 'Xóa trang thành công!');
         } catch (\Exception $exeption) {
             Log::error($exeption->getMessage());
-            return redirect()->back()->withInput()->with('message-error', $exeption->getMessage());
+            return redirect()->back()->with('message-error', $exeption->getMessage());
         }
 
     }
