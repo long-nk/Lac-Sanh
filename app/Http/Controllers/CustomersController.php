@@ -67,24 +67,29 @@ class CustomersController extends BaseController
     public function postRegister(Request $request)
     {
 
-        $check = Customers::where('email', $request->email)->first();
-        if (!$check) {
-            $data = [
-                'name' => $request->username,
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'password' => bcrypt($request->password),
-            ];
+        try {
+            $check = Customers::where('email', $request->email)->first();
+            if (!$check) {
+                $data = [
+                    'name' => $request->username,
+                    'email' => $request->email,
+                    'phone_number' => $request->phone_number,
+                    'password' => bcrypt($request->password),
+                ];
 
-            try {
-                Mail::to($request->email)->send(new MailRegisterSuccess($data));
-            } catch (\Exception $e) {
-                return redirect()->back()->withInput()->with('message-error', 'Email không tồn tại, vui lòng nhập email chính xác!');
+                try {
+                    Mail::to($request->email)->send(new MailRegisterSuccess($data));
+                } catch (\Exception $e) {
+                    return redirect()->back()->withInput()->with('message-error', 'Email không tồn tại, vui lòng nhập email chính xác!');
+                }
+                Customers::create($data);
+                return redirect()->back()->withInput()->with('message-success', 'Đăng ký tài khoản thành công! Vui lòng kích hoạt tài khoản để đăng nhập');
             }
-            Customers::create($data);
-            return redirect()->back()->withInput()->with('message-success', 'Đăng ký tài khoản thành công! Vui lòng kích hoạt tài khoản để đăng nhập');
+            return redirect()->back()->withInput()->with('message-error', 'Email đã được đăng ký!');
+        } catch(\Exception $e) {
+            \Log::error($e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi đăng ký, vui lòng thử lại sau!');
         }
-        return redirect()->back()->withInput()->with('message-error', 'Email đã được đăng ký!');
 
     }
 
@@ -96,7 +101,7 @@ class CustomersController extends BaseController
     public function logout(Request $request)
     {
         $request->session()->flush();
-        return redirect()->intended(url()->previous())->with('message-success', 'Đăng nhập thành công!');
+        return redirect()->intended(url()->previous())->with('message-success', 'Đăng xuất thành công!');
     }
 
     public function postLogin(Request $request)
@@ -190,7 +195,9 @@ class CustomersController extends BaseController
     {
         $customer = Customers::where('email', $request->email)->first();
         if ($customer) {
-            $password = uniqid();
+            // Tạo mật khẩu 6 ký tự ngẫu nhiên (gồm chữ + số)
+            $password = Str::upper(Str::random(6));
+
             $customer->password = bcrypt($password);
             if ($customer->save()) {
                 $data = [

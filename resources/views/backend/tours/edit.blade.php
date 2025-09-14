@@ -360,7 +360,7 @@
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="text">Demo
                                     </label>
-                                    @php $type = 'khach-san'; @endphp
+                                    @php $type = 'tour'; @endphp
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="google-preview"
                                              style="text-align:left;margin-top: 20px; border: 1px solid #ddd; padding: 15px; background: #fff;">
@@ -656,8 +656,7 @@
                                 {{--                                </div>--}}
                                 {{--                                @if($tour->type != \App\Models\Comforts::TO)--}}
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Loại khách
-                                        sạn<span class="required">*</span>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Hạng tour<span class="required">*</span>
                                     </label>
                                     <div class="col-md-3 col-sm-6 col-xs-12">
                                         <select class="form-control" name="rate"
@@ -711,6 +710,20 @@
                                                 <strong>{{ $errors->first('sort') }}</strong>
                                             </div>
                                         @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Hiển thị trang chủ
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <select name="hot" id="hot" value="{{old('hot')}}"
+                                                class="form-control">
+                                            <option value="1" {{$tour->hot == 1 ? 'selected' : ''}}>Hiển thị
+                                            </option>
+                                            <option value="0" {{$tour->hot == 0 ? 'selected' : ''}}>Không hiển thị
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="item form-group">

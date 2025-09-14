@@ -710,7 +710,7 @@
                                     <li><a href="{{url('admin/users')}}"><i class="fa fa-users"></i> Quản lý người dùng</a>
                                     </li>
                                 @endif
-                                <li><a href="{{route('info.index')}}"><i class="fa fa-gears"></i> Cài đặt</a></li>
+                                <li><a href="{{route('info.index')}}"><i class="fa fa-gears"></i> Cẩu hình website</a></li>
                             </ul>
                         @endif
                     </div>

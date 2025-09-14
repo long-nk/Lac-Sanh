@@ -748,6 +748,20 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Hiển thị trang chủ
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <select name="hot" id="hot" value="{{old('hot')}}"
+                                                class="form-control">
+                                            <option value="1" {{$hotel->hot == 1 ? 'selected' : ''}}>Hiển thị
+                                            </option>
+                                            <option value="0" {{$hotel->hot == 0 ? 'selected' : ''}}>Không hiển thị
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Trạng thái
                                         <span class="required">*</span>
                                     </label>

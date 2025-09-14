@@ -159,8 +159,10 @@ class LocactionsController extends Controller
 
             $path = "images/uploads/locations";
             $image = $request->image;
-            if ($image && $location->image != "") {
-                File::delete($location->image);
+            if ($image) {
+                if (\Illuminate\Support\Facades\File::exists($location->image)) {
+                    File::delete($location->image);
+                }
                 $extension = $image->extension();
                 $file_name = "location_" . time() . '.' . $extension;
                 $file_path = $path . '/' . $file_name;

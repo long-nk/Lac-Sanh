@@ -39,10 +39,11 @@
                                     <th class="text-center" width="5%">STT</th>
                                     <th class="text-center" width="10%">Tên trang</th>
                                     <th class="text-center" width="15%">Link check</th>
+                                    <th class="text-center" width="15%">Hình ảnh</th>
                                     <th class="text-center" width="15%">Tiêu đề SEO</th>
                                     <th class="text-center" width="25%">Meta description</th>
-                                    <th class="text-center" width="10%">Thêm lúc</th>
-                                    <th class="text-center" width="10%">Cập nhật</th>
+{{--                                    <th class="text-center" width="10%">Thêm lúc</th>--}}
+{{--                                    <th class="text-center" width="10%">Cập nhật</th>--}}
                                     <th class="text-center" width="10%">Cập nhật cuối</th>
 {{--                                    <th class="text-center" width="10%">Thứ tự</th>--}}
                                     <th class="text-center" width="10%">Trạng thái</th>
@@ -62,17 +63,20 @@
                                                 {{$content->link}}
                                             </td>
                                             <td class="text-center">
+                                                <img src="{{asset($content->image)}}" style="max-width:150px" alt="">
+                                            </td>
+                                            <td class="text-center">
                                                 {!!$content->title_seo!!}
                                             </td>
                                             <td class="text-center">
                                                 {!!$content->summary!!}
                                             </td>
-                                            <td class="text-center">
-                                                {{Carbon\Carbon::parse($content->created_at)->format('H:i d/m/Y')}}
-                                            </td>
-                                            <td class="text-center">
-                                                {{Carbon\Carbon::parse($content->updated_at)->format('H:i d/m/Y')}}
-                                            </td>
+{{--                                            <td class="text-center">--}}
+{{--                                                {{Carbon\Carbon::parse($content->created_at)->format('H:i d/m/Y')}}--}}
+{{--                                            </td>--}}
+{{--                                            <td class="text-center">--}}
+{{--                                                {{Carbon\Carbon::parse($content->updated_at)->format('H:i d/m/Y')}}--}}
+{{--                                            </td>--}}
                                             <td class="text-center">
                                                 {{@$content->userUpdate->name}}
                                             </td>

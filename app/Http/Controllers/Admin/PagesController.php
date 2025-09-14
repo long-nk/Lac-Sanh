@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use File;
+use Image;
 
 class PagesController extends Controller
 {
@@ -67,6 +69,16 @@ class PagesController extends Controller
 
         try {
             DB::beginTransaction();
+            $path = "images/uploads/pages";
+            $image = $request->image;
+            $file_path = "";
+            if ($request->image) {
+                $extension = $image->extension();
+                $file_name = "page_" . time() . '.' . $extension;
+                $file_path = $path . '/' . $file_name;
+                $image->move($path . '/', $file_name);
+                $data['image'] = $file_path;
+            }
             Pages::create($data);
             DB::commit();
             return redirect()->route('pages.index')->with('message-success', 'Thêm mới thành công');
@@ -144,6 +156,18 @@ class PagesController extends Controller
         try {
             DB::beginTransaction();
             $news = Pages::find($request->id);
+
+            $path = "images/uploads/pages";
+            $image = $request->image;
+            if ($image) {
+                if (File::exists($news->image)) {
+                    File::delete($news->image);
+                }
+                $file_name = "page_" . time();
+                $file_path = $path . '/' . $file_name;
+                $image->move($path . '/', $file_name);
+                $news->image = $file_path;
+            }
 
             $news->title = $data['title'];
             $news->title_seo = $data['title_seo'];

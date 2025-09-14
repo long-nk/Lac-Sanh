@@ -27,7 +27,19 @@ class HotelsController extends Controller
 {
     public function index()
     {
-
+        try {
+            $banners = Banner::where('status', Banner::IS_ACTIVE)->where('type', '=', Banner::TYPE_BANNER)->orderBy('sort', 'asc')->get();
+            $vouchers = Vouchers::where('status', 1)->get();
+            $locations = Locations::where('region', Locations::REGION_IN)->where('status', 1)->limit(4)->get();
+            $locationHots = Locations::where('region', Locations::REGION_IN)->where('status', 1)->where('check', 1)->limit(4)->get();
+            $hotels = Hotels::where('status', 1)->orderBy('created_at', 'desc')->limit(9)->get();
+            $hotelPopulars = Hotels::where('status', 1)->orderBy('rate', 'desc')->where('type', Comforts::KS)->limit(12)->get();
+            $hotelHots = Hotels::where('status', 1)->orderBy('price', 'asc')->where('type', Comforts::KS)->limit(8)->get();
+            return view('frontend.hotels.index', compact('banners', 'vouchers', 'locations', 'locationHots'));
+        } catch(\Exception $e) {
+            \Log::error($e->getMessage());
+            return redirect()->back()->with('message-error', 'Chức năng hiện không khả dụng, vui lòng thử lại sau!');
+        }
     }
 
     public function search(Request $request)
@@ -187,67 +199,34 @@ class HotelsController extends Controller
         }
     }
 
-    public function list($type)
+    public function list()
     {
         try {
-            $title = '';
-            $t = '';
-            $listVoucher = [];
-            if ($type == 'khach-san') {
-                $title = 'Khách sạn';
-                $t = Comforts::KS;
-                $listVoucher = Vouchers::where('status', 1)->where('hotel', 1)->get();
-            } elseif ($type == 'villa') {
-                $title = 'Villa';
-                $t = Comforts::TO;
-                $listVoucher = Vouchers::where('status', 1)->where('villa', 1)->get();
-            } elseif ($type == 'homestay') {
-                $title = 'Homestay';
-                $t = Comforts::HS;
-                $listVoucher = Vouchers::where('status', 1)->where('homestay', 1)->get();
-            } elseif ($type == 'resort') {
-                $title = 'Resort';
-                $t = Comforts::RS;
-                $listVoucher = Vouchers::where('status', 1)->where('resort', 1)->get();
-            } elseif ($type == 'du-thuyen') {
-                $title = 'Du thuyền';
-                $t = Comforts::DT;
-                $listVoucher = Vouchers::where('status', 1)->where('yacht', 1)->get();
-            }
-
-            if ($t == '') {
-                $title = 'Khách sạn';
-                $t = Comforts::KS;
-            }
-            $hotels = Hotels::where('status', 1)->where('type', $t)->orderBy('sort')->orderBy('created_at', 'desc')->limit(16)->get();
-            $hotelPopulars = Hotels::where('status', 1)->orderBy('rate', 'desc')->where('type', $t)->limit(16)->get();
-            $hotelHots = Hotels::where('status', 1)->orderBy('sort')->orderByRaw('CAST(price AS UNSIGNED) ASC')->where('type', $t)->limit(8)->get();
-            $flashSales = Hotels::where('status', 1)->where('type', $t)->where('flash_sale', 1)
-                ->orderBy('created_at', 'desc')->limit(12)->get();
+            $vouchers = Vouchers::where('status', 1)->where('hotel', 1)->get();
+            $hotelPopulars = Hotels::where('status', 1)->orderBy('rate', 'desc')->limit(16)->get();
+            $hotelHots = Hotels::where('status', 1)->orderBy('sort')->orderByRaw('CAST(price AS UNSIGNED) ASC')->limit(8)->get();
+            $locationHots = Locations::where('status', 1)
+                ->whereHas('hotels', function ($query) {
+                    $query->where('status', 1);
+                })
+                ->where('check', 1)
+                ->orderBy('sort', 'asc')
+                ->get();
             $listLocation = Locations::where('status', 1)
-                ->whereHas('hotels', function ($query) use ($t) {
-                    $query->where('type', $t)->where('status', 1);
+                ->whereHas('hotels', function ($query) {
+                    $query->where('status', 1);
                 })
                 ->orderBy('sort', 'asc')
                 ->get();
             $banners = Banner::where('status', Banner::IS_ACTIVE)->where('type', '=', Banner::TYPE_BANNER)->orderBy('sort')->get();
-            if (!session()->has('formData')) {
-                session(['formData' => [
-                    'type' => @$t,
-                ]]);
-            } else {
-                $formData = Session::get('formData', []);
-                $formData['type'] = @$t;
 
-                Session::put('formData', $formData);
-            }
+            return view('frontend.hotels.index', compact( 'vouchers',
+                'listLocation', 'hotelHots', 'hotelPopulars', 'banners', 'locationHots'));
 
-
-            return view('frontend.hotels.index', compact('hotels', 'type', 'title', 'flashSales', 'listVoucher',
-                'listLocation', 'hotelHots', 'hotelPopulars', 't', 'banners'));
-
-        } catch (Exception $e) {
-            return redirect()->back();
+        } catch(\Exception $e) {
+            dd($e);
+            \Log::error($e->getMessage());
+            return redirect()->back()->with('message-error', 'Chức năng hiện không khả dụng, vui lòng thử lại sau!');
         }
 
     }
@@ -275,7 +254,7 @@ class HotelsController extends Controller
 
         $listComfortHotel = Comforts::where('type', $t)->where('status', 1)->get();
 
-        $hotels = Hotels::where('status', 1)->where('type', $t)->orderBy('type', 'asc')->orderBy('created_at', 'desc')->paginate(10);
+        $hotels = Hotels::where('status', 1)->orderBy('type', 'asc')->orderBy('created_at', 'desc')->paginate(10);
         return view('frontend.hotels.list', compact('hotels', 'type', 'title', 'listComfortHotel'));
     }
 
@@ -457,27 +436,27 @@ class HotelsController extends Controller
         if ($type == 'khach-san') {
             $title = 'khách sạn';
             $t = Comforts::KS;
-            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->where('type', $t)->orderBy('sort')
+            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->orderBy('sort')
                 ->orderBy('created_at', 'desc')->paginate(10);
         } else if ($type == 'villa') {
             $title = 'villa';
             $t = Comforts::TO;
-            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->where('type', $t)->orderBy('sort')
+            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->orderBy('sort')
                 ->orderBy('created_at', 'desc')->paginate(10);
         } else if ($type == 'homestay') {
             $title = 'homestay';
             $t = Comforts::HS;
-            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->where('type', $t)->orderBy('sort')
+            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->orderBy('sort')
                 ->orderBy('created_at', 'desc')->paginate(10);
         } else if ($type == 'resort') {
             $title = 'resort';
             $t = Comforts::RS;
-            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->where('type', $t)->orderBy('sort')
+            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->orderBy('sort')
                 ->orderBy('created_at', 'desc')->paginate(10);
         } else if ($type == 'du-thuyen') {
             $title = 'du thuyền';
             $t = Comforts::DT;
-            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->where('type', $t)->orderBy('sort')
+            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->orderBy('sort')
                 ->orderBy('created_at', 'desc')->paginate(10);
         } else {
             $title = 'dịch vụ';
@@ -755,10 +734,10 @@ class HotelsController extends Controller
 
         $location = Locations::where('slug', $request->location)->where('status', 1)->first();
         if (empty($location)) {
-            $hotels = Hotels::where('status', 1)->where('type', $t)->orderBy('sort')->orderBy('created_at', 'desc')
+            $hotels = Hotels::where('status', 1)->orderBy('sort')->orderBy('created_at', 'desc')
                 ->limit(12)->get();
         } else {
-            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->where('type', $t)->orderBy('sort')->orderBy('created_at', 'desc')
+            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->orderBy('sort')->orderBy('created_at', 'desc')
                 ->limit(12)->get();
         }
 

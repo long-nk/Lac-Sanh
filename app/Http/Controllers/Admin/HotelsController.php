@@ -120,6 +120,7 @@ class HotelsController extends Controller
             'script' => $request->script,
             'alt' => $request->alt ?? null,
             'meta' => $request->meta ?? null,
+            'hot' => $request->hot ?? null
         ];
 
         $list_comfort = [];
@@ -306,6 +307,7 @@ class HotelsController extends Controller
             'script' => $request->script,
             'alt' => $request->alt,
             'meta' => $request->meta,
+            'hot' => $request->hot ?? null
         ];
 
         $request->validate([

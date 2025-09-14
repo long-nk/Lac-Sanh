@@ -233,7 +233,6 @@ class IntroducesController extends Controller
 //            'slug' => $request->slug ?  Str::slug($request->slug, '-') : Str::slug($request->title, '-'),
             'status' => $request->get('status'),
             'content' => $request->get('content'),
-            'sort' => (int) ($request->get('sort') ?? 1),
         ];
 
         try {

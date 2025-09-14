@@ -48,8 +48,9 @@ class VouchersController extends Controller
             'term' => $request->term,
             'status' => $request->status,
             'start_date' => $request->start_date,
-            'time' => $request->time,
+            'end_date' => $request->end_date,
             'number' => $request->number,
+            'used' => $request->used,
             'cost' => $request->cost
         ];
 
@@ -160,8 +161,9 @@ class VouchersController extends Controller
             'percent' => $request->percent,
             'term' => $request->term,
             'start_date' => $request->start_date,
-            'time' => $request->time,
+            'end_date' => $request->end_date,
             'number' => $request->number,
+            'used' => $request->used,
             'cost' => $request->cost
         ];
 

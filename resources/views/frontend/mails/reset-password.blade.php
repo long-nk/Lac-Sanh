@@ -1,99 +1,105 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-    <title>Laravel</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="color-scheme" content="light">
-    <meta name="supported-color-schemes" content="light">
+    <meta charset="UTF-8">
+    <title>{{ $pageInfo->name }} - Đăng ký tài khoản thành công</title>
     <style>
-        @media only screen and (max-width: 600px) {
-            .inner-body {
-                width: 100% !important;
-            }
-
-            .footer {
-                width: 100% !important;
-            }
+        p a {
+            font-family: "Montserrat", sans-serif !important;
+            font-size: 14px !important;
+            color: #7d7d7d !important;
+            text-decoration: none;
         }
 
-        @media only screen and (max-width: 500px) {
-            .button {
-                width: 100% !important;
+        strong a {
+            color: #1e1e1e !important;
+            text-decoration: none;
+        }
+
+        .im {
+            font-family: "Montserrat", sans-serif !important;
+            color: #1e1e1e !important;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .main-wrapper {
+                background-color: #f8fafd !important;
+                padding-top: 0px !important;
             }
         }
     </style>
 </head>
-<body
-    style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -webkit-text-size-adjust: none; background-color: #ffffff; color: #718096; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
+<body style="margin:0; padding:0; background-color:#2d3748; font-family:Arial, sans-serif;">
 
-<table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation"
-       style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; margin: 0; padding: 0; width: 100%;">
+<table class="main-wrapper" width="100%" cellpadding="0" cellspacing="0" style="padding: 30px 0; background-color:#2d3748;">
     <tr>
-        <td align="center"
-            style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
-            <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation"
-                   style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;">
-                <!-- Email Body -->
+        <td align="center">
+            <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:6px; overflow:hidden;">
+
+                <!-- Header -->
                 <tr>
-                    <td class="header"
-                        style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; padding: 25px 0; text-align: center;">
-
-                    </td>
-                </tr>
-                <tr class="text-center" style="text-align: center; margin: 20px 0px !important; ">
-                    <td class="body" width="100%" cellpadding="0" cellspacing="0"
-                        style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; border-bottom: 1px solid #edf2f7; border-top: 1px solid #edf2f7; margin: 0; padding: 0; width: 100%; border: hidden !important;">
-                        <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0"
-                               role="presentation"
-                               style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; background-color: #ffffff; border-color: #e8e5ef; border-radius: 2px; border-width: 1px; box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015); margin: 0 auto; padding: 0; width: 570px;">
-                            <!-- Body content -->
-                            <tr>
-                                <td class="text-center">
-                                    <img src="{{asset('' . @$pageInfo->logo)}}" style="width: 80px;margin: 20px 0px" alt="logo" class="logo">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="content-cell"
-                                    style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 10px 32px;">
-                                    <h1 style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;">
-                                        Mật khẩu khôi phục thành công</h1>
-                                    <p style="color:black; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        Thông tin tài khoản của bạn:</p>
-                                    {{--                                    <p style="color:black; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">--}}
-                                    {{--                                        <strong>Email: </strong> {{@$data['email']}}</p>--}}
-                                    <p style="color:black; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        <strong>Tên đăng nhập: </strong> {{@$data['user_name']}}</p>
-                                    <p style="color:black;box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        <strong>Password: </strong> {{@$data['password']}}</p><br/>
-                                    <p align="center"><a style="padding:8px 10px;background:#ef4318;color:#fff;text-decoration:none;font-size:15px;font-weight:bold" href="{{url('/admin')}}">Đăng nhập ngay</a></p>
-                                </td>
-                            </tr>
-
-                        </table>
+                    <td align="center" >
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo top" style="margin-top: 25px; max-width:100%; height:auto;">
                     </td>
                 </tr>
 
+                <!-- Image Success -->
+{{--                <tr>--}}
+{{--                    <td align="center" style="padding-top: 32px">--}}
+{{--                        <img src="{{ asset('images/success.png') }}" alt="Image success" style="max-width:100%; height:auto;">--}}
+{{--                    </td>--}}
+{{--                </tr>--}}
+
+                <!-- Main Content -->
                 <tr>
-                    <td style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
-                        <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0"
-                               role="presentation"
-                               style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; margin: 0 auto; padding: 0; text-align: center; width: 570px;">
-                            <tr>
-                                <td class="content-cell" align="center"
-                                    style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
-                                    <p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #b0adc5; font-size: 12px; text-align: center;">
-                                        © {{$pageInfo->name}} All rights reserved.</p>
+                    <td style="padding-bottom: 30px; padding-left: 30px; padding-right: 30px; padding-top: 0px; color:#1e1e1e; font-family: 'Montserrat', Arial, sans-serif; font-size:16px; line-height:1.6;">
+                        <h1 style="margin-bottom:10px; text-align:center; font-size:22px; color:#1e1e1e; font-weight:700;">Đặt lại mật khẩu thành công</h1>
+                        <p style="margin: 0px; text-align:center; color:#1e1e1e; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">Vui lòng đăng nhập bằng mật khẩu mới</p>
 
-                                </td>
-                            </tr>
-                        </table>
+                        <!-- Account Info -->
+                        <div style="margin:20px 0; background:#f9f9f9; padding:15px; text-align:left; font-size:14px; border-radius:4px; color:#111111; font-weight:400; border:1px solid #e5e7eb;">
+                            <p style="margin: 0px; color:#1e1e1e; font-size:16px; font-weight:700; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">Thông tin tài khoản</p>
+                            <ul style="margin: 12px 0px; font-weight:400; padding: 0px 25px;">
+                                <li style="margin: 12px 0px; color:#1e1e1e; font-weight:400; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">Tên đăng nhập: <strong style="color:#1e1e1e !important; font-weight:700;">{{ @$data['email'] }}</strong></li>
+                                <li style="margin: 12px 0px; color:#1e1e1e; font-weight:400; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">Mật khẩu: <strong style="color:#1e1e1e; font-weight:700;">{!! @$data['password'] !!}</strong></li>
+                            </ul>
+                        </div>
+
+                        <!-- Button -->
+{{--                        <div style="text-align:center; margin-bottom:30px;">--}}
+{{--                            <a href="{{ route('accounts.login') }}" style="background: var(--L2, linear-gradient(90deg, #1a3a75 0%, #526b97 100%)); color:#ffffff; padding:10px 45px; text-decoration:none; font-size:16px; font-weight: 600; border-radius:8px; display:inline-block;">--}}
+{{--                                Đăng nhập--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+
+                        <p style="margin: 0px; color:#1e1e1e; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">Trân trọng,<br>{{ $pageInfo->name }}</p>
                     </td>
                 </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background-color:#f3f4f6; padding:15px; text-align:center; font-size:12px; color:#666666;">
+                        <p style="margin: 0px; color:#1e1e1e; font-size:14px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">© 2025 - {{ $pageInfo->name }}</p>
+                        <p style="margin:5px 0;">
+                            <span style="margin: 0 16px; color: #7d7d7d;">{{route('home')}}</span> <span style="color: #7d7d7d;">•</span>
+                            <span style="margin: 0 16px; color: #7d7d7d;"><a href="tel:{{ $pageInfo->phone_footer }}" target="_blank">{{ $pageInfo->phone_footer }}</a></span> <span style="color: #7d7d7d;">•</span>
+                            <span style="margin: 0 16px; color: #7d7d7d;">{{ $pageInfo->email }}</span>
+                        </p>
+                        <p>
+                            <a href="{{ $pageInfo->tiktok ?? '#' }}" style="margin:0 5px;">
+                                <img src="{{ asset('images/tiktok.png') }}" width="32" height="32" alt="Tiktok">
+                            </a>
+                            <a href="{{ $pageInfo->facebook ?? '#' }}" style="margin:0 5px;">
+                                <img src="{{ asset('images/facebook.png') }}" width="32" height="32" alt="Facebook">
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+
             </table>
         </td>
     </tr>
 </table>
+
 </body>
 </html>

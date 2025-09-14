@@ -15,6 +15,9 @@ class Locations extends Model
     const LM = 3;
     const TG = 4;
 
+    const REGION_IN = 0;
+    const REGION_OUT = 1;
+
     protected $fillable = [
         'name',
         'country',
@@ -33,6 +36,10 @@ class Locations extends Model
 
     public function hotels() {
         return $this->hasMany(Hotels::class, 'location_id');
+    }
+
+    public function tours() {
+        return $this->hasMany(Tours::class, 'location_id');
     }
 
     public function listhotel($id, $type) {

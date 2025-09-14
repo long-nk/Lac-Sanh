@@ -34,8 +34,27 @@ class Tours extends Model
         'script',
         'summary',
         'alt',
-        'meta'
+        'meta',
+        'hot'
     ];
+
+    public function getImageThumbsAttribute()
+    {
+        $firstImage = $this->images->first();
+
+        return $firstImage
+            ? asset('images/uploads/thumbs/' . $firstImage->name)
+            : asset('images/default.jpg');
+    }
+
+    public function getImageAttribute()
+    {
+        $firstImage = $this->images->first();
+
+        return $firstImage
+            ? asset('images/uploads/' . $firstImage->path . '/' . $firstImage->name)
+            : asset('images/default.jpg');
+    }
 
     public function images()
     {

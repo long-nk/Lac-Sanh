@@ -6,7 +6,10 @@ use App\Models\Locations;
 use App\Models\PageInfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -19,12 +22,12 @@ class PageInfoController extends Controller
      */
     public function index()
     {
-        $infor = PageInfo::first();
-        if(!$infor) {
-            return redirect()->route('info.create', compact('infor'));
+        $pageInfo = PageInfo::first();
+        if(!$pageInfo) {
+            return redirect()->route('info.create', compact('pageInfo'));
         }
 
-        return view('backend.info.index', compact('infor'));
+        return view('backend.info.index', compact('pageInfo'));
     }
 
     public function create()
@@ -34,7 +37,7 @@ class PageInfoController extends Controller
 
     public function store(Request $request) {
         try {
-            \DB::beginTransaction();
+            DB::beginTransaction();
 
             $path = "images/uploads/logo";
             $image = $request->logo;
@@ -45,12 +48,12 @@ class PageInfoController extends Controller
                 $image->move($path . '/', $file_name);
             }
 
-            $path = "images/uploads/QR";
+            $path = "images/uploads/qr_codes";
             $image = $request->qr_code;
-            $file_path = "";
-            if ($image) {
+            $copy_path = "";
+            if ($request->qr_code) {
                 $file_name = "qr_code";
-                $file_path = $path . '/' . $file_name;
+                $copy_path = $path . '/' . $file_name;
                 $image->move($path . '/', $file_name);
             }
             $data = [
@@ -63,18 +66,22 @@ class PageInfoController extends Controller
                 'phone_number2' => $request->phone_number2,
                 'email' => $request->email,
                 'mst' => $request->mst,
+                'copy_right' => $copy_path,
                 'manager' => $request->manager,
-                'card' => $request->card,
+                'facebook' => $request->facebook,
+                'youtube' => $request->youtube,
+                'instagram' => $request->instagram,
+                'twitter' => $request->twitter,
                 'bank' => $request->bank,
                 'account' => $request->account,
-                'qr_code' => $file_path,
+                'card' => $request->card
             ];
             PageInfo::create($data);
-            \DB::commit();
+            DB::commit();
 
             return redirect()->route('info.index');
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
             return redirect()->back();
         }
     }
@@ -101,14 +108,19 @@ class PageInfoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $infor = PageInfo::first();
+            $pageInfo = PageInfo::findOrFail($id);
+
             $rules = [
                 'name' => 'required|max:255',
-                'phone_number' => 'required',
+                'phone_footer' => 'required',
                 'address' => 'required',
-                'slogan' => 'required',
+                'logo'        => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp,ico|max:2048',
+                'logo_top'    => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp,ico|max:2048',
+                'logo_footer' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp,ico|max:2048',
+                'qr_code'     => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             ];
-            $validator = \Validator::make($request->all(), $rules);
+
+            $validator = Validator::make($request->all(), $rules);
 
             if ($validator->fails()) {
                 return redirect()->back()
@@ -116,74 +128,51 @@ class PageInfoController extends Controller
                     ->withInput();
             }
 
-            $data = [
-                'name' => $request->name,
-                'slogan' => $request->slogan,
-                'address' => $request->address,
-                'address2' => $request->address2,
-                'phone_number' => $request->phone_number,
-                'phone_number2' => $request->phone_number2,
-                'email' => $request->email,
-                'email2' => $request->email2,
-                'mst' => $request->mst,
-                'manager' => $request->manager,
-                'card' => $request->card,
-                'bank' => $request->bank,
-                'account' => $request->account,
-                'facebook' => $request->facebook,
-                'instagram' => $request->instagram,
-                'youtube' => $request->youtube,
-                'tiktok' => $request->tiktok,
-                'messenger' => $request->messenger,
+            $data = $request->only([
+                'name','full_name','summary','address','address2','phone_footer','phone_number',
+                'phone_number2','copy_right','alt_favicon','alt_logo','alt_logo_footer','email',
+                'mst','manager','facebook','messenger','twitter','tiktok','youtube','zalo',
+                'term','map','status','header','css','body','footer','bank','account','content',
+                'number','export_status','link_website','link_company','mail_setup','sale_name1',
+                'sale_phone1','sale_name2','sale_phone2'
+            ]);
+
+            // xử lý upload file
+            $uploadFields = [
+                'logo'        => 'logo',
+                'logo_top'    => 'logo_top',
+                'logo_footer' => 'logo_footer',
+                'qr_code'     => 'qr_code',
             ];
-            $path = "images/uploads/logo";
-            $image = $request->logo;
-            if ($image) {
-                if(File::exists($infor->logo)) {
-                    File::delete($infor->logo);
+
+            foreach ($uploadFields as $field => $prefix) {
+                if ($request->hasFile($field)) {
+                    $path = "images/uploads/" . ($field == 'qr_code' ? 'qr_codes' : 'logo');
+
+                    // Xóa file cũ
+                    if ($pageInfo->$field && File::exists(public_path($pageInfo->$field))) {
+                        File::delete(public_path($pageInfo->$field));
+                    }
+
+                    $file      = $request->file($field);
+                    $extension = $file->getClientOriginalExtension();
+                    $file_name = $prefix . '_' . time() . '.' . $extension;
+
+                    $file->move(public_path($path), $file_name);
+
+                    $data[$field] = $path . '/' . $file_name;
                 }
-                $file_name = "logo";
-                $file_path = $path . '/' . $file_name;
-                $image->move($path . '/', $file_name);
-                $infor->logo = $file_path;
             }
 
-            $path = "images/uploads/logo";
-            $image = $request->logo_mb;
-            if ($image) {
-                if(File::exists($infor->logo_mb)) {
-                    File::delete($infor->logo_mb);
-                }
-                $file_name = "logo_mb";
-                $file_path = $path . '/' . $file_name;
-                $image->move($path . '/', $file_name);
-                $infor->logo_mb = $file_path;
-            }
+            $pageInfo->update($data);
 
-            $path = "images/uploads/QR";
-            $image = $request->qr_code;
-            if ($image) {
-                if(File::exists($infor->qr_code)) {
-                    File::delete($infor->qr_code);
-                }
-                $file_name = "qr_code";
-                $file_path = $path . '/' . $file_name;
-                $image->move($path . '/', $file_name);
-                $infor->qr_code = $file_path;
-            }
-            $result = $infor->update($data);
-
-            if ($result) {
-                return redirect()->route('info.index');
-            } else {
-                return redirect()->back();
-            }
+            return redirect()->route('info.index')->with('message-success', 'Cập nhật thành công!');
         } catch (\Exception $e) {
-            dd($e);
-            return redirect()->back();
+            Log::error('Lỗi khi cập nhật website: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('message-error', 'Xảy ra lỗi khi cập nhật!');
         }
-
     }
+
 
     /**
      * Remove the specified resource from storage.

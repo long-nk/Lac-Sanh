@@ -58,6 +58,7 @@ class BannersController extends Controller
                 'name' => $request->name,
                 'link' => $request->link,
                 'image' => $file_path,
+                'alt' => $request->alt,
                 'type' => $request->type,
                 'sort' => $request->sort,
                 'status' => $request->status,
@@ -115,8 +116,10 @@ class BannersController extends Controller
 
             $path = "images/banners";
             $image = $request->image;
-            if ($image && $banner->image != "") {
-                File::delete($banner->image);
+            if ($image) {
+                if (\Illuminate\Support\Facades\File::exists($banner->image)) {
+                    File::delete($banner->image);
+                }
                 $extension = $image->extension();
                 $file_name = "viva_trip_banner" . time() . '.' . $extension;
                 $file_path = $path . '/' . $file_name;
@@ -125,6 +128,7 @@ class BannersController extends Controller
             }
             $banner->name = $request->name;
             $banner->link = $request->link;
+            $banner->alt = $request->alt;
             $banner->sort = $request->sort;
             $banner->type = $request->type;
             $banner->status = $request->status;

@@ -1,138 +1,136 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Thông báo có khách hàng mới cần tư vấn</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Thông báo có khách hàng liên hệ</title>
+    <style>
+        p a {
+            font-family: "Montserrat", sans-serif !important;
+            font-size: 14px !important;
+            color: #7d7d7d !important;
+            text-decoration: none;
+        }
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        strong a {
+            color: #1e1e1e !important;
+            text-decoration: none;
+        }
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+        .im {
+            font-family: "Montserrat", sans-serif !important;
+            color: #1e1e1e !important;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .main-wrapper {
+                background-color: #f8fafd !important;
+                padding-top: 0px !important;
+            }
+        }
+    </style>
 </head>
-<body>
-<div class="">
-    <div class="aHl"></div>
-    <div id=":ri" tabindex="-1"></div>
-    <div id=":o5" class="ii gt" jslog="20277; u014N:xr6bB; 4:W251bGwsbnVsbCxbXV0.">
-        <div id=":o4" class="a3s aiL ">
-            <div class="adM"><br></div>
-            <div>
-                <div class="adM"><br></div>
-                <div class="gmail_quote">
-                    <div style="margin:0px">
-                        <table style="border-spacing:0px;border-collapse:collapse;height:100%!important;width:100%!important">
-                            <tbody>
-                            <tr>
-                                <td style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                    <table style="border-spacing:0px;border-collapse:collapse;width:100%;margin:40px 0px 20px;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                        <tbody style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                        <tr style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                            <td style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                <center style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                    <table style="border-spacing:0px;border-collapse:collapse;width:560px;text-align:left;margin:0px auto;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                        <tbody style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                        <tr style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                            <td style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                                <table style="border-spacing:0px;border-collapse:collapse;width:100%;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                                    <tbody style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                                    <tr style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                                        <td style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
+<body style="margin:0; padding:0; background-color:#2d3748; font-family:Arial, sans-serif;">
 
-                                                                            <img src="{{asset('' . $pageInfo->logo)}}"
-                                                                                 alt="VivaTrip" width="140"
-                                                                                 style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif"
-                                                                                 class="CToWUd">
+<table class="main-wrapper" width="100%" cellpadding="0" cellspacing="0"
+       style="padding: 30px 0; background-color:#2d3748;">
+    <tr>
+        <td align="center">
+            <table width="600" cellpadding="0" cellspacing="0"
+                   style="background-color:#ffffff; border-radius:6px; overflow:hidden;">
 
-                                                                        </td>
-                                                                        <td style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif;text-transform:uppercase;font-size:14px;text-align:right;color:rgb(153,153,153)">
-                                                                            {{--                                             <span style="font-size:16px;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">--}}
-                                                                            {{--                                             Đơn hàng #{{$data['donhang']['id']}}--}}
-                                                                            {{--                                             </span>--}}
-                                                                        </td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </center>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <table style="border-spacing:0px;border-collapse:collapse;width:100%;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                        <tbody style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                        <tr style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                            <td style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif;padding-bottom:40px">
-                                                <center style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                    <table style="border-spacing:0px;border-collapse:collapse;width:560px;text-align:left;margin:0px auto;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                        <tbody style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                        <tr style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                            <td style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                                <h2 style="font-weight:normal;margin:0px 0px 10px;font-size:24px;font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                                    Thông báo có khách hàng mới cần tư vấn! </h2>
-                                                            </td>
+                <!-- Header -->
+                <tr>
+                    <td align="center">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo top"
+                             style="margin-top: 25px;max-width:100%; height:auto;">
+                    </td>
+                </tr>
 
-                                                        </tr>
-                                                        <tr style="font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif">
-                                                            <p><strong>Tên khách hàng:</strong> {{$data['name']}}</p>
-                                                            <p><strong>Số điện thoại:</strong> <a href="tel:{{$data['phone']}}">{{$data['phone']}}</a></p>
-{{--                                                            <p>Email: <a href="mailTo:{{$data['email']}}">{{$data['email']}}</a></p>--}}
-{{--                                                            <p><strong>Tiêu đề:</strong> {{$data['title']}}</p>--}}
-                                                            <p><strong>Nội dung:</strong> {{$data['message']}}</p>
-                                                        </tr>
+                {{--                <!-- Image Success -->--}}
+                {{--                <tr>--}}
+                {{--                    <td align="center" style="padding:20px;">--}}
+                {{--                        <img src="{{ asset('images/success.png') }}" alt="Image success" style="max-width:100%; height:auto;">--}}
+                {{--                    </td>--}}
+                {{--                </tr>--}}
 
-                                                        </tbody>
-                                                    </table>
-                                                </center>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                <!-- Main Content -->
+                <tr>
+                    <td style="padding:30px; color:#1e1e1e; font-family: 'Montserrat', Arial, sans-serif; font-size:16px; line-height:1.6;">
+                        <h1 style="margin-bottom:10px;  text-align:center; font-size:22px; color:#1e1e1e; font-weight:700;">
+                            Có khách hàng liên hệ!</h1>
+                        <p style="margin: 0px; text-align:center; color:#1e1e1e; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">
+                            Hãy kiểm tra thông tin bên dưới để tư vấn</p>
 
-                        <center>
-                            <p style="margin:0px;line-height:150%;font-size:16px;color:rgb(119,119,119)"><a
-                                        style="font-size:10px;text-decoration:none;color:rgb(153,153,153)"
-                                        href="https://vivatrip.vn/"
-                                        target="_blank"
-                                        data-saferedirecturl="https://vivatrip.vn/">powered
-                                    by VivaTrip</a></p><a
-                                    style="font-size:10px;text-decoration:none;color:rgb(153,153,153)"
-                                    href="https://vivatrip.vn/"
-                                    target="_blank"
-                                    data-saferedirecturl="https://vivatrip.vn/">
-                            </a></center>
-                    </div>
-                    <div class="yj6qo"></div>
-                    <div class="adL">
-                    </div>
-                </div>
-            </div>
-            <div class="adL">
-            </div>
-        </div>
-    </div>
-    <div id=":re" class="ii gt" style="display:none">
-        <div id=":rd" class="a3s aiL "></div>
-    </div>
-    <div class="hi"></div>
-</div>
+                        <!-- Account Info -->
+                        <div
+                            style="margin:20px 0; background:#f9f9f9; padding:15px; text-align:left; font-size:14px; border-radius:4px; color:#111111; font-weight:400; border:1px solid #e5e7eb;">
+                            <p style="margin: 0px; color:#1e1e1e; font-size:16px; font-weight:700; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">
+                                Thông tin khách hàng</p>
+                            <ul style="margin: 12px 0px; font-weight:400; padding: 0px 25px;">
+
+                                @if(!empty(@$data['name']))
+                                    <li style="margin: 12px 0px; color:#1e1e1e; font-weight:400; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">
+                                        Họ tên: <strong
+                                            style="color:#1e1e1e; font-weight:700;">{{@$data['name']}}</strong></li>
+                                @endif
+                                @if(!empty(@$data['phone']))
+                                    <li style="margin: 12px 0px; color:#1e1e1e; font-weight:400; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">
+                                        Số điện thoại: <strong
+                                            style="color:#1e1e1e; font-weight:700;">{{@$data['phone']}}</strong></li>
+                                @endif
+                                @if(!empty(@$data['email']))
+                                    <li style="margin: 12px 0px; color:#1e1e1e; font-weight:400; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">
+                                        Email: <strong
+                                            style="color:#1e1e1e; font-weight:700;">{{@$data['email']}}</strong></li>
+                                @endif
+                                @if(!empty(@$data['message']))
+                                    <li style="margin: 12px 0px; color:#1e1e1e; font-weight:400; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">
+                                        Thông tin đăng ký: <strong
+                                            style="color:#1e1e1e; font-weight:700;">{{@$data['message']}}</strong></li>
+                                @endif
+                            </ul>
+                        </div>
+
+                        <!-- Button -->
+                        <div style="text-align:center; margin-bottom:30px;">
+                            <a href="{{ route('contacts.index') }}"
+                               style="background: var(--L2, linear-gradient(90deg, #0a7d70 0%, #3b978d 100%))">
+                                Quản lý liên hệ
+                            </a>
+                        </div>
+
+                        {{--                        <p style="margin: 0px; color:#1e1e1e; font-size:16px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">Trân trọng,<br>{{ $pageInfo->name }}</p>--}}
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background-color:#f3f4f6; padding:15px; text-align:center; font-size:12px; color:#666666;">
+                        <p style="margin: 0px; color:#1e1e1e; font-size:14px; font-family: 'Montserrat', Arial, sans-serif; font-style:normal;">
+                            © 2025 - {{ $pageInfo->name }}</p>
+                        <p style="margin:5px 0;">
+                            <span style="margin: 0 16px; color: #7d7d7d;">{{route('home')}}</span> <span
+                                style="color: #7d7d7d;">•</span>
+                            <span style="margin: 0 16px; color: #7d7d7d;"><a href="tel:{{ $pageInfo->phone_footer }}"
+                                                                             target="_blank">{{ $pageInfo->phone_footer }}</a></span>
+                            <span style="color: #7d7d7d;">•</span>
+                            <span style="margin: 0 16px; color: #7d7d7d;">{{ $pageInfo->email }}</span>
+                        </p>
+                        <p>
+                            <a href="{{ $pageInfo->tiktok ?? '#' }}" style="margin:0 5px;">
+                                <img src="{{ asset('images/tiktok.png') }}" width="32" height="32" alt="Tiktok">
+                            </a>
+                            <a href="{{ $pageInfo->facebook ?? '#' }}" style="margin:0 5px;">
+                                <img src="{{ asset('images/facebook.png') }}" width="32" height="32" alt="Facebook">
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
 
 </body>
 </html>
-
-

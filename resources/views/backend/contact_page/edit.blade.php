@@ -84,7 +84,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="box_show_img upload_img">
-                                            <img src="{{asset('' . @$content->image)}}" alt="" id="img_show2">
+                                            <img src="{{asset('' . @$content->image2)}}" alt="" id="img_show2">
                                             <i class="">+</i>
                                         </div>
                                         <div class="box_upload">

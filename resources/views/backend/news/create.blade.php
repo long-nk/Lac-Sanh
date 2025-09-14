@@ -172,33 +172,33 @@
                                         </div>
                                     </div>
                                 </div>
-{{--                                <div class="item form-group mt-4">--}}
-{{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Câu hỏi liên quan</label>--}}
-{{--                                    <div class="col-md-6 col-sm-6 col-xs-12">--}}
-{{--                                        <div id="faq-list">--}}
-{{--                                            @php--}}
-{{--                                                $oldFaqs = old('faqs', []);--}}
-{{--                                            @endphp--}}
-{{--                                            @foreach ($oldFaqs as $index => $faq)--}}
-{{--                                                <div class="faq-item mb-3">--}}
-{{--                                                    <div class="faq-box p-3">--}}
-{{--                                                        <button type="button"--}}
-{{--                                                                class="btn btn-sm btn-danger float-end remove-faq">❌--}}
-{{--                                                        </button>--}}
-{{--                                                        <input type="text" name="faqs[{{ $index }}][question]"--}}
-{{--                                                               class="form-control mb-2" placeholder="Nhập câu hỏi"--}}
-{{--                                                               value="{{ $faq['question'] ?? '' }}" required>--}}
-{{--                                                        <textarea name="faqs[{{ $index }}][answer]" class="form-control textarea-fqas"--}}
-{{--                                                                  rows="5" placeholder="Nhập câu trả lời"--}}
-{{--                                                                  required>{{ $faq['answer'] ?? '' }}</textarea>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            @endforeach--}}
-{{--                                        </div>--}}
-{{--                                        <button type="button" class="btn btn-primary mt-2" id="add-faq">Thêm câu hỏi--}}
-{{--                                        </button>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                <div class="item form-group mt-4">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Câu hỏi liên quan</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div id="faq-list">
+                                            @php
+                                                $oldFaqs = old('faqs', []);
+                                            @endphp
+                                            @foreach ($oldFaqs as $index => $faq)
+                                                <div class="faq-item mb-3">
+                                                    <div class="faq-box p-3">
+                                                        <button type="button"
+                                                                class="btn btn-sm btn-danger float-end remove-faq">❌
+                                                        </button>
+                                                        <input type="text" name="faqs[{{ $index }}][question]"
+                                                               class="form-control mb-2" placeholder="Nhập câu hỏi"
+                                                               value="{{ $faq['question'] ?? '' }}" required>
+                                                        <textarea name="faqs[{{ $index }}][answer]" class="form-control textarea-fqas"
+                                                                  rows="5" placeholder="Nhập câu trả lời"
+                                                                  required>{{ $faq['answer'] ?? '' }}</textarea>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <button type="button" class="btn btn-primary mt-2" id="add-faq">Thêm câu hỏi
+                                        </button>
+                                    </div>
+                                </div>
 
 {{--                                <div class="item form-group mt-4">--}}
 {{--                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Sản phẩm liên quan</label>--}}

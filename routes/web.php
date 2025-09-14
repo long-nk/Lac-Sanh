@@ -170,8 +170,8 @@ Route::get('tim-kiem-tien-ich', [\App\Http\Controllers\HotelsController::class, 
 Route::get('danh-sach-{type}/{location}', [\App\Http\Controllers\HotelsController::class, 'listLocation'])->name('hotels.list_location');
 Route::post('dat-phong', [\App\Http\Controllers\HotelsController::class, 'book'])->name('hotels.book_room');
 Route::post('dat-phong-villa', [\App\Http\Controllers\HotelsController::class, 'bookVilla'])->name('hotels.book_room_villa');
-Route::get('tin-tuc/{slug}/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.detail');
-Route::get('{type}', [\App\Http\Controllers\HotelsController::class, 'list'])->name('hotels.list');
+Route::get('tin-tuc/{slug}-{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.detail');
+Route::get('khach-sạn', [\App\Http\Controllers\HotelsController::class, 'list'])->name('hotels.list');
 Route::get('danh-sach/{type}', [\App\Http\Controllers\HotelsController::class, 'viewMore'])->name('hotels.view_more');
 Route::get('{slug}/{id}', [\App\Http\Controllers\HotelsController::class, 'detail'])->name('hotels.detail');
 Route::post('gui-lien-he', [\App\Http\Controllers\ContactsController::class, 'store'])->name('contact.send_contact');

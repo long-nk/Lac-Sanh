@@ -12,6 +12,8 @@ class SendMailNewOrder extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data = [];
+
     /**
      * Create a new message instance.
      *
@@ -30,9 +32,9 @@ class SendMailNewOrder extends Mailable
     public function build()
     {
         $pageInfo = PageInfo::first();
-        return $this->from($pageInfo->email)
-            ->view('frontend.mails.send-mail-new-order')
-            ->subject('Thông báo có khách hàng đặt phòng')
+        return $this->from($pageInfo->email_setup, $pageInfo->name)
+            ->view('emails.send-mail-new-order')
+            ->subject('Thông báo có đơn hàng mới')
             ->with('data', $this->data);
     }
 }

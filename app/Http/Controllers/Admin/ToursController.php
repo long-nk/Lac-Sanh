@@ -38,7 +38,7 @@ class ToursController extends Controller
      */
     public function create()
     {
-        $locations = Locations::where('status', 1)->get();
+        $locations = Locations::where('status', 1)->orderBy('sort')->orderBy('region')->get();
         $listComfortHotel = Comforts::where('status', 1)->where('special', '!=', 1)->where('type', Comforts::TO)->whereNotNull('parent_id')->get();
         $listComfortSpecial = Comforts::where('status', 1)->where('special', 1)->get();
         return view('backend.tours.create', compact('locations', 'listComfortHotel', 'listComfortSpecial'));
@@ -81,6 +81,7 @@ class ToursController extends Controller
             'script' => $request->script,
             'alt' => $request->alt ?? null,
             'meta' => $request->meta ?? null,
+            'hot' => $request->hot ?? null
         ];
 
         $request->validate([
@@ -229,7 +230,7 @@ class ToursController extends Controller
     public function edit($id)
     {
         $tour = Tours::with('images')->find($id);
-        $locations = Locations::where('status', 1)->get();
+        $locations = Locations::where('status', 1)->orderBy('sort')->orderBy('region')->get();
         return view('backend.tours.edit', compact('tour', 'locations'));
     }
 
@@ -270,6 +271,7 @@ class ToursController extends Controller
             'script' => $request->script,
             'alt' => $request->alt,
             'meta' => $request->meta,
+            'hot' => $request->hot ?? null
         ];
 
         $request->validate([
@@ -441,23 +443,28 @@ class ToursController extends Controller
 
     public function destroyImage(Request $request)
     {
-        $id = $request->id;
-        $image = TourImages::find($id);
-        $tour = $image->tour_id;
-        if (empty($image)) {
+        try {
+            $id = $request->id;
+            $image = TourImages::find($id);
+            $tour = $image->tour_id;
+            if (empty($image)) {
+                return redirect()->back();
+            }
+            $filePath = public_path('images/uploads/' . $image->path . '/' . $image->name);
+            $thumbPath = public_path('images/uploads/thumbs/' . $image->name);
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+            if (File::exists($thumbPath)) {
+                File::delete($thumbPath);
+            }
+            $image->delete();
+            $images = TourImages::where('tour_id', $tour)->get();
+            return view('backend.tours.list_image', compact('images'));
+        } catch(\Exception $e) {
+            \Log::error('Lỗi khi xóa ảnh tour: ' . $e->getMessage());
             return redirect()->back();
         }
-        $filePath = public_path('images/uploads/' . $image->path . '/' . $image->name);
-        $thumbPath = public_path('images/uploads/thumbs/' . $image->name);
-        if (File::exists($filePath)) {
-            File::delete($filePath);
-        }
-        if (File::exists($thumbPath)) {
-            File::delete($thumbPath);
-        }
-        $image->delete();
-        $images = TourImages::where('tour_id', $tour)->get();
-        return view('backend.tours.list_image', compact('images'));
     }
 
 

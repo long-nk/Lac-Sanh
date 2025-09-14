@@ -22,6 +22,7 @@ class Banner extends Model
         'name',
         'link',
         'image',
+        'alt',
         'sort',
         'type',
         'status'

@@ -40,7 +40,9 @@
                                     <th class="text-center" width="10%">Tên voucher</th>
                                     <th class="text-center" width="15%">Mã voucher</th>
                                     <th class="text-center" width="15%">Hình ảnh</th>
-                                    <th class="text-center" width="30%">Áp dụng cho</th>
+                                    <th class="text-center" width="20%">Áp dụng cho</th>
+                                    <th class="text-center" width="10%">Số lượng</th>
+                                    <th class="text-center" width="10%">Đã dùng</th>
                                     <th class="text-center" width="10%">% giảm giá</th>
                                     <th class="text-center" width="15%">Bắt đầu</th>
                                     <th class="text-center" width="15%">Kết thúc</th>
@@ -104,13 +106,19 @@
 {{--                                                @endif--}}
                                             </td>
                                             <td class="text-center">
+                                                {{$voucher->number}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{$voucher->used}}
+                                            </td>
+                                            <td class="text-center">
                                                 {{$voucher->percent}}
                                             </td>
                                             <td class="text-center">
                                                 {{date('d/m/Y', strtotime($voucher->start_date))}}
                                             </td>
                                             <td class="text-center">
-                                                {{date('d/m/Y', strtotime($voucher->time))}}
+                                                {{date('d/m/Y', strtotime($voucher->end_date))}}
                                             </td>
 {{--                                            <td class="text-center">--}}
 {{--                                                @if($voucher->check_all == 1)--}}

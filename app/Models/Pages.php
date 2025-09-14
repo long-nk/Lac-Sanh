@@ -19,6 +19,7 @@ class Pages extends Model
         'summary',
         'content',
         'link',
+        'image',
         'user_id',
         'user_update_id',
         'status',

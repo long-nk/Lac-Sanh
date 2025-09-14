@@ -1,0 +1,12 @@
+body {
+    font-family: 'UTMAvo', Arial, sans-serif;
+    font-size: 16px;
+    padding: 5px 20px;
+    margin: 0;
+}
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+}

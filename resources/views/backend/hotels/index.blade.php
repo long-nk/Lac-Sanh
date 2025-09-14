@@ -79,6 +79,7 @@
                                     <th class="text-center" style="width:10%">Flash sale</th>
                                     <th class="text-center" style="width:5%">Số phòng</th>
                                     <th class="text-center" style="width:5%">Thứ tự</th>
+                                    <th class="text-center" style="width:5%">Hiện trang chủ</th>
                                     <th class="text-center" style="width:5%">Trạng thái</th>
                                     <th class="text-center" style="width:10%">Hành động</th>
                                 </tr>
@@ -134,6 +135,21 @@
                                             </td>
                                             <td class="text-center">
                                                 {{$value->sort}}
+                                            </td>
+                                            <td class="text-center">
+                                                @if($value->hot)
+                                                    <button type="button"
+                                                            class="btn btn-round btn-success btn-sm btnChangeStatus' . $value->id . '"
+                                                            onclick="btnChangeStatus(' . $value->id . ')">
+                                                        Hiển thị
+                                                    </button>
+                                                @else
+                                                    <button type="button"
+                                                            class="btn btn-round btn-danger btn-sm btnChangeStatus' . $value->id . '"
+                                                            onclick="btnChangeStatus(' . $value->id . ')">
+                                                        Không hiển thị
+                                                    </button>
+                                                @endif
                                             </td>
                                             <td class="text-center">
                                                 @if($value->status)

@@ -18,12 +18,11 @@ class NewsController extends Controller
     public function index()
     {
         try {
-            $hots = Contents::where('type', Contents::TIN_TUC)->where('check', 1)->orderBy('sort')->orderBy('created_at', 'desc')->limit(5)->get();
-            $ids = $hots->pluck('id')->toArray();
-            $contents = Contents::with('fileItem')->whereNotIn('id', $ids)->where('type', Contents::TIN_TUC)
-                ->orderBy('sort')->orderBy('created_at', 'desc')->paginate(12);
 
-            return view('frontend.news.index', compact('contents', 'hots'));
+            $contents = Contents::with('fileItem')->where('type', Contents::TIN_TUC)
+                ->orderBy('sort')->orderBy('created_at', 'desc')->paginate(9);
+
+            return view('frontend.news.index', compact('contents'));
         } catch (Exception $e) {
             Log::error('Lỗi lấy danh sách tin tức', $e->getMessage());
             return redirect()->back()->withInput()->with('message-error', 'Lỗi xảy ra, vui lòng thử lại sau!');
@@ -37,12 +36,18 @@ class NewsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($slug, $id)
     {
         try {
-            $content = Contents::find($request->id);
-            $content->view += 1;
-            $content->save();
+            $slug = $slug . '-' . $id;
+            $arr = explode('-', $slug);
+            $content = Contents::where('id', end($arr))->first();
+            $key = 'viewed_news_' . $content->id;
+            if (!session()->has($key)) {
+                $content->view++;
+                $content->save();
+                session()->put($key, true);
+            }
             $hots = Contents::where('type', Contents::TIN_TUC)
                 ->where('id', '!=', $content->id)
                 ->where('check', 1)
@@ -62,13 +67,12 @@ class NewsController extends Controller
                 ->get();
             $randoms = Contents::where('type', Contents::TIN_TUC)->where('id', '!=', $content->id)->inRandomOrder()->limit(5)->get();
             $contentRelateds = Contents::where('type', $content->type)->where('id', '!=', $content->id)->orderBy('sort')->orderBy('created_at', 'desc')->limit(10)->get();
-            return view('frontend.news.detail',compact('content', 'contentRelateds', 'news', 'hots', 'randoms'));
+            return view('frontend.news.detail', compact('content', 'news', 'hots', 'randoms', 'contentRelateds'));
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return redirect()->back()->withInput()->with('message-error', "Lỗi xem chi tiết bài viết, vui lòng thử lại sau");
 
         }
-
     }
 
     public function showDetail($slug, $id)

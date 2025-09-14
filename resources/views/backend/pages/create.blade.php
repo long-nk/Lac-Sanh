@@ -66,6 +66,21 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Hình ảnh trang <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="box_show_img upload_img">
+                                            <img src="" alt="" id="img_show">
+                                            <i class="">+</i>
+                                        </div>
+                                        <div class="box_upload">
+                                            Chọn hình ảnh
+                                            <input type="file" class="hide_file" name="image"
+                                                   onchange="show_img_selected(this)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">Tiêu đề
                                         SEO<span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">

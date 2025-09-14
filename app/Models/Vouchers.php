@@ -16,7 +16,7 @@ class Vouchers extends Model
         'term',
         'status',
         'start_date',
-        'time',
+        'end_date',
         'check_all',
         'hotel',
         'villa',
@@ -26,6 +26,7 @@ class Vouchers extends Model
         'tour',
         'image',
         'number',
+        'used',
         'cost'
     ];
 
