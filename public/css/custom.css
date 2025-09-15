@@ -354,3 +354,61 @@ nav[aria-label="Pagination Navigation"] .hidden > div > .text-sm {
 .header--button---avata .sub-infor li a:hover {
     color: #facd49;
 }
+
+.relatedPosts__slider .slick-slide {
+    margin: -1px 12px;
+}
+
+
+.post:hover .post__image img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.post__image img {
+    aspect-ratio: 282 / 186;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -webkit-transition: .15s
+    ease-in-out;
+    transition: .15s
+    ease-in-out;
+}
+
+.ratio-4 .count-custom {
+    display: block;
+    position: absolute;
+    top: 0;
+    font-weight: bold;
+    color: #fff;
+    font-size: 16px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2, 2, 2, 0.3);
+    z-index: 2;
+    line-height: 200px !important;
+    border-radius: 10px;
+    text-align: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.ratio.ratio-4 .count-custom {
+    display: flex;
+    top: 0;
+    font-weight: bold;
+    color: #fff;
+    font-size: 16px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2, 2, 2, 0.3);
+    z-index: 2;
+    border-radius: 10px;
+    text-align: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    align-items: center;
+}

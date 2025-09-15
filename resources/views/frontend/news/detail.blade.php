@@ -203,7 +203,7 @@
         }
 
         .relatedPosts__des {
-            font-size: 13px;
+            font-size: 1rem;
             font-weight: 400;
             color: rgba(0, 55, 90, 0.7);
         }
@@ -437,7 +437,7 @@
                                        target="_blank" rel="noopener noreferrer"
                                        class="icon d-flex"
                                        title="Chia sẻ Facebook">
-                                        <img src="{{ asset('frontend/images/icon-facebook.png') }}" alt="Facebook" width="36" height="36" class="d-block">
+                                        <img src="{{ asset('images/icon-facebook.png') }}" alt="Facebook" width="36" height="36" class="d-block">
                                     </a>
 
                                     {{-- Youtube (không có share, tìm kiếm theo tên trang) --}}
@@ -445,7 +445,7 @@
                                        target="_blank" rel="noopener noreferrer"
                                        class="icon d-flex"
                                        title="Tìm kiếm Youtube">
-                                        <img src="{{ asset('frontend/images/icon-youtube.png') }}" alt="Youtube" width="36" height="36" class="d-block">
+                                        <img src="{{ asset('images/icon-youtube.png') }}" alt="Youtube" width="36" height="36" class="d-block">
                                     </a>
 
                                     {{-- Google Search (giữ icon Google Plus cũ) --}}
@@ -453,7 +453,7 @@
                                        target="_blank" rel="noopener noreferrer"
                                        class="icon d-flex"
                                        title="Tìm kiếm Google">
-                                        <img src="{{ asset('frontend/images/icon-google-plus.png') }}" alt="Google Search" width="36" height="36" class="d-block">
+                                        <img src="{{ asset('images/icon-google-plus.png') }}" alt="Google Search" width="36" height="36" class="d-block">
                                     </a>
 
                                     {{-- Twitter (X) --}}
@@ -461,7 +461,7 @@
                                        target="_blank" rel="noopener noreferrer"
                                        class="icon d-flex"
                                        title="Chia sẻ Twitter">
-                                        <img src="{{ asset('frontend/images/icon-x.png') }}" alt="Twitter" width="36" height="36" class="d-block">
+                                        <img src="{{ asset('images/icon-x.png') }}" alt="Twitter" width="36" height="36" class="d-block">
                                     </a>
                                 </div>
 
@@ -476,7 +476,7 @@
                                     @foreach($hots as $hot)
                                         <div class="item d-flex w-100 align-items-center">
                                             <a href="{{route('news.detail', ['slug' => $hot->slug, 'id' => $hot->id])}}" class="img flex-shrink-0 d-block overflow-hidden">
-                                                <img src="{{$hot->image ?? 'images/default.jpg'}}"
+                                                <img src="{{asset($hot->image ?? 'images/default.jpg')}}"
                                                      alt="{{$hot->alt ?? $hot->title}}"
                                                      class="d-block w-100 h-100">
                                             </a>
@@ -521,7 +521,7 @@
                             </a>
                             <div class="post__content d-flex flex-column flex-grow-1">
                                 <h4 class="post__title mb-0"><a href="{{route('news.detail', ['slug' => $content->slug, 'id' => $content->id])}}" title="{{$content->title}}">{{$content->title}}</a></h4>
-                                <p class="post__excerpt mb-0">{{getSummary($content->content)}}</p>
+                                <p class="post__excerpt mb-0">{!! getSummary($content->content) !!}</p>
                                 <div class="post__meta d-flex w-100 column-gap-4">
                                     <span class="date">{{date('d/m/Y', strtotime($content->created_at))}}</span>
                                     <span class="viewCount">{{$content->view}}</span>
@@ -540,7 +540,7 @@
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
         $('#list-news-us').slick({
-            slidesToShow: 4,
+            slidesToShow: 3,
             slidesToScroll: 1,
             autoplay: true,
             autoplaySpeed: 3000,

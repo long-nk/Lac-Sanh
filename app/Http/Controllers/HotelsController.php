@@ -36,7 +36,7 @@ class HotelsController extends Controller
             $hotelPopulars = Hotels::where('status', 1)->orderBy('rate', 'desc')->where('type', Comforts::KS)->limit(12)->get();
             $hotelHots = Hotels::where('status', 1)->orderBy('price', 'asc')->where('type', Comforts::KS)->limit(8)->get();
             return view('frontend.hotels.index', compact('banners', 'vouchers', 'locations', 'locationHots'));
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return redirect()->back()->with('message-error', 'Chức năng hiện không khả dụng, vui lòng thử lại sau!');
         }
@@ -220,10 +220,10 @@ class HotelsController extends Controller
                 ->get();
             $banners = Banner::where('status', Banner::IS_ACTIVE)->where('type', '=', Banner::TYPE_BANNER)->orderBy('sort')->get();
 
-            return view('frontend.hotels.index', compact( 'vouchers',
+            return view('frontend.hotels.index', compact('vouchers',
                 'listLocation', 'hotelHots', 'hotelPopulars', 'banners', 'locationHots'));
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             dd($e);
             \Log::error($e->getMessage());
             return redirect()->back()->with('message-error', 'Chức năng hiện không khả dụng, vui lòng thử lại sau!');
@@ -265,44 +265,14 @@ class HotelsController extends Controller
             $listVoucher = [];
             $currentDateTime = Carbon::now();
 
-            if ($hotel->type == Comforts::KS) {
-                $type = 'khách sạn';
-                $listVoucher = Vouchers::where('status', 1)
-                    ->where('hotel', 1)
-                    ->whereDate('start_date', '<=', $currentDateTime)
-                    ->whereDate('time', '>=', $currentDateTime)
-                    ->get();
-            } elseif ($hotel->type == Comforts::TO) {
-                $type = 'villa';
-                $listVoucher = Vouchers::where('status', 1)
-                    ->where('villa', 1)
-                    ->whereDate('start_date', '<=', $currentDateTime)
-                    ->whereDate('time', '>=', $currentDateTime)
-                    ->get();
-            } elseif ($hotel->type == Comforts::HS) {
-                $type = 'homestay';
-                $listVoucher = Vouchers::where('status', 1)
-                    ->where('homestay', 1)
-                    ->whereDate('start_date', '<=', $currentDateTime)
-                    ->whereDate('time', '>=', $currentDateTime)
-                    ->get();
-            } elseif ($hotel->type == Comforts::RS) {
-                $type = 'resort';
-                $listVoucher = Vouchers::where('status', 1)
-                    ->where('resort', 1)
-                    ->whereDate('start_date', '<=', $currentDateTime)
-                    ->whereDate('time', '>=', $currentDateTime)
-                    ->get();
-            } elseif ($hotel->type == Comforts::DT) {
-                $type = 'du thuyền';
-                $listVoucher = Vouchers::where('status', 1)
-                    ->where('yacht', 1)
-                    ->whereDate('start_date', '<=', $currentDateTime)
-                    ->whereDate('time', '>=', $currentDateTime)
-                    ->get();
-            }
+            $listVoucher = Vouchers::where('status', 1)
+                ->where('hotel', 1)
+                ->whereDate('start_date', '<=', $currentDateTime)
+                ->whereDate('end_date', '>=', $currentDateTime)
+                ->get();
+
             $rooms = Rooms::where('hotel_id', $hotel->id)->where('status', 1)->orderBy('created_at', 'desc')->get();
-            $hotels = Hotels::where('status', 1)->where('id', '!=', $hotel->id)->where('type', $hotel->type)->where('location_id', $hotel->location_id)->orderBy('sort')->orderBy('created_at', 'desc')->limit(15)->get();
+            $hotels = Hotels::where('status', 1)->where('id', '!=', $hotel->id)->where('location_id', $hotel->location_id)->orderBy('sort')->orderBy('created_at', 'desc')->limit(15)->get();
             $comments = Comments::where('hotel_id', $hotel->id)->where('status', 1)->limit(3)->get();
             $allImages = $hotel->images->merge($hotel->comments->pluck('commentImages')->flatten());
             $commentImages = $hotel->comments->pluck('commentImages')->flatten();
@@ -394,10 +364,10 @@ class HotelsController extends Controller
                 Session::put('formData', $formData);
             }
 
-            return view('frontend.hotels.detail', compact('type', 'hotel', 'hotels', 'rooms', 'comments', 'allImages',
+            return view('frontend.hotels.detail', compact( 'hotel', 'hotels', 'rooms', 'comments', 'allImages',
                 'commentImages', 'listComforts', 'listCompare', 'totalComforts', 'listVoucher'));
         } catch (\Exception $e) {
-            return redirect()->route('home')->with('error', 'Lỗi xảy ra, vui lòng thử lại sau.');
+            return redirect()->route('home')->with('message-error', 'Không tìm thấy thông tin phù hợp, vui lòng thử lại sau.');
         }
 
     }
@@ -533,7 +503,7 @@ class HotelsController extends Controller
         $type = $request->type;
         $location_id = $request->location_id;
         // Apply the filters to your query
-        if($type != '') {
+        if ($type != '') {
             $hotelsQuery = Hotels::where('status', 1)->where('type', $type)->where('location_id', $location_id);
         } else {
             $hotelsQuery = Hotels::where('status', 1)->where('location_id', $location_id);

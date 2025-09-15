@@ -36,24 +36,34 @@
 
             <div class="heroSearch p-3 p-lg-4 d-none flex-column">
                 <div class="nav nav-tabs mb-3 mb-lg-4" id="searchTab" role="tablist">
-                    <button class="nav-link active" id="tours-tab" data-bs-toggle="tab" data-bs-target="#tours" type="button" role="tab" aria-controls="tours" aria-selected="true">Tours</button>
-                    <button class="nav-link" id="hotels-tab" data-bs-toggle="tab" data-bs-target="#hotels" type="button" role="tab" aria-controls="hotels" aria-selected="false">Hotels</button>
+                    <button class="nav-link active" id="tours-tab" data-bs-toggle="tab" data-bs-target="#tours"
+                            type="button" role="tab" aria-controls="tours" aria-selected="true">Tours
+                    </button>
+                    <button class="nav-link" id="hotels-tab" data-bs-toggle="tab" data-bs-target="#hotels" type="button"
+                            role="tab" aria-controls="hotels" aria-selected="false">Hotels
+                    </button>
                 </div>
                 <div class="tab-content" id="searchTabContent">
-                    <div class="tab-pane fade show active" id="tours" role="tabpanel" aria-labelledby="tours-tab" tabindex="0">
+                    <div class="tab-pane fade show active" id="tours" role="tabpanel" aria-labelledby="tours-tab"
+                         tabindex="0">
                         <form action="#" class="heroSearch__form d-flex flex-wrap gap-3 gap-lg-4">
                             <div class="form-group d-flex flex-column">
                                 <label for="" class="form-label">Location</label>
-                                <input type="text" name="" id="serchLocation" class="form-control locationInput" placeholder="Thành phố, khách sạn, địa điểm">
+                                <input type="text" name="" id="serchLocation" class="form-control locationInput"
+                                       placeholder="Thành phố, khách sạn, địa điểm">
                                 <div class="locationResult p-3">
                                     <div class="mobiAction d-flex align-items-center d-lg-none w-100 gap-2 mb-2">
-                                        <input type="text" name="" id="serchLocationMobi" class="form-control flex-grow-1 locationInput" placeholder="Thành phố, khách sạn, địa điểm">
-                                        <button class="closeResult flex-shrink-0" type="button"><i class="fal fa-times"></i></button>
+                                        <input type="text" name="" id="serchLocationMobi"
+                                               class="form-control flex-grow-1 locationInput"
+                                               placeholder="Thành phố, khách sạn, địa điểm">
+                                        <button class="closeResult flex-shrink-0" type="button"><i
+                                                class="fal fa-times"></i></button>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-4 d-flex flex-column">
                                             <h3 class="locationResult__title flex-shrink-0 mb-3">Gợi ý</h3>
-                                            <div class="locationResult__list d-flex flex-column w-100 gap-2 border-top flex-grow-1">
+                                            <div
+                                                class="locationResult__list d-flex flex-column w-100 gap-2 border-top flex-grow-1">
                                                 <div class="item d-flex pb-2 border-bottom align-items-center">
                                                     <div class="img d-block overflow-hidden flex-shrink-0">
                                                         <i class="fas fa-map-marker-alt"></i>
@@ -62,7 +72,8 @@
                                                         <h4 class="title mb-0">Vũng Tàu</h4>
                                                         <p class="text mb-0">Việt Nam</p>
                                                     </div>
-                                                    <span class="ks d-flex align-items-center gap-1">255 <i class="fal fa-building"></i></span>
+                                                    <span class="ks d-flex align-items-center gap-1">255 <i
+                                                            class="fal fa-building"></i></span>
                                                 </div>
                                                 <div class="item d-flex pb-2 border-bottom align-items-center">
                                                     <div class="img d-block overflow-hidden flex-shrink-0">
@@ -72,118 +83,138 @@
                                                         <h4 class="title mb-0">Vũng Tàu</h4>
                                                         <p class="text mb-0">Việt Nam</p>
                                                     </div>
-                                                    <span class="ks d-flex align-items-center gap-1">255 <i class="fal fa-building"></i></span>
+                                                    <span class="ks d-flex align-items-center gap-1">255 <i
+                                                            class="fal fa-building"></i></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-8 d-flex flex-column">
-                                            <h3 class="locationResult__subtitle mb-3 flex-shrink-0">Địa điểm nổi bật</h3>
+                                            <h3 class="locationResult__subtitle mb-3 flex-shrink-0">Địa điểm nổi
+                                                bật</h3>
                                             <div class="locationResult__feature row row-gap-3">
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-4">
                                                     <div class="item d-flex flex-column align-items-center w-100 h-100">
-                                                        <img src="images/imgpostsiba.jpg" alt="" class="img d-block mx-auto">
+                                                        <img src="images/imgpostsiba.jpg" alt=""
+                                                             class="img d-block mx-auto">
                                                         <span class="text">Vũng Tàu</span>
                                                     </div>
                                                 </div>
@@ -194,7 +225,9 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="hotels" role="tabpanel" aria-labelledby="hotels-tab" tabindex="0">...</div>
+                    <div class="tab-pane fade" id="hotels" role="tabpanel" aria-labelledby="hotels-tab" tabindex="0">
+                        ...
+                    </div>
                 </div>
             </div>
         </section>
@@ -266,21 +299,21 @@
                 <div
                     class="homeHotel__head d-flex align-items-center justify-content-between flex-column flex-lg-row mb-3 mb-lg-4">
                     <h2 class="homeTitle homeHotel__title mb-0">Hotels & Resort</h2>
-                    <a href="#" class="viewall" title="Xem tất cả">Xem tất cả</a>
+                    <a href="{{route('hotels.list')}}" class="viewall" title="Xem tất cả">Xem tất cả</a>
                 </div>
                 <div class="homeHotel__list row row-gap-4">
                     @if(!empty($hotels) && count($hotels) > 0)
                         @foreach($hotels as $hotel)
                             <div class="col-lg-3">
                                 <div class="hotel d-flex flex-column w-100 h-100 p-2 overflow-hidden bg-white">
-                                    <a href="hotel_detail.html"
+                                    <a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}"
                                        class="hotel__img d-block w-100 overflow-hidden flex-shrink-0 mb-3"
                                        title="{{$hotel->meta ?? $hotel->name}}">
                                         <img
                                             src="{{asset('' . @$hotel->image_thumbs)}}"
                                             alt="{{$hotel->alt ?? $hotel->name}}" class="d-block w-100 h-100">
                                     </a>
-                                    <h3 class="hotel__title"><a href="hotel_detail.html"
+                                    <h3 class="hotel__title"><a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}"
                                                                 title="{{$hotel->name}}">{{$hotel->name}}</a></h3>
                                     <div
                                         class="hotel__info d-flex w-100 align-items-center justify-content-between gap-1">
@@ -306,7 +339,7 @@
                                     <div class="hotel__price">
                                         <strong>{{!empty($hotel->price) ? number_format($hotel->price) . 'đ/ người' : 'Liên hệ'}} </strong>
                                     </div>
-                                    <a href="hotel_detail.html" class="hotel__book" title="Đặt ngay">Đặt ngay</a>
+                                    <a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}" class="hotel__book" title="Đặt ngay">Đặt ngay</a>
                                 </div>
                             </div>
                         @endforeach
@@ -340,7 +373,8 @@
 
         <section class="feedback w-100 overflow-hidden py-4 py-lg-5">
             <div class="container d-flex flex-column">
-                <div class="feedback__head w-100 d-flex flex-column flex-lg-row align-items-center justify-content-between gap-4 mb-4">
+                <div
+                    class="feedback__head w-100 d-flex flex-column flex-lg-row align-items-center justify-content-between gap-4 mb-4">
                     <h2 class="feedback__title mb-0" data-aos="fade-left" data-aos-duration="1000">Cảm nhận của khách
                         hàng</h2>
                     <a href="#" class="viewall" title="Xem tất cả" data-aos="fade-right" data-aos-duration="150">Xem tất
@@ -353,12 +387,12 @@
                                 <div class="feedback__item pe-3 pe-lg-4 pb-3 pb-lg-4 position-relative w-100 h-100">
                                     <div class="itemInner d-flex flex-column w-100 h-100 p-3 p-lg-4 bg-white">
                                         <h3 class="title mb-2">{{$feedback->title ?? 'Dịch vụ rất tốt'}}</h3>
-                                        <p class="text mb-2">{!! @$feedback->content !!}</p>
+                                        <p class="text mb-2">{!! strip_tags(@$feedback->message, '<br><strong><em><u><a><img>') !!}</p>
                                         <span class="star d-flex gap-2 mb-3">
                                             @for($i = 0; $i < $feedback->rate ?? 5; $i ++)
                                                 <i class="fas fa-star"></i>
                                             @endfor
-                                </span>
+                                        </span>
                                         <strong class="author">{{@$feedback->name}}</strong>
                                         <span class="address">{{@$feedback->address}}</span>
                                     </div>
@@ -370,9 +404,7 @@
                             <div class="feedback__item pe-3 pe-lg-4 pb-3 pb-lg-4 position-relative w-100 h-100">
                                 <div class="itemInner d-flex flex-column w-100 h-100 p-3 p-lg-4 bg-white">
                                     <h3 class="title mb-2">Dịch vụ rất tốt</h3>
-                                    <p class="text mb-2">Đây là chuyến đi tour nước ngoài lần đầu tiên của tôi, tôi thật
-                                        sự
-                                        rất vui, thoải mái với sự phục vụ và thái độ của Hướng dẫn viên.</p>
+
                                     <span class="star d-flex gap-2 mb-3">
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
@@ -446,7 +478,6 @@
                 </div>
             </div>
         </section>
-
         <section class="homeNews w-100 overflow-hidden py-4 py-lg-5 bg-white">
             <div class="container d-flex flex-column">
                 <div

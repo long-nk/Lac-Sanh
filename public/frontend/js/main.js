@@ -141,46 +141,50 @@
                 ]
             });
         }
-        var hotHotel__navs = new Swiper(".hotHotel__navs", {
-            slidesPerView: "auto",
-            spaceBetween: 30,
-            freeMode: true,
-            pagination: false,
-            navigation: {
-                nextEl: ".hotHotel__wrap .swiper-button-next",
-                prevEl: ".hotHotel__wrap .swiper-button-prev",
-            },
-        });
-        if ($('.aboutPartner__slider').length) {
-            $('.aboutPartner__slider').slick({
-                slidesToShow: 6,
+
+        if ($('.hotHotel__navs').length) {
+            const hotHotel__navs = new Swiper(".hotHotel__navs", {
+                slidesPerView: "auto",
+                spaceBetween: 30,
+                freeMode: true,
+                pagination: false,
+                navigation: {
+                    nextEl: ".hotHotel__wrap .swiper-button-next",
+                    prevEl: ".hotHotel__wrap .swiper-button-prev",
+                },
+            });
+        }
+
+        if ($('.reviewSlider').length) {
+            $('.reviewSlider').slick({
+                slidesToShow: 1,
                 autoplay: true,
-                autoplaySpeed: 5000,
+                autoplaySpeed: 3500,
                 infinite: true,
                 lazyLoad: "progressive",
                 speed: 500,
-                arrows: false,
+                arrows: true,
                 dots: true,
-                responsive: [
-                    {
-                        breakpoint: 992,
-                        settings: {
-                            slidesToShow: 6,
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            slidesToShow: 3,
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            slidesToShow: 2,
-                        }
-                    }
-                ]
+                cssEase: 'linear',
+            });
+        }
+
+        if($('.room__images').length) {
+            $('.room__images').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
+                fade: true,
+                asNavFor: '.room__thumbs'
+            });
+
+            $('.room__thumbs').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                asNavFor: '.room__images',
+                dots: false,
+                centerMode: true,
+                focusOnSelect: true
             });
         }
 
@@ -205,24 +209,79 @@
             }, 1000);
         }
 
-        $(document).on('click', '.btnViewmore', function (e) {
-            e.preventDefault();
-            if ($(this).hasClass('more')) {
-                $(this)
-                    .removeClass('more')
-                    .text('Xem thêm')
-                    .closest('.info')
-                    .find('.info__time')
-                    .css('max-height', '72px');
-            } else {
-                $(this)
-                    .addClass('more')
-                    .text('Thu gọn')
-                    .closest('.info')
-                    .find('.info__time')
-                    .css('max-height', '9999px');
+        $('.select-sx--title').click(function (event) {
+            // Prevent click event from propagating to the document
+            event.stopPropagation();
+
+            // Toggle the 'active-model' class on click of the title
+            $(this).parents('.details-raiting').find('.select-filter-model').toggleClass('active-model');
+        });
+
+        $('.js-dots').click(function () {
+            $('.js-dots').removeClass('active');
+            $(this).addClass('active');
+            var text = $(this).find('.text').text();
+            $(this).parents('.select-sx').find('.js-sx').text(text);
+        });
+
+        $(document).on('click', function (e) {
+            if (!e.target.closest('.filter__content')) {
+                $('.sub-filter').fadeOut(0);
+                $('.sub-filter--checkn').removeClass('show-sub');
+                $('.js-list-start').hide();
+            }
+            if (!e.target.closest('.select-sx')) {
+                $('.select-filter-model').removeClass('active-model');
             }
         });
+
+        if ($('.hotelDetail__content').length) {
+            const contentHeight = $('.hotelDetail__content .content').outerHeight();
+            if (contentHeight > 50) {
+                $('.hotelDetail__content .content').css('max-height', '50px').after('<button type="button" class="btnViewmore mt-3">Xem thêm</button>');
+            }
+
+            $(document).on('click', '.btnViewmore', function (e) {
+                e.preventDefault();
+                if ($(this).hasClass('more')) {
+                    $(this)
+                        .removeClass('more')
+                        .text('Xem thêm')
+                        .siblings('.content')
+                        .css('max-height', '50px');
+                } else {
+                    $(this)
+                        .addClass('more')
+                        .text('Thu gọn')
+                        .siblings('.content')
+                        .css('max-height', '9999px');
+                }
+            });
+        }
+
+        if ($('.facilityList').length) {
+            const contentHeight = $('.facilityList').outerHeight();
+            if (contentHeight > 24) {
+                $('.facilityList').css('max-height', '24px').after('<button type="button" class="moreFacility mt-3">Xem thêm</button>');
+            }
+
+            $(document).on('click', '.moreFacility', function (e) {
+                e.preventDefault();
+                if ($(this).hasClass('more')) {
+                    $(this)
+                        .removeClass('more')
+                        .text('Xem thêm')
+                        .siblings('.facilityList')
+                        .css('max-height', '24px');
+                } else {
+                    $(this)
+                        .addClass('more')
+                        .text('Thu gọn')
+                        .siblings('.facilityList')
+                        .css('max-height', '9999px');
+                }
+            });
+        }
 
         $(document).on('click', '.prodFilter__block .title', function (e) {
             e.preventDefault();
