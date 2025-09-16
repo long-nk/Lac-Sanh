@@ -29,7 +29,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>tiện ích</h2>
+                            <h2>Tiện ích</h2>
 
                             <div class="clearfix"></div>
                         </div>
@@ -104,7 +104,7 @@
                                         </td>
                                         <td class="text-center">
                                             <a href="{{route('comforts.edit', $value->id)}}"
-                                               class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                                               class="btn btn-primary btn-sm" style="min-width:100px;"><i class="fa fa-edit"></i> Edit</a>
                                             <form action="{{route('comforts.destroy', $value->id)}}" method="post">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 {{csrf_field()}}

@@ -19,7 +19,6 @@ class HomeController extends Controller
     public function index()
     {
         session()->forget('formData');
-        $banners = Banner::where('status', Banner::IS_ACTIVE)->where('type', '=', Banner::TYPE_BANNER)->orderBy('sort', 'asc')->get();
         $locationHots = Locations::where('status', 1)->where('check', 1)->limit(4)->get();
         if (empty($locationHots)) {
             $locationHots = Locations::where('status', 1)->orderBy('sort')->orderByDesc('created_at')->limit(4)->get();
@@ -35,7 +34,7 @@ class HomeController extends Controller
         }
         $feedbacks = Feedbacks::where('status', 1)->orderBy('sort')->orderByDesc('created_at')->limit(12)->get();
         $newsHots = Contents::where('status', 1)->where('check', 1)->orderBy('sort')->orderByDesc('created_at')->limit(3)->get();
-        return view('frontend.homepage.index', compact('banners', 'locationHots', 'vouchers', 'hotels', 'tours', 'feedbacks', 'newsHots'));
+        return view('frontend.homepage.index', compact( 'locationHots', 'vouchers', 'hotels', 'tours', 'feedbacks', 'newsHots'));
     }
 
     public function introduce()

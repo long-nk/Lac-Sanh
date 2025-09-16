@@ -67,7 +67,9 @@ class RoomsController extends Controller
 //            'surcharge_child2' => $request->surcharge_child2,
 //            'surcharge_child3' => $request->surcharge_child3,
             'cancel' => $request->cancel,
-            'status' => $request->status
+            'status' => $request->status,
+            'alt' => $request->alt ?? null,
+            'meta' => $request->meta ?? null,
         ];
         $list_comfort = [];
         $list_comfort = $request->input('list_comfort');
@@ -108,7 +110,9 @@ class RoomsController extends Controller
                 $images = array();
                 if ($request->hasFile('images')) {
                     $files = $request->file('images');
-                    foreach ($files as $item) {
+                    $alts = $request->input('alts', []);
+                    $titles = $request->input('titles', []);
+                    foreach ($files as $index => $item) {
                         $name = $item->getClientOriginalName();
                         $images[] = $name;
                         $extensionImage = $item->extension();
@@ -120,7 +124,9 @@ class RoomsController extends Controller
                             'room_id' => $room->id,
                             'name' => $image_name,
                             'mime' => $item->getClientMimeType(),
-                            'path' => 'rooms'
+                            'path' => 'rooms',
+                            'alt' => $alts[$index] ?? null,
+                            'meta' => $titles[$index] ?? null,
                         ];
                         $thumbsPathImage = public_path('images/uploads/thumbs/' . $image_name);
                         $widthImg = $imageNew->width();
@@ -211,7 +217,9 @@ class RoomsController extends Controller
 //            'surcharge_child2' => $request->surcharge_child2,
 //            'surcharge_child3' => $request->surcharge_child3,
             'cancel' => $request->cancel,
-            'status' => $request->status
+            'status' => $request->status,
+            'alt' => $request->alt,
+            'meta' => $request->meta,
         ];
 
         $room_comfort = RoomComforts::where('room_id', $id)->pluck('comfort_id')->toArray();
@@ -281,7 +289,9 @@ class RoomsController extends Controller
             $images = array();
             if ($request->hasFile('images')) {
                 $files = $request->file('images');
-                foreach ($files as $item) {
+                $altsNew = $request->input('alts_new', []);
+                $titlesNew = $request->input('titles_new', []);
+                foreach ($files as $index => $item) {
                     $name = $item->getClientOriginalName();
                     $images[] = $name;
                     $extensionImage = $item->extension();
@@ -292,7 +302,9 @@ class RoomsController extends Controller
                         'name' => $image_name,
                         'mime' => $item->getClientMimeType(),
                         'size' => $item->getSize(),
-                        'path' => 'rooms'
+                        'path' => 'rooms',
+                        'alt' => $altsNew[$index] ?? null,
+                        'meta' => $titlesNew[$index] ?? null,
                     ];
                     $item->move('images/uploads/rooms/', $image_name);
 

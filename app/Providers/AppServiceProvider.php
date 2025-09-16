@@ -137,6 +137,10 @@ class AppServiceProvider extends ServiceProvider
 //            View::share('listComfort', $listComfort);
 //            Cache::put('listComfort', $listComfort, $minutes);
 //
+            $banners = Banner::where('status', Banner::IS_ACTIVE)->where('type', '=', Banner::TYPE_BANNER)->orderBy('sort', 'asc')->get();
+            View::share('banners', $banners);
+            Cache::put('banners', $banners, $minutes);
+
             $terms = Contents::where('status', 1)->where('type', Contents::CHINH_SACH)->orderBy('sort')->orderByDesc('created_at')->get();
             View::share('terms', $terms);
             Cache::put('terms', $terms, $minutes);

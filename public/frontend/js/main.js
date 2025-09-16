@@ -169,24 +169,50 @@
             });
         }
 
-        if($('.room__images').length) {
-            $('.room__images').slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: true,
-                fade: true,
-                asNavFor: '.room__thumbs'
-            });
+        if($('.room__gallery').length) {
+            $('.room__gallery').each(function() {
+                const $images = $(this).find('.room__images');
+                const $thumbs = $(this).find('.room__thumbs');
+                $images.slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: true,
+                    dots: false,
+                    fade: true,
+                    asNavFor: $thumbs
+                });
 
-            $('.room__thumbs').slick({
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                asNavFor: '.room__images',
-                dots: false,
-                centerMode: true,
-                focusOnSelect: true
+                $thumbs.slick({
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    asNavFor: $images,
+                    dots: false,
+                    arrows: false,
+                    centerMode: true,
+                    focusOnSelect: true
+                });
             });
         }
+        
+        if ($('.tourGallery').length) {
+            $('.tourGallery').slick({
+                slidesToShow: 1,
+                autoplay: true,
+                autoplaySpeed: 3500,
+                infinite: true,
+                lazyLoad: "progressive",
+                speed: 500,
+                arrows: true,
+                dots: false,
+                fade: true,
+                cssEase: 'linear',
+            });
+        }
+
+        $('.modalRoom').on('shown.bs.modal', function (e) {
+            // Kích hoạt việc tính toán lại vị trí cho slider
+            $(this).find('.room__images, .room__thumbs').slick('setPosition');
+        });
 
         $('a[data-fancybox]').fancybox();
 

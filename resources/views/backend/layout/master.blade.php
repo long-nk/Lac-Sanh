@@ -359,7 +359,7 @@
         }
 
         .item .alert {
-            width: 100% !IMPORTANT;
+            /*width: 100% !IMPORTANT;*/
             opacity: 1 !IMPORTANT;
             justify-content: center;
             align-items: center;

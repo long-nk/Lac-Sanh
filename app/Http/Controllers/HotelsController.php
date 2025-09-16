@@ -28,14 +28,13 @@ class HotelsController extends Controller
     public function index()
     {
         try {
-            $banners = Banner::where('status', Banner::IS_ACTIVE)->where('type', '=', Banner::TYPE_BANNER)->orderBy('sort', 'asc')->get();
             $vouchers = Vouchers::where('status', 1)->get();
             $locations = Locations::where('region', Locations::REGION_IN)->where('status', 1)->limit(4)->get();
             $locationHots = Locations::where('region', Locations::REGION_IN)->where('status', 1)->where('check', 1)->limit(4)->get();
             $hotels = Hotels::where('status', 1)->orderBy('created_at', 'desc')->limit(9)->get();
             $hotelPopulars = Hotels::where('status', 1)->orderBy('rate', 'desc')->where('type', Comforts::KS)->limit(12)->get();
             $hotelHots = Hotels::where('status', 1)->orderBy('price', 'asc')->where('type', Comforts::KS)->limit(8)->get();
-            return view('frontend.hotels.index', compact('banners', 'vouchers', 'locations', 'locationHots'));
+            return view('frontend.hotels.index', compact('vouchers', 'locations', 'locationHots'));
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return redirect()->back()->with('message-error', 'Chức năng hiện không khả dụng, vui lòng thử lại sau!');

@@ -67,9 +67,41 @@
                                         </div>
                                         {{--<div class="box_upload">--}}
                                         {{--Chọn hình ảnh--}}
-                                        <input type="file" class="hide_file" name="image" value="{{@$hotel->images[0]}}"
-                                               onchange="show_img_selected(this)" {{@$hotel->images[0]->name == ""?"required":""}}>
+                                        <input type="file" class="hide_file" name="image" value="{{@$room->images[0]}}"
+                                               onchange="show_img_selected(this)" {{@$room->images[0]->name == ""?"required":""}}>
                                         {{--</div>--}}
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                        Alt ảnh
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="alt" value="{{old('alt') ?? @$room->alt}}"
+                                               class="form-control col-md-7 col-xs-12"
+                                               name="alt" type="text" placeholder="Alt ảnh">
+                                        @if ($errors->has('alt'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('alt') }}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                        Tiêu đề ảnh
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="meta" value="{{old('meta') ?? @$hotel->meta}}"
+                                               class="form-control col-md-7 col-xs-12"
+                                               name="meta" type="text" placeholder="Tiêu đề ảnh">
+                                        @if ($errors->has('meta'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('meta') }}</strong>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -80,24 +112,32 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         @if(count($room->images) > 0)
                                             <div class="box_show_img">
-                                                <div class="row list_image" style="width: 100%;padding: 0px 10px;" id="upload-new-image">
+                                                <div class="row list_image" style="width: 100%; padding: 0px 10px;" id="image_preview">
+                                                    {{-- Ảnh đã có --}}
                                                     @foreach($room->images as $items => $item)
-                                                        @if($items == 0)
-                                                            @continue
+                                                        @if($items != 0)
+                                                            <div class='col-sm-2 col-md-3 image-item'>
+                                                                <img
+                                                                    src="{{ asset('images/uploads/thumbs/' . $item->name) }}"
+                                                                    style="margin-bottom: 5px" class='img_upload'>
+                                                                <input type='text' name='alts[{{$item->id}}]'
+                                                                       class="form-control"
+                                                                       style="padding-left: 5px;padding-right: 0px"
+                                                                       value="{{$item->alt}}"
+                                                                       placeholder='Nhập alt cho ảnh'>
+                                                                <input type='text' name='titles[{{$item->id}}]'
+                                                                       class="form-control"
+                                                                       style="padding-left: 5px;padding-right: 0px"
+                                                                       value="{{$item->meta}}"
+                                                                       placeholder='Nhập title cho ảnh'>
+                                                                {{ csrf_field() }}
+                                                                <a href="javascript:;" class="btn btn-danger btn-sm"
+                                                                   id="delete_images" data-id="{{$item->id}}">
+                                                                    Xóa
+                                                                </a>
+                                                            </div>
                                                         @endif
-                                                        <div class='col-sm-2 col-md-3'>
-                                                            <img src="{{asset('images/uploads/thumbs/' . $item->name)}}"
-                                                                 style="margin-bottom: 10px" alt="" class='img_upload remove-img'
-                                                                 id="img_show2">
-
-                                                            {{csrf_field()}}
-                                                            <a href="javascript:;" data-id="{{$item->id}}"
-                                                               id="delete_images">
-                                                                <i class="fa fa-trash"></i> Xóa
-                                                            </a>
-                                                        </div>
                                                     @endforeach
-
                                                 </div>
                                             </div>
                                         @else
@@ -492,20 +532,30 @@
         });
 
         function preview_image() {
-            var total_file = document.getElementById("upload_file").files.length;
-            for (var i = 0; i < total_file; i++) {
-                $('#image_preview, #upload-new-image').append(
-                    "<div class='col-sm-2 col-md-3'>" +
-                    "<img class='img_upload remove-img' data-id='" + i + "' src='" + URL.createObjectURL(document.getElementById("upload_file").files[i]) + "'>" +
-                    "</div>"
-                );
+            let fileInput = document.getElementById("upload_file");
+            let files = fileInput.files;
+            let previewContainer = $('#image_preview');
+
+            // previewContainer.empty(); // Xóa preview cũ trước khi render mới
+
+            for (let i = 0; i < files.length; i++) {
+                let imgUrl = URL.createObjectURL(files[i]);
+
+                previewContainer.append(`
+            <div class="col-sm-2 col-md-3 image-item" data-id="${i}" style="position: relative; margin-bottom: 15px;">
+                <img class="img_upload" src="${imgUrl}" style="width: 100%; height: auto; border: 1px solid #ddd; padding: 4px; margin-bottom: 5px;">
+                <input type="text" name="alts_new[]" class="form-control mb-2" placeholder="Nhập alt cho ảnh">
+                <input type="text" name="titles_new[]" class="form-control mb-2" placeholder="Nhập title cho ảnh">
+                <button type="button" class="remove-img btn btn-danger btn-sm mt-1">Xóa</button>
+            </div>
+        `);
             }
         }
 
-        $("body").on('click', "img.remove-img", function () {
-            let confirm = ConfirmDelete();
-            if (confirm) {
-                $(this).remove();
+
+        $("body").on('click', ".remove-img", function () {
+            if (confirm("Bạn có chắc muốn xóa ảnh này không?")) {
+                $(this).closest('.image-item').remove(); // Xóa cả khối ảnh
             }
         });
 

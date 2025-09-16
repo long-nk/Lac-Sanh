@@ -73,6 +73,38 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                        Alt ảnh
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="alt" value="{{old('alt')}}"
+                                               class="form-control col-md-7 col-xs-12"
+                                               name="alt" type="text" placeholder="Alt ảnh">
+                                        @if ($errors->has('alt'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('alt') }}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                        Tiêu đề ảnh
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="meta" value="{{old('meta')}}"
+                                               class="form-control col-md-7 col-xs-12"
+                                               name="meta" type="text" placeholder="Tiêu đề ảnh">
+                                        @if ($errors->has('meta'))
+                                            <div id="formMessage" class="alert alert-danger">
+                                                <strong>{{ $errors->first('meta') }}</strong>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Thêm nhiều
                                         hình ảnh<span class="required">*</span>
                                     </label>
@@ -426,12 +458,18 @@
         }
 
         function preview_image() {
-            var total_file = document.getElementById("upload_file").files.length;
-            for (var i = 0; i < total_file; i++) {
+            let total_file = document.getElementById("upload_file").files.length;
+            let files = document.getElementById("upload_file").files;
+
+            for (let i = 0; i < total_file; i++) {
+                let imgUrl = URL.createObjectURL(files[i]);
                 $('#image_preview').append(
-                    "<div class='col-sm-2 col-md-3'>" +
-                    "<img class='img_upload remove-img' data-id='" + i + "' src='" + URL.createObjectURL(event.target.files[i]) + "'>" +
-                    "</div>"
+                    `<div class="col-sm-2 col-md-3 image-item" data-id="${i}" style="position: relative; margin-bottom: 15px;">
+                        <img class="img_upload" src="${imgUrl}" style="width: 100%; height: auto; border: 1px solid #ddd; padding: 4px;">
+                        <input type="text" name="alts[]" class="form-control" style="padding-left: 5px;padding-right: 0px" placeholder="Nhập alt cho ảnh">
+                        <input type="text" name="titles[]" class="form-control" style="padding-left: 5px;padding-right: 0px" placeholder="Nhập title cho ảnh">
+                        <button type="button" class="remove-img btn btn-danger btn-sm">Xóa</button>
+                    </div>`
                 );
             }
         }

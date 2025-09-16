@@ -375,6 +375,10 @@ nav[aria-label="Pagination Navigation"] .hidden > div > .text-sm {
     ease-in-out;
 }
 
+.ratio.ratio-3 .count-custom {
+    display: none !important;
+}
+
 .ratio-4 .count-custom {
     display: block;
     position: absolute;
@@ -411,4 +415,47 @@ nav[aria-label="Pagination Navigation"] .hidden > div > .text-sm {
     -webkit-box-pack: center;
     justify-content: center;
     align-items: center;
+}
+
+span.sale {
+    padding: 5px;
+    color: #fff;
+    background: #0a7d70;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+h3.information {
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-close-custom {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    line-height: 1;
+    width: 1em;
+    height: 1em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-close-custom svg {
+    width: 1em;
+    height: 1em;
+    fill: #000; /* đổi màu tại đây */
+}
+.modal-header.sticky-top {
+    display: flex;
+    align-items: center;
+}
+
+.modal-dialog .modal-header .title-left .modal-title {
+    padding-top: 0px;
 }

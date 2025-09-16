@@ -40,7 +40,9 @@ class Rooms extends Model
         'surcharge_child2',
         'cancel',
         'voucher',
-        'status'
+        'status',
+        'alt',
+        'meta'
     ];
 
     public function hotel() {

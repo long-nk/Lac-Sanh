@@ -172,8 +172,11 @@ Route::post('dat-phong', [\App\Http\Controllers\HotelsController::class, 'book']
 Route::post('dat-phong-villa', [\App\Http\Controllers\HotelsController::class, 'bookVilla'])->name('hotels.book_room_villa');
 Route::get('tin-tuc/{slug}-{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.detail');
 Route::get('khach-sạn', [\App\Http\Controllers\HotelsController::class, 'list'])->name('hotels.list');
-Route::get('danh-sach/{type}', [\App\Http\Controllers\HotelsController::class, 'viewMore'])->name('hotels.view_more');
 Route::get('{slug}/{id}', [\App\Http\Controllers\HotelsController::class, 'detail'])->name('hotels.detail');
+Route::get('tours', [\App\Http\Controllers\ToursController::class, 'list'])->name('tours.list');
+Route::get('{slug}/{id}', [\App\Http\Controllers\ToursController::class, 'detail'])->name('tours.detail');
+Route::get('danh-sach/{type}', [\App\Http\Controllers\HotelsController::class, 'viewMore'])->name('hotels.view_more');
+
 Route::post('gui-lien-he', [\App\Http\Controllers\ContactsController::class, 'store'])->name('contact.send_contact');
 
 

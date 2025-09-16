@@ -65,7 +65,7 @@
             <button type="button" class="closeMenu d-flex d-lg-none"></button>
             <ul class="header__menu m-0 p-0" id="menuPrimary">
                 <li class="menu-item"><a href="{{route('home')}}" rel="nofollow" class="menu-link">Home</a></li>
-                <li class="menu-item"><a href="#" class="menu-link">Tour</a></li>
+                <li class="menu-item"><a href="{{route('tours.list')}}" class="menu-link">Tour</a></li>
                 <li class="menu-item"><a href="{{route('hotels.list')}}" class="menu-link">Hotels & Resort</a></li>
                 <li class="menu-item"><a href="{{route('news.list')}}" class="menu-link">Blogs</a></li>
                 <li class="menu-item"><a href="{{route('about.index')}}" class="menu-link">About Us</a></li>

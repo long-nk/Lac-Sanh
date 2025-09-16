@@ -14,7 +14,9 @@ class RoomImages extends Model
         'name',
         'mime',
         'size',
-        'path'
+        'path',
+        'alt',
+        'meta'
     ];
 
     public function room()

@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Dịch vụ | Dashboard')
+@section('title', 'Cập nhật khách sạn | Dashboard')
 @section('content')
 
     <!-- page content -->
@@ -7,7 +7,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Cập nhật dịch vụ</h3>
+                    <h3>Cập nhật khách sạn</h3>
                 </div>
 
             </div>
@@ -17,7 +17,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Dịch vụ</h2>
+                            <h2>Khách sạn</h2>
 
                             <div class="clearfix"></div>
                         </div>
@@ -637,7 +637,7 @@
                                 {{--                                @endif--}}
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Thuế và phí
-                                        dịch vụ<span
+                                        khách sạn<span
                                             class="required">*</span>
                                     </label>
                                     <div class="col-md-3 col-sm-6 col-xs-12">
