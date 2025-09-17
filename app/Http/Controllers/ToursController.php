@@ -31,12 +31,12 @@ class ToursController extends Controller
         try {
             $vouchers = Vouchers::where('status', 1)->get();
             $locationIns = Locations::where('region', Locations::REGION_IN)->where('status', 1)->pluck('id');
-            $locationOuts = Locations::where('region', Locations::REGION_IN)->where('status', 1)->pluck('id');
-            $tourIns = Tours::where('status', 1)->where('hot', 1)->whereIn('location_id', $locationIns)->orderBy('sort')->orderBy('created_at', 'desc')->limit(8)->get();
+            $locationOuts = Locations::where('region', Locations::REGION_OUT)->where('status', 1)->pluck('id');
+            $tourIns = Tours::where('status', 1)->whereIn('location_id', $locationIns)->orderBy('sort')->orderBy('created_at', 'desc')->limit(8)->get();
             if(!empty($tourIns) && count($tourIns) == 0){
                 $tourIns = Tours::where('status', 1)->whereIn('location_id', $locationIns)->orderBy('sort')->orderBy('created_at', 'desc')->limit(8)->get();
             }
-            $tourOuts = Tours::where('status', 1)->where('hot', 1)->whereIn('location_id', $locationOuts)->orderBy('sort')->orderBy('created_at', 'desc')->limit(8)->get();
+            $tourOuts = Tours::where('status', 1)->whereIn('location_id', $locationOuts)->orderBy('sort')->orderBy('created_at', 'desc')->limit(8)->get();
             if(!empty($tourOuts) && count($tourOuts) == 0){
                 $tourOuts = Tours::where('status', 1)->whereIn('location_id', $locationOuts)->orderBy('sort')->orderBy('created_at', 'desc')->limit(8)->get();
             }
@@ -241,60 +241,24 @@ class ToursController extends Controller
     public function detail(Request $request)
     {
         try {
-            $tour = Tours::with(['images', 'comments.commentImages'])->find($request->id);
+            $slug = $request->slug . '-' . $request->id;
+            $arr = explode('-', $slug);
+            $tour = Tours::with(['images', 'comments.commentImages'])->find(end($arr));
             $listVoucher = [];
             $currentDateTime = Carbon::now();
 
             $listVoucher = Vouchers::where('status', 1)
-                ->where('hotel', 1)
+                ->where('tour', 1)
                 ->whereDate('start_date', '<=', $currentDateTime)
                 ->whereDate('end_date', '>=', $currentDateTime)
                 ->get();
 
-            $rooms = Rooms::where('hotel_id', $hotel->id)->where('status', 1)->orderBy('created_at', 'desc')->get();
-            $hotels = Hotels::where('status', 1)->where('id', '!=', $hotel->id)->where('location_id', $hotel->location_id)->orderBy('sort')->orderBy('created_at', 'desc')->limit(15)->get();
-            $comments = Comments::where('hotel_id', $hotel->id)->where('status', 1)->limit(3)->get();
-            $allImages = $hotel->images->merge($hotel->comments->pluck('commentImages')->flatten());
-            $commentImages = $hotel->comments->pluck('commentImages')->flatten();
-            $listComforts = [];
-            if (@$hotel->comforts) {
-                $listComforts = @$hotel->comforts->groupBy('parent_id');
-            }
-            $listComforts = $listComforts->filter(function ($value, $key) {
-                return !empty($key);
-            });
+            $rooms = Rooms::where('hotel_id', $tour->id)->where('status', 1)->orderBy('created_at', 'desc')->get();
+            $tours = Tours::where('status', 1)->where('id', '!=', $tour->id)->where('location_id', $tour->location_id)->orderBy('sort')->orderBy('created_at', 'desc')->limit(4)->get();
+            $comments = Comments::where('hotel_id', $tour->id)->where('status', 1)->limit(3)->get();
+            $allImages = $tour->images->merge($tour->comments->pluck('commentImages')->flatten());
+            $commentImages = $tour->comments->pluck('commentImages')->flatten();
 
-            $totalComforts = $listComforts->sum(function ($comforts) {
-                return $comforts->count();
-            });
-
-            $compareList = session('compareList', []);
-            $listCompare = Hotels::whereIn('id', $compareList)->get();
-
-            $newHotel = [
-                'id' => $hotel->id,
-                'image' => @$hotel->images[0]->name, // Đường dẫn hình ảnh
-                'name' => $hotel->name,
-                'slug' => $hotel->slug,// Tên khách sạn
-                'stars' => $hotel->rate, // Số sao
-                'address' => $hotel->address, // Địa chỉ
-                'type' => $hotel->type
-            ];
-
-            // Lấy danh sách khách sạn hiện tại từ session, nếu không có thì tạo một mảng trống
-            $hotelList = session('hotelList', []);
-
-            // Kiểm tra xem khách sạn đã tồn tại trong danh sách chưa
-            $exists = collect($hotelList)->contains(function ($hotel) use ($newHotel) {
-                return $hotel['id'] === $newHotel['id'];
-            });
-
-            if (!$exists) {
-                // Nếu khách sạn chưa tồn tại, thêm vào danh sách
-                $hotelList[] = $newHotel;
-                // Lưu danh sách khách sạn vào session
-                session(['hotelList' => $hotelList]);
-            }
             Carbon::setLocale('vi');
             $now = Carbon::now()->addDay();
 
@@ -320,33 +284,34 @@ class ToursController extends Controller
             $month = $tomorrow->format('m'); // Zero-padded month
             $end = "{$dayName}, {$dayOfMonth} tháng {$month}";
 
-            if (!session()->has('formData')) {
-
-                session(['formData' => [
-                    'id' => @$hotel->id ?? '',
-                    'location' => @$hotel->name,
-                    'startDate' => $start,
-                    'endDate' => $end,
-                    'day' => 1,
-                    'room' => 1,
-                    'people' => 1,
-                    'child' => 0,
-                    'type' => $hotel->type,
-                    'start' => $now->format('d/m/Y'),
-                    'end' => $tomorrow->format('d/m/Y'),
-                ]]);
-            } else {
+//            if (!session()->has('formData')) {
+//
+//                session(['formData' => [
+//                    'id' => @$tour->id ?? '',
+//                    'location' => @$tour->name,
+//                    'startDate' => $start,
+//                    'endDate' => $end,
+//                    'day' => 1,
+//                    'room' => 1,
+//                    'people' => 1,
+//                    'child' => 0,
+//                    'type' => $tour->type,
+//                    'start' => $now->format('d/m/Y'),
+//                    'end' => $tomorrow->format('d/m/Y'),
+//                ]]);
+//            } else {
                 $formData = Session::get('formData', []);
-                $formData['id'] = @$hotel->id;
-                $formData['location'] = @$hotel->name;
+                $formData['id'] = @$tour->id;
+                $formData['location'] = @$tour->name;
 
                 // Save updated data back to session
                 Session::put('formData', $formData);
-            }
+//            }
 
-            return view('frontend.tours.detail', compact( 'hotel', 'hotels', 'rooms', 'comments', 'allImages',
-                'commentImages', 'listComforts', 'listCompare', 'totalComforts', 'listVoucher'));
+            return view('frontend.tours.detail', compact( 'tour', 'tours', 'rooms', 'comments', 'allImages',
+                'commentImages', 'listVoucher'));
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->route('home')->with('message-error', 'Không tìm thấy thông tin phù hợp, vui lòng thử lại sau.');
         }
 

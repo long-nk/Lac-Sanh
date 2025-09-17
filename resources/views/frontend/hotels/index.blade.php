@@ -285,7 +285,7 @@
                 <div class="locationFea__list slick-fsale w-100 d-grid gap-3 gap-lg-4">
                     @if(!empty($listLocation))
                         @foreach($listLocation as $location)
-                            <a href="hotels.html"
+                            <a href="{{route('hotels.list')}}"
                                class="locationFea__item d-flex flex-column row-gap-2 row-gap-lg-3 p-2 p-lg-3 overflow-hidden"
                                title="Sapa">
                                 <div class="img d-block w-100 overflow-hidden">
@@ -298,7 +298,7 @@
                             </a>
                         @endforeach
                     @else
-                        <h3 class="message-information text-center">
+                        <h3 class="nformation text-center">
                             Địa điểm đang cập nhật
                         </h3>
                     @endif
@@ -352,7 +352,7 @@
                             </div>
                         @endforeach
                     @else
-                        <h3 class="message-information text-center">Khách sạn đang cập nhật</h3>
+                        <h3 class="nformation text-center">Khách sạn đang cập nhật</h3>
                     @endif
                 </div>
             </div>
@@ -369,15 +369,15 @@
                         <div class="hotHotel__navs swiper w-100 mb-0">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <a href="javascript:;" data-location="all"
-                                       title="Tất cả" class="hotHotel__nav active">Tất cả</a>
+                                    <a href="javascript:;" data-type="hotel" data-location="all"
+                                       title="Tất cả" class="hotHotel__nav active filter-hotel-location">Tất cả</a>
                                 </div>
                                 @foreach(@$listLocation as $i => $location)
                                     <div class="swiper-slide">
                                         <a href="javascript:;"
-                                           data-name="{{$location->name}}" title="{{$location->name}}"
+                                           data-type="hotel" data-name="{{$location->name}}" title="{{$location->name}}"
                                            data-location="{{$location->slug}}"
-                                           class="hotHotel__nav">{{$location->name}}</a>
+                                           class="hotHotel__nav filter-hotel-location">{{$location->name}}</a>
                                     </div>
                                 @endforeach
                             </div>
@@ -386,48 +386,51 @@
                     </div>
                 @endif
 
-                @if(!empty($hotelHots) && count($hotelHots) > 0)
-                    <div class="homeHotel__list row row-gap-4">
-                        @foreach($hotelHots as $hotel)
-                            <div class="col-lg-3">
-                                <div class="hotel d-flex flex-column w-100 h-100 p-2 overflow-hidden bg-white">
-                                    <a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}"
-                                       class="hotel__img d-block w-100 overflow-hidden flex-shrink-0 mb-3" title="">
-                                        <img src="{{@$hotel->image_thumbs}}" alt="{{$hotel->alt ?? $hotel->name}}"
-                                             class="d-block w-100 h-100">
-                                    </a>
-                                    <h3 class="hotel__title"><a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}" aria-label="{{$hotel->name}}"
-                                                                title="{{$hotel->name}}">{{$hotel->name}}</a></h3>
-                                    <div
-                                        class="hotel__info d-flex w-100 align-items-center justify-content-between gap-1">
+                <div id="list-filter-location">
+                    @if(!empty($hotelHots) && count($hotelHots) > 0)
+                        <div class="homeHotel__list row row-gap-4">
+                            @foreach($hotelHots as $hotel)
+                                <div class="col-lg-3">
+                                    <div class="hotel d-flex flex-column w-100 h-100 p-2 overflow-hidden bg-white">
+                                        <a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}"
+                                           class="hotel__img d-block w-100 overflow-hidden flex-shrink-0 mb-3" title="">
+                                            <img src="{{@$hotel->image_thumbs}}" alt="{{$hotel->alt ?? $hotel->name}}"
+                                                 class="d-block w-100 h-100">
+                                        </a>
+                                        <h3 class="hotel__title"><a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}" aria-label="{{$hotel->name}}"
+                                                                    title="{{$hotel->name}}">{{$hotel->name}}</a></h3>
+                                        <div
+                                            class="hotel__info d-flex w-100 align-items-center justify-content-between gap-1">
                                 <span class="hotel__address d-flex align-items-center gap-1">
                                     <i class="fas fa-map-marker-alt"></i>
                                     {{@$hotel->address}}
                                 </span>
-                                        <span class="hotel__rating d-flex align-items-center gap-1">
+                                            <span class="hotel__rating d-flex align-items-center gap-1">
                                     <i class="fas fa-star"></i>
                                     @php $maxRate = 0;  $total = 1; @endphp
-                                            @foreach(@$hotel->comments as $comment)
-                                                @if($maxRate < $comment->rate)
-                                                    @php $maxRate = $comment->rate; @endphp
+                                                @foreach(@$hotel->comments as $comment)
+                                                    @if($maxRate < $comment->rate)
+                                                        @php $maxRate = $comment->rate; @endphp
+                                                    @endif
+                                                @endforeach
+                                                @if($maxRate > 0)
+                                                    {{$maxRate}} ({{count(@$hotel->comments)}})
+                                                @else
+                                                    {{$hotel->rate}}
                                                 @endif
-                                            @endforeach
-                                            @if($maxRate > 0)
-                                                {{$maxRate}} ({{count(@$hotel->comments)}})
-                                            @else
-                                                {{$hotel->rate}}
-                                            @endif
                                 </span>
+                                        </div>
+                                        <div class="hotel__price">
+                                            <strong>{{!empty($hotel->price) ? number_format($hotel->price) . 'đ/ người' : 'Liên hệ'}} </strong>
+                                        </div>
+                                        <a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}" class="hotel__book" title="Đặt ngay">Đặt ngay</a>
                                     </div>
-                                    <div class="hotel__price">
-                                        <strong>{{!empty($hotel->price) ? number_format($hotel->price) . 'đ/ người' : 'Liên hệ'}} </strong>
-                                    </div>
-                                    <a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}" class="hotel__book" title="Đặt ngay">Đặt ngay</a>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+
             </div>
         </section>
 
@@ -437,7 +440,7 @@
                 <div class="topLocation__list d-grid gap-3 gap-lg-4 w-100">
                     @if(!empty($locationHots) && count($locationHots) > 0)
                         @foreach($locationHots as $location)
-                            <a href="hotels.html" class="topLocation__item d-block overflow-hidden position-relative"
+                            <a href="{{route('hotels.list')}}" class="topLocation__item d-block overflow-hidden position-relative"
                                title="{{$location->name}}">
                                 <div class="img d-block w-100 overflow-hidden">
                                     <img src="{{asset($location->image ?? 'images/default.jpg')}}" alt="{{$location->name}}" class="d-block w-100 h-100">
@@ -451,7 +454,7 @@
                             </a>
                         @endforeach
                     @else
-                        <h3 class="message-information text-center">Địa điểm đang cập nhật</h3>
+                        <h3 class="nformation text-center">Địa điểm đang cập nhật</h3>
                     @endif
                 </div>
             </div>

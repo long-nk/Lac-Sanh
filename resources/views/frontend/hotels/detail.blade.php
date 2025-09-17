@@ -17,7 +17,7 @@
             <div class="container d-flex flex-column">
                 <div class="hotelDetail__summary d-flex flex-column overflow-hidden p-3 p-lg-4 mb-4 mb-lg-5">
                     <div
-                        class="summaryHead d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2 mb-3">
+                        class="summaryHead d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2">
                         <div class="summaryHead__info flex-grow-1 d-flex flex-column">
                             <h1 class="summaryHead__title">{{$hotel->name}}</h1>
                             <div class="hotelType d-flex align-items-center gap-1">
@@ -72,7 +72,8 @@
                                     </a>
                                 @endif
                             @endif
-                            <a class="hotelAddress d-flex align-items-center gap-1" href="javascript:;" data-bs-toggle="modal"
+                            <a class="hotelAddress d-flex align-items-center gap-1" href="javascript:;"
+                               data-bs-toggle="modal"
                                data-bs-target="#modal-maps">
                                 <i class="fas fa-map-marker-alt"></i>
                                 {{$hotel->address}}
@@ -113,7 +114,7 @@
                                 @endif
                             @endforeach
                         @else
-                            <h3 class="message-information text-center">Đang cập nhật ảnh!</h3>
+                            <h3 class="nformation text-center">Đang cập nhật ảnh!</h3>
                         @endif
 
                     </div>
@@ -191,11 +192,12 @@
                     </div>
                 </div>
 
-                <div
-                    class="hotelDetail__rooms d-flex flex-column w-100 p-3 p-lg-4 overflow-hidden row-gap-3 row-gap-lg-4 bg-white mb-4 mb-lg-5"
-                    id="hotelDetailRooms">
-                    <div class="room d-flex w-100 flex-column flex-lg-row gap-3 gap-lg-4 p-3 p-lg-4 overflow-hidden">
-                        @if((count(@$rooms) > 0))
+                @if((count(@$rooms) > 0))
+                    <div
+                        class="hotelDetail__rooms d-flex flex-column w-100 p-3 p-lg-4 overflow-hidden row-gap-3 row-gap-lg-4 bg-white mb-4 mb-lg-5"
+                        id="hotelDetailRooms">
+                        <div
+                            class="room d-flex w-100 flex-column flex-lg-row gap-3 gap-lg-4 p-3 p-lg-4 overflow-hidden">
                             @foreach($rooms as $room)
                                 <div class="room__gallery d-flex flex-shrink-0 flex-column row-gap-2">
                                     <div class="room__images w-100">
@@ -378,86 +380,86 @@
                                                     class="MuiBox-root jss4592 jss4509">cho  {{@$dataSearch['day'] ?? 1}} đêm</span>
                                             @endif
                                         </div>
-{{--                                        <div--}}
-{{--                                            class="MuiBox-root jss1377 jss1289 jss1285 {{$hotel->price != 0 ? 'js-hover js-show-hover' : ''}}">--}}
-{{--                                            @if($room->sale)--}}
-{{--                                                <div--}}
-{{--                                                    class="MuiBox-root jss1378 jss1293"><span--}}
-{{--                                                        class="MuiBox-root jss1379 jss1294">-{{$room->sale}}%</span><span--}}
-{{--                                                        class="MuiBox-root jss1380 jss1295">{{number_format($room->price)}} ₫</span>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                            <div class="MuiBox-root jss1381 jss1290"--}}
-{{--                                                 style="margin-top: 0px;"><span--}}
-{{--                                                    class="MuiBox-root jss1382">Giá cho 1 đêm x 1 phòng</span><span--}}
-{{--                                                    class="MuiBox-root jss1383">{{$room->sale ? number_format((100 - $room->sale) / 100 * ($room->price)) : number_format($room->price)}} ₫</span>--}}
-{{--                                            </div>--}}
-{{--                                            <div--}}
-{{--                                                class="MuiBox-root jss1384 jss1298">--}}
-{{--                                                <div--}}
-{{--                                                    class="MuiBox-root jss1385 jss1299">--}}
-{{--                                                            <span--}}
-{{--                                                                class="MuiBox-root jss1386">Giá cho {{@$dataSearch['day'] ?? 1}} đêm x {{@$dataSearch['room'] ?? 1}} phòng</span><span--}}
-{{--                                                        class="MuiBox-root jss1387">{{ number_format((100 - $room->sale) / 100 * ($room->price * (@$dataSearch['day'] ?? 1) * (@$dataSearch['room'] ?? 1))) }} ₫</span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            @if(@$listVoucher && count(@$listVoucher) > 0)--}}
-{{--                                                <div--}}
-{{--                                                    class="MuiBox-root jss1388 jss1290">--}}
-{{--                                                    @foreach(@$listVoucher as $voucher)--}}
-{{--                                                        <span--}}
-{{--                                                            class="MuiBox-root jss1389">Mã: {{$voucher->code}}--}}
-{{--                                                                                                <span--}}
-{{--                                                                                                    class="MuiBox-root jss1391">-{{number_format((1 - $room->sale / 100) * ($room->price) * (@$dataSearch['room'] ?? 1) * (@$dataSearch['day'] ?? 1) * ($voucher->percent / 100))}}₫</span></span>--}}
-{{--                                                    @endforeach--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                            <div class="MuiBox-root jss1392 jss1290"--}}
-{{--                                                 style="border-bottom: 1px solid rgb(237, 242, 247); padding-bottom: 8px;">--}}
-{{--                                                <span class="MuiBox-root jss1393">Giá sau giảm giá</span><span--}}
-{{--                                                    class="MuiBox-root jss1394">{{ number_format($room->price * (1 - $room->sale / 100) * (1 - $percent / 100) * (@$dataSearch['day'] ?? 1) * (@$dataSearch['room'] ?? 1)) }} ₫</span>--}}
-{{--                                            </div>--}}
-{{--                                            @if($room->surcharge != 0 && @$dataSearch['people'] != 0)--}}
-{{--                                                <div--}}
-{{--                                                    class="MuiBox-root jss1395 jss1290"--}}
-{{--                                                    style="border-bottom: 1px solid rgb(237, 242, 247); padding-bottom: 8px;"><span--}}
-{{--                                                        class="MuiBox-root jss1396">Phụ thu người lớn</span><span--}}
-{{--                                                        class="MuiBox-root jss1397">{{@$dataSearch['people']}} x {{number_format($room->surcharge_adult)}} ₫</span>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                            @if($room->surcharge_check != 0 && @$dataSearch['child'] != 0)--}}
-{{--                                                <div--}}
-{{--                                                    class="MuiBox-root jss1395 jss1290"--}}
-{{--                                                    style="border-bottom: 1px solid rgb(237, 242, 247); padding-bottom: 8px;"><span--}}
-{{--                                                        class="MuiBox-root jss1396">Phụ thu trẻ em</span><span--}}
-{{--                                                        class="MuiBox-root jss1397">{{@$dataSearch['child']}} x{{number_format($room->surcharge_child)}} ₫</span>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                            @if($hotel->vat)--}}
-{{--                                                <div--}}
-{{--                                                    class="MuiBox-root jss1395 jss1290"--}}
-{{--                                                    style="border-bottom: 1px solid rgb(237, 242, 247); padding-bottom: 8px;"><span--}}
-{{--                                                        class="MuiBox-root jss1396">Thuế và phí dịch vụ {{@$type}}</span><span--}}
-{{--                                                        class="MuiBox-root jss1397">{{number_format($hotel->vat)}} ₫</span>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                            <div class="MuiBox-root jss1398 jss1290"--}}
-{{--                                                 style="padding-top: 8px;">--}}
-{{--                                                <span class="MuiBox-root jss1399">Tổng tiền thanh toán</span><span--}}
-{{--                                                    class="MuiBox-root jss1400">{{ number_format($room->price * (1 - $room->sale / 100) * (1 - $percent / 100) * (@$dataSearch['day'] ?? 1) * (@$dataSearch['room'] ?? 1) + @$surcharge + @$hotel->vat) }} ₫</span>--}}
-{{--                                            </div>--}}
-{{--                                            <div--}}
-{{--                                                class="MuiBox-root jss1402 jss1290 jss1292"--}}
-{{--                                                style="left:0">--}}
-{{--                                                        <span class="MuiBox-root jss1401 jss1292"--}}
-{{--                                                              style="text-align: left!important;">Đã bao gồm thuế, phí, VAT</span>--}}
-{{--                                            </div>--}}
-{{--                                            <div--}}
-{{--                                                class="MuiBox-root jss1402 jss1290 jss1292"--}}
-{{--                                                style="left:0">--}}
-{{--                                                <span class="MuiBox-root jss1403">Giá cho {{@$dataSearch['day'] ?? 1}} đêm, {{@$dataSearch['people'] ?? 1}} người lớn</span>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div--}}
+                                        {{--                                            class="MuiBox-root jss1377 jss1289 jss1285 {{$hotel->price != 0 ? 'js-hover js-show-hover' : ''}}">--}}
+                                        {{--                                            @if($room->sale)--}}
+                                        {{--                                                <div--}}
+                                        {{--                                                    class="MuiBox-root jss1378 jss1293"><span--}}
+                                        {{--                                                        class="MuiBox-root jss1379 jss1294">-{{$room->sale}}%</span><span--}}
+                                        {{--                                                        class="MuiBox-root jss1380 jss1295">{{number_format($room->price)}} ₫</span>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            @endif--}}
+                                        {{--                                            <div class="MuiBox-root jss1381 jss1290"--}}
+                                        {{--                                                 style="margin-top: 0px;"><span--}}
+                                        {{--                                                    class="MuiBox-root jss1382">Giá cho 1 đêm x 1 phòng</span><span--}}
+                                        {{--                                                    class="MuiBox-root jss1383">{{$room->sale ? number_format((100 - $room->sale) / 100 * ($room->price)) : number_format($room->price)}} ₫</span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                            <div--}}
+                                        {{--                                                class="MuiBox-root jss1384 jss1298">--}}
+                                        {{--                                                <div--}}
+                                        {{--                                                    class="MuiBox-root jss1385 jss1299">--}}
+                                        {{--                                                            <span--}}
+                                        {{--                                                                class="MuiBox-root jss1386">Giá cho {{@$dataSearch['day'] ?? 1}} đêm x {{@$dataSearch['room'] ?? 1}} phòng</span><span--}}
+                                        {{--                                                        class="MuiBox-root jss1387">{{ number_format((100 - $room->sale) / 100 * ($room->price * (@$dataSearch['day'] ?? 1) * (@$dataSearch['room'] ?? 1))) }} ₫</span>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                            @if(@$listVoucher && count(@$listVoucher) > 0)--}}
+                                        {{--                                                <div--}}
+                                        {{--                                                    class="MuiBox-root jss1388 jss1290">--}}
+                                        {{--                                                    @foreach(@$listVoucher as $voucher)--}}
+                                        {{--                                                        <span--}}
+                                        {{--                                                            class="MuiBox-root jss1389">Mã: {{$voucher->code}}--}}
+                                        {{--                                                                                                <span--}}
+                                        {{--                                                                                                    class="MuiBox-root jss1391">-{{number_format((1 - $room->sale / 100) * ($room->price) * (@$dataSearch['room'] ?? 1) * (@$dataSearch['day'] ?? 1) * ($voucher->percent / 100))}}₫</span></span>--}}
+                                        {{--                                                    @endforeach--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            @endif--}}
+                                        {{--                                            <div class="MuiBox-root jss1392 jss1290"--}}
+                                        {{--                                                 style="border-bottom: 1px solid rgb(237, 242, 247); padding-bottom: 8px;">--}}
+                                        {{--                                                <span class="MuiBox-root jss1393">Giá sau giảm giá</span><span--}}
+                                        {{--                                                    class="MuiBox-root jss1394">{{ number_format($room->price * (1 - $room->sale / 100) * (1 - $percent / 100) * (@$dataSearch['day'] ?? 1) * (@$dataSearch['room'] ?? 1)) }} ₫</span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                            @if($room->surcharge != 0 && @$dataSearch['people'] != 0)--}}
+                                        {{--                                                <div--}}
+                                        {{--                                                    class="MuiBox-root jss1395 jss1290"--}}
+                                        {{--                                                    style="border-bottom: 1px solid rgb(237, 242, 247); padding-bottom: 8px;"><span--}}
+                                        {{--                                                        class="MuiBox-root jss1396">Phụ thu người lớn</span><span--}}
+                                        {{--                                                        class="MuiBox-root jss1397">{{@$dataSearch['people']}} x {{number_format($room->surcharge_adult)}} ₫</span>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            @endif--}}
+                                        {{--                                            @if($room->surcharge_check != 0 && @$dataSearch['child'] != 0)--}}
+                                        {{--                                                <div--}}
+                                        {{--                                                    class="MuiBox-root jss1395 jss1290"--}}
+                                        {{--                                                    style="border-bottom: 1px solid rgb(237, 242, 247); padding-bottom: 8px;"><span--}}
+                                        {{--                                                        class="MuiBox-root jss1396">Phụ thu trẻ em</span><span--}}
+                                        {{--                                                        class="MuiBox-root jss1397">{{@$dataSearch['child']}} x{{number_format($room->surcharge_child)}} ₫</span>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            @endif--}}
+                                        {{--                                            @if($hotel->vat)--}}
+                                        {{--                                                <div--}}
+                                        {{--                                                    class="MuiBox-root jss1395 jss1290"--}}
+                                        {{--                                                    style="border-bottom: 1px solid rgb(237, 242, 247); padding-bottom: 8px;"><span--}}
+                                        {{--                                                        class="MuiBox-root jss1396">Thuế và phí dịch vụ {{@$type}}</span><span--}}
+                                        {{--                                                        class="MuiBox-root jss1397">{{number_format($hotel->vat)}} ₫</span>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            @endif--}}
+                                        {{--                                            <div class="MuiBox-root jss1398 jss1290"--}}
+                                        {{--                                                 style="padding-top: 8px;">--}}
+                                        {{--                                                <span class="MuiBox-root jss1399">Tổng tiền thanh toán</span><span--}}
+                                        {{--                                                    class="MuiBox-root jss1400">{{ number_format($room->price * (1 - $room->sale / 100) * (1 - $percent / 100) * (@$dataSearch['day'] ?? 1) * (@$dataSearch['room'] ?? 1) + @$surcharge + @$hotel->vat) }} ₫</span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                            <div--}}
+                                        {{--                                                class="MuiBox-root jss1402 jss1290 jss1292"--}}
+                                        {{--                                                style="left:0">--}}
+                                        {{--                                                        <span class="MuiBox-root jss1401 jss1292"--}}
+                                        {{--                                                              style="text-align: left!important;">Đã bao gồm thuế, phí, VAT</span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                            <div--}}
+                                        {{--                                                class="MuiBox-root jss1402 jss1290 jss1292"--}}
+                                        {{--                                                style="left:0">--}}
+                                        {{--                                                <span class="MuiBox-root jss1403">Giá cho {{@$dataSearch['day'] ?? 1}} đêm, {{@$dataSearch['people'] ?? 1}} người lớn</span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                     @else
                                         <button class="btn btn-blue" disabled
                                                 type="button">
@@ -474,8 +476,10 @@
                                                     <h5 class="modal-title"
                                                         id="exampleModalLongTitle">{{$room->name}}</h5>
                                                 </div>
-                                                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                                                <button type="button" class="btn-close-custom" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                                         width="16" height="16" fill="currentColor">
                                                         <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586
                  14.293.293a1 1 0 1 1 1.414 1.414L9.414
                  8l6.293 6.293a1 1 0 0 1-1.414
@@ -619,8 +623,10 @@
                                                     <h5 class="modal-title"
                                                         id="exampleModalLongTitle">{{$room->name}}</h5>
                                                 </div>
-                                                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                                                <button type="button" class="btn-close-custom" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                                         width="16" height="16" fill="currentColor">
                                                         <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586
                  14.293.293a1 1 0 1 1 1.414 1.414L9.414
                  8l6.293 6.293a1 1 0 0 1-1.414
@@ -787,9 +793,9 @@
                                     </div>
                                 </div>
                             @endforeach
-                        @endif
+                        </div>
                     </div>
-                </div>
+                @endif
                 @if(count(@$hotel->comments) > 0)
                     <div class="hotelDetail__rating page-raiting d-flex w-100 flex-column p-3 p-lg-4 mb-4 mb-lg-5">
                         <h2 class="hotelDetail__title mb-3 mb-lg-4">Đánh giá</h2>
@@ -905,10 +911,10 @@
                 @endif
 
                 @if(!empty($hotel->notes))
-                <div class="hotelDetail__moreContent w-100 p-3 p-lg-4">
-                    {!! $hotel->notes !!}
-                </div>
-                    @endif
+                    <div class="hotelDetail__moreContent w-100 p-3 p-lg-4">
+                        {!! $hotel->notes !!}
+                    </div>
+                @endif
             </div>
         </section>
 
@@ -922,7 +928,8 @@
                             <span>{{$hotel->name}}</span>
                         </div>
                         <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"
+                                 fill="currentColor">
                                 <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586
                  14.293.293a1 1 0 1 1 1.414 1.414L9.414
                  8l6.293 6.293a1 1 0 0 1-1.414
@@ -1084,37 +1091,37 @@
                                             <ul class="nav">
                                                 <li class="nav-items">
                                                     <a class="nav-link filter-model-star active" data-star="all"
-                                                       data-hotel="{{@$hotel->id}}" data-type="{{@$type}}"
+                                                       data-hotel="{{@$hotel->id}}" data-type="hotel"
                                                        href="javascript:;">Tất cả
                                                         <span>({{$G1 + $G2 + $G3 + $G4 + $G5}})</span></a>
                                                 </li>
                                                 <li class="nav-items">
                                                     <a class="nav-link filter-model-star" data-star="5"
-                                                       data-hotel="{{@$hotel->id}}" data-type="{{@$type}}"
+                                                       data-hotel="{{@$hotel->id}}" data-type="hotel"
                                                        href="javascript:;">5<?php echo svg('start') ?>
                                                         <span>({{$G1}})</span></a>
                                                 </li>
                                                 <li class="nav-items">
                                                     <a class="nav-link filter-model-star" data-star="4"
-                                                       data-hotel="{{@$hotel->id}}" data-type="{{@$type}}"
+                                                       data-hotel="{{@$hotel->id}}" data-type="hotel"
                                                        href="javascript:;">4<?php echo svg('start') ?>
                                                         <span>({{$G2}})</span></a>
                                                 </li>
                                                 <li class="nav-items">
                                                     <a class="nav-link filter-model-star" data-star="3"
-                                                       data-hotel="{{@$hotel->id}}" data-type="{{@$type}}"
+                                                       data-hotel="{{@$hotel->id}}" data-type="hotel"
                                                        href="javascript:;">3<?php echo svg('start') ?>
                                                         <span>({{$G3}})</span></a>
                                                 </li>
                                                 <li class="nav-items">
                                                     <a class="nav-link filter-model-star" data-star="2"
-                                                       data-hotel="{{@$hotel->id}}" data-type="{{@$type}}"
+                                                       data-hotel="{{@$hotel->id}}" data-type="hotel"
                                                        href="javascript:;">2<?php echo svg('start') ?>
                                                         <span>({{$G4}})</span></a>
                                                 </li>
                                                 <li class="nav-items">
                                                     <a class="nav-link filter-model-star" data-star="1"
-                                                       data-hotel="{{@$hotel->id}}" data-type="{{@$type}}"
+                                                       data-hotel="{{@$hotel->id}}" data-type="hotel"
                                                        href="javascript:;">1<?php echo svg('start') ?>
                                                         <span>({{$G5}})</span></a>
                                                 </li>
@@ -1222,235 +1229,6 @@
                 </div>
             </div>
         </div>
-        <div class="modal modal-album fade" id="modal-album" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header align-items-center sticky-top">
-                        <div class="title-left">
-                            <h5 class="modal-title" id="exampleModalLongTitle">{{$hotel->name}}</h5>
-                            <div class="star">
-                                @for($i = 0; $i < $hotel->rate; $i++)
-                                    <i class="fas fa-star"></i>
-                                @endfor
-                            </div>
-                            <p style="margin-top: 10px; margin-bottom: 0px"><?php echo svg('address') ?> {{$hotel->address}}</p>
-                        </div>
-                        <div class="button d-flex flex-column">
-                            <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
-                                    <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586
-                 14.293.293a1 1 0 1 1 1.414 1.414L9.414
-                 8l6.293 6.293a1 1 0 0 1-1.414
-                 1.414L8 9.414l-6.293 6.293a1 1
-                 0 0 1-1.414-1.414L6.586 8 .293
-                 1.707a1 1 0 0 1 0-1.414z"/>
-                                </svg>
-                            </button>
-                            <a class="btn btn-blue"
-                               href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}">Chọn
-                                phòng</a>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-9 col-md-8">
-                                <div class="album-table">
-                                    <ul class="nav">
-                                        <li class="nav-items">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#tab1">
-                                        <span class="ratio">
-                                        <img src="{{asset('images/uploads/thumbs/' . @$allImages[0]->name)}}"
-                                             alt="Tất cả ảnh">
-                                        </span>
-                                                <span>Tất cả ảnh</span>
-                                            </a>
-                                        </li>
-                                        @if(count(@$commentImages) > 0)
-                                            <li class="nav-items">
-                                                <a class="nav-link" data-bs-toggle="tab" href="#tab2">
-                                        <span class="ratio">
-                                        <img
-                                            src="{{asset('images/uploads/thumbs/' . @$commentImages[0]->name)}}"
-                                            alt="Ảnh người dùng đánh giá">
-                                        </span>
-                                                    <span>Ảnh người dùng đánh giá</span>
-                                                </a>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade active show" id="tab1">
-                                            <div class="row row-custom">
-                                                @foreach($allImages as $k => $image)
-                                                    <div class="col-lg-3 col-md-4 col-6 col-custom">
-                                                        <div class="images ratio">
-                                                            <a data-src="{{asset('images/uploads/hotels/' . $image->name)}}"
-                                                               data-fancybox="all-image">
-                                                                <img
-                                                                    src="{{asset('images/uploads/thumbs/' . $image->name)}}"
-                                                                    alt="Ảnh {{$hotel->image}}-{{$k + 1}}">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                        @if(count(@$commentImages) > 0)
-                                            <div class="tab-pane fade" id="tab2">
-                                                <div class="row row-custom">
-                                                    @foreach($commentImages as $k => $image)
-                                                        <div class="col-lg-3 col-md-4 col-6 col-custom">
-                                                            <div class="images ratio">
-                                                                <a data-src="{{asset('images/uploads/thumbs/' . $image->name)}}"
-                                                                   data-fancybox="gallery">
-                                                                    <img
-                                                                        src="{{asset('images/uploads/thumbs/' . $image->name)}}"
-                                                                        alt="Ảnh {{$hotel->image}}-{{$k + 1}}">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4">
-                                @if(count(@$hotel->comments) > 0)
-                                    <div class="sidebar-modal">
-                                        <div class="dg">
-                                            <span class="dg-f">{{$maxRate}}</span>
-                                            <div class="dg-content">
-                                                <p>@if(@$maxRate >= 9.5)
-                                                        Tuyệt vời
-                                                    @elseif(@$maxRate >= 9)
-                                                        Xuất sắc
-                                                    @elseif(@$maxRate >= 8)
-                                                        Tốt
-                                                    @elseif(@$maxRate >= 7)
-                                                        Trung bình
-                                                    @else
-                                                        Kém
-                                                    @endif
-                                                </p>
-                                                <span>({{count(@$hotel->comments)}} đánh giá)</span>
-                                            </div>
-                                        </div>
-                                        <div class="sidebar-modal--content">
-                                            <span class="tl">Điều khách thích nhất:</span>
-                                            <div class="list">
-                                                @foreach(@$hotel->comments as $comment)
-                                                    <div class="items">
-                                                        <div class="img">@php
-                                                                $words = explode(' ', $comment->name);
-                                                                $first_letter_first_word = ucfirst(substr($words[0], 0, 1));
-                                                                $first_letter_last_word = ucfirst(substr(end($words), 0, 1));
-                                                            @endphp
-                                                            {{$first_letter_first_word}}{{$first_letter_last_word}}
-                                                        </div>
-                                                        <div class="name">
-                                                            <p>{{$comment->name}}</p>
-                                                            <span>{!! $comment->message !!}</span>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                            <div class="page-raiting">
-                                                <h5>Đánh giá chi tiết</h5>
-                                                <div class="raiting--infor raiting--infor2">
-                                                    <div class="raiting--infor--items">
-                                                        <p>Vị trí</p>
-                                                        <div class="width-if">
-                                                            <span style="width:{{$location * 10}}%"></span>
-                                                        </div>
-                                                        <p>{{$location}}</p>
-                                                    </div>
-                                                    <div class="raiting--infor--items">
-                                                        <p>Giá cả</p>
-                                                        <div class="width-if">
-                                                            <span style="width:{{$price * 10}}%"></span>
-                                                        </div>
-                                                        <p>{{$price}}</p>
-                                                    </div>
-                                                    <div class="raiting--infor--items">
-                                                        <p>Phục vụ</p>
-                                                        <div class="width-if">
-                                                            <div class="width-percent">
-                                                                <span style="width:{{$staff * 10}}%"></span>
-                                                            </div>
-                                                        </div>
-                                                        <p>{{$staff}}</p>
-                                                    </div>
-                                                    <div class="raiting--infor--items">
-                                                        <p>Vệ sinh</p>
-                                                        <div class="width-if">
-                                                            <span style="width:{{$wc * 10}}%"></span>
-                                                        </div>
-                                                        <p>{{$wc}}</p>
-                                                    </div>
-                                                    <div class="raiting--infor--items">
-                                                        <p>Tiện nghi</p>
-                                                        <div class="width-if">
-                                                            <span style="width:{{$comfort * 10}}%"></span>
-                                                        </div>
-                                                        <p>{{$comfort}}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="modal-tienich" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header sticky-top">
-                        <div class="title-left">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Tiện nghi {{@$type}}</h5>
-                            <span>{{$hotel->name}}</span>
-                        </div>
-                        <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
-                                <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586
-                 14.293.293a1 1 0 1 1 1.414 1.414L9.414
-                 8l6.293 6.293a1 1 0 0 1-1.414
-                 1.414L8 9.414l-6.293 6.293a1 1
-                 0 0 1-1.414-1.414L6.586 8 .293
-                 1.707a1 1 0 0 1 0-1.414z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="content-tn-hotel">
-                            @foreach($listComforts as $parentComfort)
-                                <div class="items">
-                                    <h6>{{@$parentComfort[0]->parent->name}}</h6>
-                                    @if($parentComfort)
-                                        <ul>
-                                            @foreach($parentComfort as $childComfort)
-                                                <li>
-                                                    <img src="{{asset('' . $childComfort->image)}}"
-                                                         alt="{{$childComfort->name}}" loading="lazy">
-                                                    <span>{{$childComfort->name}}</span>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="modal fade" id="modal-maps" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -1461,7 +1239,8 @@
                             <span>Khách sạn Four Seasons</span>
                         </div>
                         <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"
+                                 fill="currentColor">
                                 <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586
                  14.293.293a1 1 0 1 1 1.414 1.414L9.414
                  8l6.293 6.293a1 1 0 0 1-1.414

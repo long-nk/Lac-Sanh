@@ -344,7 +344,7 @@
                             </div>
                         @endforeach
                     @else
-                        <h3 class="message-information text-center">
+                        <h3 class="nformation text-center">
                             Khách sạn đang được cập nhật!
                         </h3>
                     @endif
@@ -366,7 +366,7 @@
                     </div>
                     <a href="#" class="viewall mx-auto" title="Xem thêm">Xem thêm</a>
                 @else
-                    <h3 class="message-information text-center">Tour đang cập nhật!</h3>
+                    <h3 class="nformation text-center">Tour đang cập nhật!</h3>
                 @endif
             </div>
         </section>
@@ -505,7 +505,7 @@
                             </div>
                         @endforeach
                     @else
-                        <h3 class="message-information text-center">
+                        <h3 class="nformation text-center">
                             Tin tức đang được cập nhật!
                         </h3>
                     @endif

@@ -1,117 +1,42 @@
-@if(count($hotels) > 0)
-    <div class="row">
-        @foreach($hotels as $hotel)
-            <div class="col-md-3 col-6 mb-30">
-                <div class="items">
-                    <div class="items-tour">
-                        <div class="items-tour--images">
-                            <a class="ratio"
-                               href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}"
-                               title="{{$hotel->name}}">
-                                <img class="" src="{{asset('images/uploads/thumbs/' . @$hotel->images[0]['name'])}}">
-                            </a>
-                            <a href="javascript:;" class="add-favorist-list" aria-label="Thêm vào danh sách yêu thích" data-id="{{$hotel->id}}">
-                                @if(in_array($hotel->id, session('favoristList') ?? []))
-                                    <span class="hotel like js-hotel-save1"><?php echo svg('hear') ?></span>
-                                @else
-                                    <span class="hotel like js-hotel-save2"><?php echo svg('hear3') ?></span>
+@if(!empty($datas) && count($datas) > 0)
+    <div class="homeHotel__list row row-gap-4">
+        @foreach($datas as $hotel)
+            <div class="col-lg-3">
+                <div class="hotel d-flex flex-column w-100 h-100 p-2 overflow-hidden bg-white">
+                    <a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}"
+                       class="hotel__img d-block w-100 overflow-hidden flex-shrink-0 mb-3" title="">
+                        <img src="{{@$hotel->image_thumbs}}" alt="{{$hotel->alt ?? $hotel->name}}"
+                             class="d-block w-100 h-100">
+                    </a>
+                    <h3 class="hotel__title"><a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}" aria-label="{{$hotel->name}}"
+                                                title="{{$hotel->name}}">{{$hotel->name}}</a></h3>
+                    <div
+                        class="hotel__info d-flex w-100 align-items-center justify-content-between gap-1">
+                                <span class="hotel__address d-flex align-items-center gap-1">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    {{@$hotel->address}}
+                                </span>
+                        <span class="hotel__rating d-flex align-items-center gap-1">
+                                    <i class="fas fa-star"></i>
+                                    @php $maxRate = 0;  $total = 1; @endphp
+                            @foreach(@$hotel->comments as $comment)
+                                @if($maxRate < $comment->rate)
+                                    @php $maxRate = $comment->rate; @endphp
                                 @endif
-                            </a>
-                            @if($hotel->sale)
-                                <span class="sale"
-                                      style="background-color: rgb(255, 188, 57);"><small>{{$hotel->sale}}%</small></span>
-                            @endif
-                        </div>
-                        <div class="items-tour--content">
-                            <h3><a class="items-tour--content__title"
-                                   href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}"
-                                   title="">{{$hotel->name}}</a></h3>
-
-                            <div class="items-tour--content__start">
-                                @if($hotel->type != \App\Models\Comforts::TO)
-                                    @for($i = 0; $i < $hotel->rate; $i++)
-                                            <?php echo svg('start') ?>
-                                    @endfor
-                                @endif
-                            </div>
-                            <p class="items-tour--content__address">
-                                    <?php echo svg('address') ?>
-                                <span>{{$hotel->address}}</span>
-                            </p>
-                            @if($hotel->type == \App\Models\Comforts::TO)
-                                @if(@$hotel->people)
-                                    <div
-                                        class="items-tour--content__address items-tour--content__address2">
-                                            <?php echo svg('user') ?>
-                                        <span>Từ {{@$hotel->people_min ?? 1}}-{{@$hotel->people}} khách</span>
-                                    </div>
-                                @endif
-                                <div class="details--them2">
-                                    @if(@$hotel->bedroom)
-                                        <p>
-                                                <?php echo svg('zoom') ?>
-                                            <span>{{@$hotel->bedroom}} Phòng ngủ</span>
-                                        </p>
-                                    @endif
-                                    @if(@$hotel->bed)
-                                        <p>
-                                                <?php echo svg('giuong-ngu') ?>
-                                            <span>{{@$hotel->bed}} Giường</span>
-                                        </p>
-                                    @endif
-                                    @if(@$hotel->bedroom)
-                                        <p>
-                                                <?php echo svg('tam') ?>
-                                            <span>{{@$hotel->bathroom}} Phòng tắm</span>
-                                        </p>
-                                    @endif
-                                </div>
-                            @endif
-                            <div class="items-tour--content__dg">
-                                @if(count(@$hotel->comments) > 0)
-                                    <div class="items-tour--content__dg--content">
-                                        <span>{{@$hotel->comments[0]->rate}}</span>
-                                        <p>
-                                            @if($hotel->comments[0]->rate > 9.5)
-                                                Tuyệt vời
-                                            @elseif($hotel->comments[0]->rate > 9)
-                                                Xuất sắc
-                                            @elseif($hotel->comments[0]->rate > 8)
-                                                Tốt
-                                            @elseif($hotel->comments[0]->rate > 7)
-                                                Trung bình
-                                            @else
-                                                Kém
-                                            @endif
-                                        </p>
-                                        <p>.</p>
-                                    </div>
-                                    <span
-                                        class="items-tour--content__dg--text">{{count(@$hotel->comments)}} đánh giá</span>
-                                @endif
-                            </div>
-                            @if($hotel->type == \App\Models\Comforts::TO || $hotel->price == 0)
-                                <p class="bil">Liên hệ</p>
-                            @elseif($hotel->sale == 0)
-                                <div class="items-tour--content__price">
-                                    <p class="bil">{{number_format($hotel->price)}}đ</p>
-                                </div>
+                            @endforeach
+                            @if($maxRate > 0)
+                                {{$maxRate}} ({{count(@$hotel->comments)}})
                             @else
-                                <div class="items-tour--content__price">
-                                    <p class="ins">{{number_format($hotel->price)}} đ</p>
-                                    <p class="bil">{{number_format((100 - $hotel->sale) / 100 * $hotel->price)}}
-                                        đ</p>
-                                </div>
+                                {{$hotel->rate}}
                             @endif
-                        </div>
+                                </span>
                     </div>
-
+                    <div class="hotel__price">
+                        <strong>{{!empty($hotel->price) ? number_format($hotel->price) . 'đ/ người' : 'Liên hệ'}} </strong>
+                    </div>
+                    <a href="{{route('hotels.detail', ['slug' => $hotel->slug, 'id' => $hotel->id])}}" class="hotel__book" title="Đặt ngay">Đặt ngay</a>
                 </div>
             </div>
         @endforeach
     </div>
-{{--        <a class="btn btn-blue" href="{{route('hotels.list', ['type' => $type])}}">Xem tiếp</a>--}}
-    <a class="btn btn-blue" href="{{route('hotels.list_location', ['type' => $type, 'location' => @$hotel->location->slug])}}" title="Xem tiếp">Xem tiếp</a>
-@else
-    <h3 class="information">Đang cập nhật!</h3>
 @endif

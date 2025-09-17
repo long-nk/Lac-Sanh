@@ -445,6 +445,7 @@ h3.information {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    margin-right: 15px;
 }
 .btn-close-custom svg {
     width: 1em;
@@ -458,4 +459,8 @@ h3.information {
 
 .modal-dialog .modal-header .title-left .modal-title {
     padding-top: 0px;
+}
+
+a.hotelAddress {
+    margin-bottom: 1rem;
 }

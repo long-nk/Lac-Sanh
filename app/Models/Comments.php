@@ -31,6 +31,10 @@ class Comments extends Model
         return $this->belongsTo(Hotels::class, 'hotel_id');
     }
 
+    public function tour() {
+        return $this->belongsTo(Tours::class, 'tour_id');
+    }
+
     public function images()
     {
         return $this->hasMany(CommentImages::class, 'comment_id');

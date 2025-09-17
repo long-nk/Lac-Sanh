@@ -61,6 +61,11 @@ class Tours extends Model
         return $this->hasMany(TourImages::class, 'tour_id');
     }
 
+    public function schedules()
+    {
+        return $this->hasMany(Schedules::class, 'tour_id');
+    }
+
     public function vouchers()
     {
         return $this->belongsToMany(Vouchers::class, 'tour_vouchers', 'tour_id', 'voucher_id');
@@ -71,11 +76,15 @@ class Tours extends Model
     }
 
     public function comments(){
-        return $this->hasMany(Comments::class, 'hotel_id')->where('status', 1);
+        return $this->hasMany(Comments::class, 'tour_id')->where('status', 1);
+    }
+
+    public function hotels(){
+        return $this->hasMany(TourHotels::class, 'tour_id')->where('status', 1);
     }
 
     public function orders() {
-        return $this->hasMany(Orders::class, 'hotel_id');
+        return $this->hasMany(Orders::class, 'tour_id');
     }
 
     public function allImages()

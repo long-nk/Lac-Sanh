@@ -36,7 +36,7 @@
                             </div>
                         @endforeach
                     @else
-                        <h3 class="message-information text-center m-10">
+                        <h3 class="nformation text-center m-10">
                             Tin tức đang cập nhật!
                         </h3>
                     @endif

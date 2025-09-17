@@ -9,6 +9,7 @@ use App\Models\Comforts;
 use App\Models\CommentImages;
 use App\Models\Comments;
 use App\Models\Hotels;
+use App\Models\Tours;
 use App\Models\HotelVouchers;
 use App\Models\Locations;
 use App\Models\Orders;
@@ -203,7 +204,7 @@ class HotelsController extends Controller
         try {
             $vouchers = Vouchers::where('status', 1)->where('hotel', 1)->get();
             $hotelPopulars = Hotels::where('status', 1)->orderBy('rate', 'desc')->limit(16)->get();
-            $hotelHots = Hotels::where('status', 1)->orderBy('sort')->orderByRaw('CAST(price AS UNSIGNED) ASC')->limit(8)->get();
+            $hotelHots = Hotels::where('status', 1)->orderByRaw('CAST(price AS UNSIGNED) ASC')->orderBy('sort')->limit(8)->get();
             $locationHots = Locations::where('status', 1)
                 ->whereHas('hotels', function ($query) {
                     $query->where('status', 1);
@@ -260,7 +261,9 @@ class HotelsController extends Controller
     public function detail(Request $request)
     {
         try {
-            $hotel = Hotels::with(['images', 'comments.commentImages'])->find($request->id);
+            $slug = $request->slug . '-' . $request->id;
+            $arr = explode('-', $slug);
+            $hotel = Hotels::with(['images', 'comments.commentImages'])->find(end($arr));
             $listVoucher = [];
             $currentDateTime = Carbon::now();
 
@@ -684,33 +687,27 @@ class HotelsController extends Controller
     public function filterLocation(Request $request)
     {
         $type = $request->type;
-        if ($type == 'khach-san') {
-            $title = 'Khách sạn';
-            $t = Comforts::KS;
-        } elseif ($type == 'villa') {
-            $title = 'Villa';
-            $t = Comforts::TO;
-        } elseif ($type == 'homestay') {
-            $title = 'Homestay';
-            $t = Comforts::HS;
-        } elseif ($type == 'resort') {
-            $title = 'Resort';
-            $t = Comforts::RS;
-        } elseif ($type == 'du-thuyen') {
-            $title = 'Du thuyền';
-            $t = Comforts::DT;
-        }
-
         $location = Locations::where('slug', $request->location)->where('status', 1)->first();
-        if (empty($location)) {
-            $hotels = Hotels::where('status', 1)->orderBy('sort')->orderBy('created_at', 'desc')
-                ->limit(12)->get();
-        } else {
-            $hotels = Hotels::where('status', 1)->where('location_id', $location->id)->orderBy('sort')->orderBy('created_at', 'desc')
-                ->limit(12)->get();
+        $locationOuts = Locations::where('region', Locations::REGION_OUT)->where('status', 1)->pluck('id');
+        if($type == 'hotel') {
+            if (empty($location)) {
+                $datas = Hotels::where('status', 1)->orderBy('sort')->orderByRaw('CAST(price AS UNSIGNED) ASC')->orderBy('created_at', 'desc')
+                    ->limit(8)->get();
+            } else {
+                $datas = Hotels::where('status', 1)->where('location_id', $location->id)->orderBy('sort')->orderByRaw('CAST(price AS UNSIGNED) ASC')->orderBy('created_at', 'desc')
+                    ->limit(8)->get();
+            }
+            return view('frontend.hotels.list-filter-location', compact('datas', 'type', 'location'));
+        } elseif($type == 'tour') {
+            if (empty($location)) {
+                $datas = Tours::where('status', 1)->whereIn('location_id', $locationOuts)->orderBy('sort')->orderBy('created_at', 'desc')
+                    ->limit(8)->get();
+            } else {
+                $datas = Tours::where('status', 1)->where('location_id', $location->id)->orderBy('sort')->orderBy('created_at', 'desc')
+                    ->limit(8)->get();
+            }
+            return view('frontend.tours.list-filter-location', compact('datas', 'type', 'location'));
         }
-
-        return view('frontend.hotels.list-filter-location', compact('hotels', 'type', 'location'));
     }
 
     public function listFlashSale(Request $request)

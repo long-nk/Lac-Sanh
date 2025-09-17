@@ -24,6 +24,7 @@ class Orders extends Model
         'email',
         'room_id',
         'hotel_id',
+        'tour_id',
         'number',
         'people',
         'child',

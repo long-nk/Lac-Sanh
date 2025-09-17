@@ -21,7 +21,7 @@
 {{--                                </li>--}}
                                 <li>
                                         <?php echo svg('room') ?>
-                                    <span>{{$comment->hotel->name}}</span>
+                                    <span>{{@$comment->tour->name ?? @$comment->hotel->name ?? ''}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -49,11 +49,13 @@
                         @if(count(@$comment->images) > 0)
                             <div class="MuiBox-root jss1011 jss944">
                                 @foreach($comment->images as $k => $img)
-                                    <img
-                                        src="{{asset('images/uploads/comments/' . $img->name)}}"
-                                        alt="Ảnh người dùng đánh giá {{$comment->hotel->name}}"
-                                        title="Ảnh người dùng đánh giá {{$comment->hotel->name}}"
-                                        style="width: 96px; height: 96px; object-fit: cover; border-radius: 8px; margin: 0px 6px; cursor: pointer;">
+                                    <a href="{{asset('images/uploads/comments/' . $img->name)}}" data-fancybox="images-comment">
+                                        <img
+                                            src="{{asset('images/uploads/comments/' . $img->name)}}"
+                                            alt="Ảnh người dùng đánh giá {{@$comment->hotel->name ?? @$comment->tour->name ?? ''}}"
+                                            title="Ảnh người dùng đánh giá {{$comment->hotel->name ?? @$comment->tour->name ?? ''}}"
+                                            style="width: 96px; height: 96px; object-fit: cover; border-radius: 8px; margin: 0px 6px; cursor: pointer;">
+                                    </a>
                                 @endforeach
                             </div>
                         @endif
